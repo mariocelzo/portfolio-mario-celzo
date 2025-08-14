@@ -7,8 +7,6 @@ import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import {
   Mail,
-  Phone,
-  MapPin,
   Github,
   Briefcase,
   Code,
@@ -31,11 +29,13 @@ import {
   Zap,
   Target,
   Lightbulb,
+  Linkedin,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 export default function HomePage() {
   const [scrollY, setScrollY] = useState(0)
@@ -82,38 +82,41 @@ export default function HomePage() {
           <Link href="#" className="text-2xl font-bold text-primary" prefetch={false}>
             Mario Celzo
           </Link>
-          <ul className="hidden md:flex gap-6">
-            <li>
-              <Link href="#about" className="hover:text-primary transition-colors" prefetch={false}>
-                Su di me
-              </Link>
-            </li>
-            <li>
-              <Link href="#education" className="hover:text-primary transition-colors" prefetch={false}>
-                Istruzione
-              </Link>
-            </li>
-            <li>
-              <Link href="#skills" className="hover:text-primary transition-colors" prefetch={false}>
-                Competenze
-              </Link>
-            </li>
-            <li>
-              <Link href="#projects" className="hover:text-primary transition-colors" prefetch={false}>
-                Progetti
-              </Link>
-            </li>
-            <li>
-              <Link href="#experience" className="hover:text-primary transition-colors" prefetch={false}>
-                Esperienza
-              </Link>
-            </li>
-            <li>
-              <Link href="#contact" className="hover:text-primary transition-colors" prefetch={false}>
-                Contatti
-              </Link>
-            </li>
-          </ul>
+          <div className="flex items-center gap-6">
+            <ul className="hidden md:flex gap-6">
+              <li>
+                <Link href="#about" className="hover:text-primary transition-colors" prefetch={false}>
+                  Su di me
+                </Link>
+              </li>
+              <li>
+                <Link href="#education" className="hover:text-primary transition-colors" prefetch={false}>
+                  Istruzione
+                </Link>
+              </li>
+              <li>
+                <Link href="#skills" className="hover:text-primary transition-colors" prefetch={false}>
+                  Competenze
+                </Link>
+              </li>
+              <li>
+                <Link href="#projects" className="hover:text-primary transition-colors" prefetch={false}>
+                  Progetti
+                </Link>
+              </li>
+              <li>
+                <Link href="#experience" className="hover:text-primary transition-colors" prefetch={false}>
+                  Esperienza
+                </Link>
+              </li>
+              <li>
+                <Link href="#contact" className="hover:text-primary transition-colors" prefetch={false}>
+                  Contatti
+                </Link>
+              </li>
+            </ul>
+            <ThemeToggle />
+          </div>
         </nav>
       </header>
 
@@ -624,32 +627,39 @@ export default function HomePage() {
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
             <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01]">
               <CardContent className="pt-6 grid gap-4 text-lg text-foreground">
-                <div className="flex items-center gap-3">
-                  <Phone className="w-6 h-6 text-primary" />
-                  <Link href="tel:3385403836" className="hover:underline" prefetch={false}>
-                    3385403836
-                  </Link>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Mail className="w-6 h-6 text-primary" />
-                  <Link href="mailto:mariocelzo003@gmail.com" className="hover:underline" prefetch={false}>
+                <div className="flex items-center gap-3 group hover:scale-105 transition-transform duration-300">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <Mail className="w-5 h-5 text-primary" />
+                  </div>
+                  <Link href="mailto:mariocelzo003@gmail.com" className="hover:text-primary transition-colors font-medium" prefetch={false}>
                     mariocelzo003@gmail.com
                   </Link>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Github className="w-6 h-6 text-primary" />
+                <div className="flex items-center gap-3 group hover:scale-105 transition-transform duration-300">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <Github className="w-5 h-5 text-primary" />
+                  </div>
                   <Link
                     href="https://github.com/mariocelzo"
                     target="_blank"
-                    className="hover:underline"
+                    className="hover:text-primary transition-colors font-medium"
                     prefetch={false}
                   >
-                    mariocelzo
+                    github.com/mariocelzo
                   </Link>
                 </div>
-                <div className="flex items-center gap-3">
-                  <MapPin className="w-6 h-6 text-primary" />
-                  <span>Via Bracigliano n56 Sarno(Sa)</span>
+                <div className="flex items-center gap-3 group hover:scale-105 transition-transform duration-300">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <Linkedin className="w-5 h-5 text-primary" />
+                  </div>
+                  <Link
+                    href="https://www.linkedin.com/in/mario-celzo-40917a2b9/"
+                    target="_blank"
+                    className="hover:text-primary transition-colors font-medium"
+                    prefetch={false}
+                  >
+                    linkedin.com/in/mario-celzo
+                  </Link>
                 </div>
               </CardContent>
             </Card>

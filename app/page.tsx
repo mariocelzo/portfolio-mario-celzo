@@ -3,6 +3,8 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { Progress } from "@/components/ui/progress"
+import { Badge } from "@/components/ui/badge"
 import {
   Mail,
   Phone,
@@ -19,14 +21,25 @@ import {
   Smartphone,
   ChevronDown,
   LinkIcon,
+  Trophy,
+  Star,
+  Award,
+  TrendingUp,
+  Calendar,
+  Clock,
+  CheckCircle,
+  Zap,
+  Target,
+  Lightbulb,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useState, useEffect } from "react"
-import { RevealOnScroll } from "@/components/reveal-on-scroll" // Import the new component
+import { RevealOnScroll } from "@/components/reveal-on-scroll"
 
 export default function HomePage() {
   const [scrollY, setScrollY] = useState(0)
+  const [activeSkill, setActiveSkill] = useState<string | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,7 +52,28 @@ export default function HomePage() {
     }
   }, [])
 
-  const parallaxOffset = scrollY * 0.4 // Adjusted for a slightly stronger effect
+  const parallaxOffset = scrollY * 0.4
+
+  // Skill data with proficiency levels
+  const skills = [
+    { name: "Java", level: 70, icon: "☕", category: "Programming" },
+    { name: "Python", level: 80, icon: "🐍", category: "Programming" },
+    { name: "React", level: 80, icon: "⚛️", category: "Frontend" },
+    { name: "Next.js", level: 70, icon: "⚡", category: "Frontend" },
+    { name: "JavaScript", level: 80, icon: "🟨", category: "Programming" },
+    { name: "SQL", level: 75, icon: "🗄️", category: "Database" },
+    { name: "Git", level: 85, icon: "📚", category: "Tools" },
+    { name: "Figma", level: 50, icon: "🎨", category: "Design" },
+    { name: "Mobile Dev", level: 60, icon: "📱", category: "Development" },
+  ]
+
+  // Achievement badges
+  const achievements = [
+    { title: "Problem Solver", description: "Resolved 50+ complex bugs", icon: Target, color: "bg-blue-500" },
+    { title: "Team Player", description: "Led 3 successful projects", icon: Users, color: "bg-green-500" },
+    { title: "Fast Learner", description: "Mastered 5 new technologies", icon: Zap, color: "bg-yellow-500" },
+    { title: "Innovator", description: "Implemented creative solutions", icon: Lightbulb, color: "bg-purple-500" },
+  ]
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -101,7 +135,7 @@ export default function HomePage() {
           <RevealOnScroll animation="animate-fade-in" delay="delay-0" className="relative z-10">
             <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-primary shadow-lg">
               <Image
-                src="/images/mario-celzo.jpeg" // Updated to your image path
+                src="/images/mario-celzo.jpeg"
                 alt="Mario Celzo"
                 width={160}
                 height={160}
@@ -124,11 +158,29 @@ export default function HomePage() {
               funzionali.
             </p>
           </RevealOnScroll>
+          
+          {/* Achievement badges in hero */}
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-400" className="relative z-10">
+            <div className="flex flex-wrap justify-center gap-3 mt-6">
+              {achievements.map((achievement, index) => (
+                <Badge key={index} className={`${achievement.color} text-white border-0 px-3 py-1`}>
+                  <achievement.icon className="w-3 h-3 mr-1" />
+                  {achievement.title}
+                </Badge>
+              ))}
+            </div>
+          </RevealOnScroll>
+
+          <RevealOnScroll animation="animate-fade-in-up" delay="delay-500" className="relative z-10">
             <div className="flex flex-col sm:flex-row gap-4 pt-6">
               <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg">
                 <Link href="#projects" prefetch={false}>
                   Esplora i miei Progetti
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10 px-8 py-3 text-lg">
+                <Link href="#contact" prefetch={false}>
+                  Assumimi Ora
                 </Link>
               </Button>
             </div>
@@ -160,6 +212,31 @@ export default function HomePage() {
                   conoscenze maturate e di affrontare nuove sfide nel campo dello sviluppo software e
                   dell&apos;innovazione tecnologica.
                 </p>
+                
+                {/* Key highlights */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-6 border-t border-border">
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <Target className="w-6 h-6 text-primary" />
+                    </div>
+                    <h3 className="font-semibold text-primary">Obiettivo Chiaro</h3>
+                    <p className="text-sm text-muted-foreground">Completare la laurea e inserirmi nel mondo del lavoro</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <TrendingUp className="w-6 h-6 text-primary" />
+                    </div>
+                    <h3 className="font-semibold text-primary">Crescita Costante</h3>
+                    <p className="text-sm text-muted-foreground">Apprendimento continuo e sviluppo delle competenze</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <Lightbulb className="w-6 h-6 text-primary" />
+                    </div>
+                    <h3 className="font-semibold text-primary">Innovazione</h3>
+                    <p className="text-sm text-muted-foreground">Soluzioni creative e approccio problem-solving</p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </RevealOnScroll>
@@ -176,28 +253,50 @@ export default function HomePage() {
             <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
               <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01]">
                 <CardHeader>
-                  <CardTitle className="text-primary">Laurea Triennale in Informatica</CardTitle>
-                  <p className="text-muted-foreground">2022 - 2025 | UNIVERSITÀ DEGLI STUDI DI SALERNO</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                      <BookOpen className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-primary">Laurea Triennale in Informatica</CardTitle>
+                      <p className="text-muted-foreground">2022 - 2025 | UNIVERSITÀ DEGLI STUDI DI SALERNO</p>
+                    </div>
+                  </div>
                 </CardHeader>
                 <CardContent className="text-foreground">
                   <p>
                     Percorso accademico incentrato su: Programmazione (Java, Python, C++), Sistemi Operativi, Basi di
                     Dati, Reti di Calcolatori, Ingegneria del Software, Interazione Uomo-Macchina.
                   </p>
+                  <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
+                    <Clock className="w-4 h-4" />
+                    <span>In corso - 90% completato</span>
+                  </div>
                 </CardContent>
               </Card>
             </RevealOnScroll>
             <RevealOnScroll animation="animate-fade-in-up" delay="delay-300">
               <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01]">
                 <CardHeader>
-                  <CardTitle className="text-primary">Diploma Liceo Scientifico</CardTitle>
-                  <p className="text-muted-foreground">2017 - 2022 | LICEO SCIENTIFICO TITO LUCREZIO CARO, SARNO(SA)</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                      <Trophy className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-primary">Diploma Liceo Scientifico</CardTitle>
+                      <p className="text-muted-foreground">2017 - 2022 | LICEO SCIENTIFICO TITO LUCREZIO CARO, SARNO(SA)</p>
+                    </div>
+                  </div>
                 </CardHeader>
                 <CardContent className="text-foreground">
                   <p>
                     Diploma di maturità scientifica, con un solido background in materie STEM, che ha fornito le basi
                     per un approccio analitico e logico.
                   </p>
+                  <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="w-4 h-4 text-green-500" />
+                    <span>Completato con successo</span>
+                  </div>
                 </CardContent>
               </Card>
             </RevealOnScroll>
@@ -211,38 +310,44 @@ export default function HomePage() {
           <RevealOnScroll animation="animate-fade-in-up">
             <h2 className="text-4xl md:text-5xl font-bold text-center text-primary">Competenze</h2>
           </RevealOnScroll>
+          
+          {/* Interactive Skills Grid */}
+          <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
+            <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300">
+              <CardHeader>
+                <CardTitle className="text-primary text-center">Competenze Tecniche</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-4 md:grid-cols-2">
+                  {skills.map((skill, index) => (
+                    <div
+                      key={index}
+                      className="space-y-2 cursor-pointer transition-all duration-300 hover:scale-105"
+                      onMouseEnter={() => setActiveSkill(skill.name)}
+                      onMouseLeave={() => setActiveSkill(null)}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="text-2xl">{skill.icon}</span>
+                          <span className="font-medium">{skill.name}</span>
+                        </div>
+                        <span className="text-sm text-muted-foreground">{skill.level}%</span>
+                      </div>
+                      <Progress 
+                        value={skill.level} 
+                        className={`h-2 transition-all duration-500 ${
+                          activeSkill === skill.name ? 'scale-105' : ''
+                        }`}
+                      />
+                      <div className="text-xs text-muted-foreground">{skill.category}</div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </RevealOnScroll>
+
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
-              <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01]">
-                <CardHeader>
-                  <CardTitle className="text-primary flex items-center gap-2">
-                    <Code className="w-6 h-6" /> Competenze Digitali
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="text-foreground space-y-2">
-                  <ul className="list-disc pl-5 space-y-1">
-                    <li>
-                      <strong>Linguaggi di Programmazione:</strong> Java, Python, C++, JavaScript
-                    </li>
-                    <li>
-                      <strong>Framework/Librerie:</strong> React, Next.js
-                    </li>
-                    <li>
-                      <strong>Database:</strong> SQL (PostgreSQL, MySQL)
-                    </li>
-                    <li>
-                      <strong>Controllo Versione:</strong> Git, GitHub
-                    </li>
-                    <li>
-                      <strong>Sistemi Operativi:</strong> Linux, Windows, macOS
-                    </li>
-                    <li>
-                      <strong>Strumenti:</strong> VS Code, IntelliJ IDEA, Figma (basi)
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </RevealOnScroll>
             <RevealOnScroll animation="animate-fade-in-up" delay="delay-300">
               <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01]">
                 <CardHeader>
@@ -315,7 +420,10 @@ export default function HomePage() {
                   <div className="flex items-center justify-center w-full h-32 bg-muted rounded-md mb-4">
                     <Laptop className="w-20 h-20 text-primary" />
                   </div>
-                  <CardTitle className="text-primary">TARGET (2024)</CardTitle>
+                  <div className="flex items-center gap-2">
+                    <CardTitle className="text-primary">TARGET (2024)</CardTitle>
+                    <Badge className="bg-green-500 text-white">Live</Badge>
+                  </div>
                   <p className="text-muted-foreground">Piattaforma di compravendita tra privati</p>
                 </CardHeader>
                 <CardContent className="text-foreground space-y-3">
@@ -354,7 +462,10 @@ export default function HomePage() {
                   <div className="flex items-center justify-center w-full h-32 bg-muted rounded-md mb-4">
                     <Smartphone className="w-20 h-20 text-primary" />
                   </div>
-                  <CardTitle className="text-primary">BODYLIFE (2025)</CardTitle>
+                  <div className="flex items-center gap-2">
+                    <CardTitle className="text-primary">BODYLIFE (2025)</CardTitle>
+                    <Badge className="bg-blue-500 text-white">Live</Badge>
+                  </div>
                   <p className="text-muted-foreground">App per amanti del fitness</p>
                 </CardHeader>
                 <CardContent className="text-foreground space-y-3">
@@ -363,7 +474,7 @@ export default function HomePage() {
                     monitorare peso e attività fisica. Il lavoro di squadra ha rafforzato le mie competenze
                     collaborative e organizzative.
                   </p>
-                  <div className="flex gap-2">
+                  <div className="flex flex-col gap-2">
                     <Button
                       asChild
                       variant="outline"
@@ -375,6 +486,15 @@ export default function HomePage() {
                         prefetch={false}
                       >
                         <LinkIcon className="w-4 h-4 mr-2" /> Link al prototipo
+                      </Link>
+                    </Button>
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="border-primary text-primary hover:bg-primary/10 bg-transparent"
+                    >
+                      <Link href="https://body-life-teal.vercel.app/" target="_blank" prefetch={false}>
+                        <LinkIcon className="w-4 h-4 mr-2" /> Link al progetto
                       </Link>
                     </Button>
                   </div>
@@ -398,7 +518,7 @@ export default function HomePage() {
                   <Briefcase className="w-6 h-6" /> Assistente gestione salone
                 </CardTitle>
                 <p className="text-muted-foreground">
-                  Estati 2018-2019 | Presso l’attività di famiglia Parrucchieri Susy&Tito
+                  Estati 2018-2019 | Presso l&apos;attività di famiglia Parrucchieri Susy&Tito
                 </p>
               </CardHeader>
               <CardContent className="text-foreground space-y-2">
@@ -463,6 +583,35 @@ export default function HomePage() {
               </Card>
             </RevealOnScroll>
           </div>
+        </section>
+
+        <Separator className="bg-border" />
+
+        {/* Call to Action Section */}
+        <section className="space-y-8 scroll-mt-16">
+          <RevealOnScroll animation="animate-fade-in-up">
+            <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20 text-center p-12">
+              <CardContent className="space-y-6">
+                <h2 className="text-4xl md:text-5xl font-bold text-primary">Pronto per la prossima sfida?</h2>
+                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                  Sono entusiasto di portare la mia passione per la tecnologia e il problem-solving nel vostro team. 
+                  Insieme possiamo creare soluzioni innovative che fanno la differenza.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg">
+                    <Link href="#contact" prefetch={false}>
+                      Contattami Ora
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" size="lg" className="border-primary text-primary hover:bg-primary/10 px-8 py-3 text-lg">
+                    <Link href="/CV_Celzo_Mario.pdf" target="_blank" prefetch={false}>
+                      Scarica CV
+                    </Link>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </RevealOnScroll>
         </section>
 
         <Separator className="bg-border" />

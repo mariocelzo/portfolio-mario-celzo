@@ -40,19 +40,36 @@ import { ThemeToggle } from "@/components/theme-toggle"
 export default function HomePage() {
   const [scrollY, setScrollY] = useState(0)
   const [activeSkill, setActiveSkill] = useState<string | null>(null)
+  const [activeSection, setActiveSection] = useState<string>("hero")
 
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY)
+      
+      // Track active section for navigation highlighting
+      const sections = ['hero', 'about', 'education', 'skills', 'projects', 'experience', 'hobbies', 'contact']
+      const currentSection = sections.find(section => {
+        const element = document.getElementById(section)
+        if (element) {
+          const rect = element.getBoundingClientRect()
+          return rect.top <= 100 && rect.bottom >= 100
+        }
+        return false
+      })
+      
+      if (currentSection && currentSection !== activeSection) {
+        setActiveSection(currentSection)
+      }
     }
 
     window.addEventListener("scroll", handleScroll)
     return () => {
       window.removeEventListener("scroll", handleScroll)
     }
-  }, [])
+  }, [activeSection])
 
-  const parallaxOffset = scrollY * 0.4
+  const parallaxOffset = scrollY * 0.3
+  const smoothScrollY = scrollY * 0.5
 
   // Skill data with proficiency levels
   const skills = [
@@ -77,6 +94,14 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* Scroll Progress Bar */}
+      <div className="fixed top-0 left-0 w-full h-1 bg-muted z-50">
+        <div 
+          className="h-full bg-primary transition-all duration-300 ease-out"
+          style={{ width: `${(scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100}%` }}
+        ></div>
+      </div>
+      
       <header className="sticky top-0 z-50 w-full border-b border-border bg-background/90 backdrop-blur-sm">
         <nav className="container flex h-16 items-center justify-between">
           <Link href="#" className="text-2xl font-bold text-primary" prefetch={false}>
@@ -85,33 +110,87 @@ export default function HomePage() {
           <div className="flex items-center gap-6">
             <ul className="hidden md:flex gap-6">
               <li>
-                <Link href="#about" className="hover:text-primary transition-colors" prefetch={false}>
+                <Link 
+                  href="#about" 
+                  className={`transition-all duration-300 relative group ${
+                    activeSection === 'about' ? 'text-primary' : 'hover:text-primary'
+                  }`} 
+                  prefetch={false}
+                >
                   Su di me
+                  <span className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                    activeSection === 'about' ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}></span>
                 </Link>
               </li>
               <li>
-                <Link href="#education" className="hover:text-primary transition-colors" prefetch={false}>
+                <Link 
+                  href="#education" 
+                  className={`transition-all duration-300 relative group ${
+                    activeSection === 'education' ? 'text-primary' : 'hover:text-primary'
+                  }`} 
+                  prefetch={false}
+                >
                   Istruzione
+                  <span className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                    activeSection === 'education' ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}></span>
                 </Link>
               </li>
               <li>
-                <Link href="#skills" className="hover:text-primary transition-colors" prefetch={false}>
+                <Link 
+                  href="#skills" 
+                  className={`transition-all duration-300 relative group ${
+                    activeSection === 'skills' ? 'text-primary' : 'hover:text-primary'
+                  }`} 
+                  prefetch={false}
+                >
                   Competenze
+                  <span className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                    activeSection === 'skills' ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}></span>
                 </Link>
               </li>
               <li>
-                <Link href="#projects" className="hover:text-primary transition-colors" prefetch={false}>
+                <Link 
+                  href="#projects" 
+                  className={`transition-all duration-300 relative group ${
+                    activeSection === 'projects' ? 'text-primary' : 'hover:text-primary'
+                  }`} 
+                  prefetch={false}
+                >
                   Progetti
+                  <span className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                    activeSection === 'projects' ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}></span>
                 </Link>
               </li>
               <li>
-                <Link href="#experience" className="hover:text-primary transition-colors" prefetch={false}>
+                <Link 
+                  href="#experience" 
+                  className={`transition-all duration-300 relative group ${
+                    activeSection === 'experience' ? 'text-primary' : 'hover:text-primary'
+                  }`} 
+                  prefetch={false}
+                >
                   Esperienza
+                  <span className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                    activeSection === 'experience' ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}></span>
                 </Link>
               </li>
               <li>
-                <Link href="#contact" className="hover:text-primary transition-colors" prefetch={false}>
+                <Link 
+                  href="#contact" 
+                  className={`transition-all duration-300 relative group ${
+                    activeSection === 'contact' ? 'text-primary' : 'hover:text-primary'
+                  }`} 
+                  prefetch={false}
+                >
                   Contatti
+                  <span className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                    activeSection === 'contact' ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}></span>
                 </Link>
               </li>
             </ul>
@@ -129,10 +208,25 @@ export default function HomePage() {
           {/* Parallax background element */}
           <div
             className="absolute inset-0 bg-gradient-to-br from-background via-background/80 to-primary/10 z-0"
-            style={{ transform: `translateY(${parallaxOffset}px)` }}
+            style={{ transform: `translateY(${parallaxOffset * 0.5}px)` }}
           ></div>
-          {/* Radial gradient overlay for more depth */}
-          <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-transparent via-background/50 to-background"></div>
+          {/* Floating geometric shapes for visual interest */}
+          <div className="absolute inset-0 z-0 overflow-hidden">
+            <div 
+              className="absolute top-20 left-10 w-32 h-32 border border-primary/20 rounded-full opacity-30"
+              style={{ transform: `translateY(${parallaxOffset * 0.3}px) rotate(${scrollY * 0.05}deg) scale(${1 + scrollY * 0.0001})` }}
+            ></div>
+            <div 
+              className="absolute top-40 right-20 w-24 h-24 border border-primary/30 rounded-lg opacity-40"
+              style={{ transform: `translateY(${parallaxOffset * 0.4}px) rotate(${-scrollY * 0.08}deg) scale(${1 + scrollY * 0.00008})` }}
+            ></div>
+            <div 
+              className="absolute bottom-40 left-20 w-20 h-20 border border-primary/25 opacity-30"
+              style={{ transform: `translateY(${parallaxOffset * 0.2}px) rotate(${scrollY * 0.12}deg) scale(${1 + scrollY * 0.00012})` }}
+            ></div>
+          </div>
+          {/* Enhanced radial gradient overlay */}
+          <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-transparent via-background/40 to-background"></div>
 
           {/* Content of the hero section (z-10 to be above parallax background) */}
           <RevealOnScroll animation="animate-fade-in" delay="delay-0" className="relative z-10">
@@ -666,6 +760,17 @@ export default function HomePage() {
           </RevealOnScroll>
         </section>
       </main>
+
+      {/* Scroll to Top Button */}
+      {scrollY > 500 && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-8 right-8 z-50 w-12 h-12 bg-primary/90 hover:bg-primary text-primary-foreground rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 backdrop-blur-sm"
+          aria-label="Scroll to top"
+        >
+          <ChevronDown className="w-6 h-6 mx-auto transform rotate-180" />
+        </button>
+      )}
 
       <footer className="bg-card border-t border-border py-8 text-center text-muted-foreground text-sm">
         <p>

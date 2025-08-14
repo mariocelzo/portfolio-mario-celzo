@@ -41,8 +41,15 @@ export default function HomePage() {
   const [scrollY, setScrollY] = useState(0)
   const [activeSkill, setActiveSkill] = useState<string | null>(null)
   const [activeSection, setActiveSection] = useState<string>("hero")
+  const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!isMounted) return
+
     const handleScroll = () => {
       setScrollY(window.scrollY)
       
@@ -66,7 +73,7 @@ export default function HomePage() {
     return () => {
       window.removeEventListener("scroll", handleScroll)
     }
-  }, [activeSection])
+  }, [activeSection, isMounted])
 
   const parallaxOffset = scrollY * 0.3
   const smoothScrollY = scrollY * 0.5
@@ -95,12 +102,16 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* Scroll Progress Bar */}
-      <div className="fixed top-0 left-0 w-full h-1 bg-muted z-50">
-        <div 
-          className="h-full bg-primary transition-all duration-300 ease-out"
-          style={{ width: `${(scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100}%` }}
-        ></div>
-      </div>
+      {isMounted && (
+        <div className="fixed top-0 left-0 w-full h-1 bg-muted z-50">
+          <div 
+            className="h-full bg-primary transition-all duration-300 ease-out"
+            style={{ 
+              width: `${(scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100}%` 
+            }}
+          ></div>
+        </div>
+      )}
       
       <header className="sticky top-0 z-50 w-full border-b border-border bg-background/90 backdrop-blur-sm">
         <nav className="container flex h-16 items-center justify-between">
@@ -762,7 +773,7 @@ export default function HomePage() {
       </main>
 
       {/* Scroll to Top Button */}
-      {scrollY > 500 && (
+      {isMounted && scrollY > 500 && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="fixed bottom-8 right-8 z-50 w-12 h-12 bg-primary/90 hover:bg-primary text-primary-foreground rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 backdrop-blur-sm"

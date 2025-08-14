@@ -30,6 +30,16 @@ import {
   Target,
   Lightbulb,
   Linkedin,
+  Play,
+  ExternalLink,
+  Eye,
+  GitBranch,
+  Database,
+  Palette,
+  Cpu,
+  Shield,
+  Rocket,
+  Sparkles,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -42,6 +52,8 @@ export default function HomePage() {
   const [activeSkill, setActiveSkill] = useState<string | null>(null)
   const [activeSection, setActiveSection] = useState<string>("hero")
   const [isMounted, setIsMounted] = useState(false)
+  const [selectedProject, setSelectedProject] = useState<string | null>(null)
+  const [showParticles, setShowParticles] = useState(false)
 
   useEffect(() => {
     setIsMounted(true)
@@ -99,8 +111,66 @@ export default function HomePage() {
     { title: "Innovator", description: "Implemented creative solutions", icon: Lightbulb, color: "bg-purple-500" },
   ]
 
+  // Enhanced project data with interactive features
+  const projects = [
+    {
+      id: "target",
+      title: "TARGET",
+      year: "2024",
+      description: "Piattaforma di compravendita tra privati",
+      fullDescription: "Piattaforma ispirata a Vinted e Subito, sviluppata per l'esame di Ingegneria del Software. Facilita la compravendita tra privati con funzionalità di creazione annunci, ricerca prodotti e gestione vendite. Ho migliorato le mie competenze in collaborazione e progettazione centrata sull'utente.",
+      image: "/images/target-preview.jpg",
+      icon: Laptop,
+      badge: "Live",
+      badgeColor: "bg-green-500",
+      techStack: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Firebase"],
+      features: ["User Authentication", "Product Listings", "Search & Filters", "Real-time Chat", "User Profiles"],
+      github: "https://github.com/mariocelzo/Target",
+      liveUrl: "https://v0-target-svp6klexsij.vercel.app/",
+      demoUrl: "https://v0-target-svp6klexsij.vercel.app/",
+      stats: { features: "15+", components: "50+", rating: "4.8" }
+    },
+    {
+      id: "bodylife",
+      title: "BODYLIFE",
+      year: "2025",
+      description: "App per amanti del fitness",
+      fullDescription: "Sviluppata per il corso di Interazione Uomo-Macchina, Body Life è un'app intuitiva per monitorare peso e attività fisica. Il lavoro di squadra ha rafforzato le mie competenze collaborative e organizzative.",
+      image: "/images/bodylife-preview.jpg",
+      icon: Smartphone,
+      badge: "Live",
+      badgeColor: "bg-blue-500",
+      techStack: ["React Native", "Expo", "Figma", "TypeScript", "Local Storage"],
+      features: ["Fitness Tracking", "Progress Analytics", "Goal Setting", "Nutrition Log", "UI/UX Design"],
+      github: null,
+      liveUrl: "https://body-life-teal.vercel.app/",
+      demoUrl: "https://www.figma.com/design/FgrYVoi37erhxvlGQEtiBm/Gym-App--Community-?node-id=0-1&p=f",
+      stats: { screens: "8+", features: "12+", rating: "4.6" }
+    }
+  ]
+
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* Particle Effects */}
+      {showParticles && (
+        <div className="particles">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="particle"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                width: `${Math.random() * 4 + 2}px`,
+                height: `${Math.random() * 4 + 2}px`,
+                animationDelay: `${Math.random() * 6}s`,
+                animationDuration: `${Math.random() * 3 + 4}s`,
+              }}
+            />
+          ))}
+        </div>
+      )}
+      
       {/* Scroll Progress Bar */}
       {isMounted && (
         <div className="fixed top-0 left-0 w-full h-1 bg-muted z-50">
@@ -205,6 +275,15 @@ export default function HomePage() {
                 </Link>
               </li>
             </ul>
+            <Button
+              onClick={() => setShowParticles(!showParticles)}
+              variant="ghost"
+              size="sm"
+              className="w-10 h-10 p-0"
+              title={showParticles ? "Hide particles" : "Show particles"}
+            >
+              <Sparkles className={`w-5 h-5 ${showParticles ? 'text-primary' : 'text-muted-foreground'}`} />
+            </Button>
             <ThemeToggle />
           </div>
         </nav>
@@ -252,7 +331,7 @@ export default function HomePage() {
             </div>
           </RevealOnScroll>
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-100" className="relative z-10">
-            <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight text-foreground drop-shadow-lg">
+            <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight text-foreground drop-shadow-lg typing-animation">
               Mario Celzo
             </h1>
           </RevealOnScroll>
@@ -516,99 +595,92 @@ export default function HomePage() {
 
         <Separator className="bg-border" />
 
-        {/* Projects Section */}
+        {/* Enhanced Projects Section */}
         <section id="projects" className="space-y-8 scroll-mt-16">
           <RevealOnScroll animation="animate-fade-in-up">
             <h2 className="text-4xl md:text-5xl font-bold text-center text-primary">Progetti</h2>
           </RevealOnScroll>
-          <div className="grid gap-6 md:grid-cols-2">
-            <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
-              <Card className="bg-card border-border group hover:shadow-primary/30 hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.01]">
-                <CardHeader>
-                  <div className="flex items-center justify-center w-full h-32 bg-muted rounded-md mb-4">
-                    <Laptop className="w-20 h-20 text-primary" />
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CardTitle className="text-primary">TARGET (2024)</CardTitle>
-                    <Badge className="bg-green-500 text-white">Live</Badge>
-                  </div>
-                  <p className="text-muted-foreground">Piattaforma di compravendita tra privati</p>
-                </CardHeader>
-                <CardContent className="text-foreground space-y-3">
-                  <p>
-                    Piattaforma ispirata a Vinted e Subito, sviluppata per l&apos;esame di Ingegneria del Software.
-                    Facilita la compravendita tra privati con funzionalità di creazione annunci, ricerca prodotti e
-                    gestione vendite. Ho migliorato le mie competenze in collaborazione e progettazione centrata
-                    sull&apos;utente.
-                  </p>
-                  <div className="flex gap-2">
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="border-primary text-primary hover:bg-primary/10 bg-transparent"
-                    >
-                      <Link href="https://github.com/mariocelzo/Target" target="_blank" prefetch={false}>
-                        <Github className="w-4 h-4 mr-2" /> GitHub
-                      </Link>
-                    </Button>
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="border-primary text-primary hover:bg-primary/10 bg-transparent"
-                    >
-                      <Link href="https://v0-target-svp6klexsij.vercel.app/" target="_blank" prefetch={false}>
-                        <LinkIcon className="w-4 h-4 mr-2" /> Link al sito
-                      </Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </RevealOnScroll>
-            <RevealOnScroll animation="animate-fade-in-up" delay="delay-300">
-              <Card className="bg-card border-border group hover:shadow-primary/30 hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.01]">
-                <CardHeader>
-                  <div className="flex items-center justify-center w-full h-32 bg-muted rounded-md mb-4">
-                    <Smartphone className="w-20 h-20 text-primary" />
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CardTitle className="text-primary">BODYLIFE (2025)</CardTitle>
-                    <Badge className="bg-blue-500 text-white">Live</Badge>
-                  </div>
-                  <p className="text-muted-foreground">App per amanti del fitness</p>
-                </CardHeader>
-                <CardContent className="text-foreground space-y-3">
-                  <p>
-                    Sviluppata per il corso di Interazione Uomo-Macchina, Body Life è un&apos;app intuitiva per
-                    monitorare peso e attività fisica. Il lavoro di squadra ha rafforzato le mie competenze
-                    collaborative e organizzative.
-                  </p>
-                  <div className="flex flex-col gap-2">
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="border-primary text-primary hover:bg-primary/10 bg-transparent"
-                    >
-                      <Link
-                        href="https://www.figma.com/design/FgrYVoi37erhxvlGQEtiBm/Gym-App--Community-?node-id=0-1&p=f"
-                        target="_blank"
-                        prefetch={false}
+          <div className="grid gap-8 md:grid-cols-2">
+            {projects.map((project, index) => (
+              <RevealOnScroll key={project.id} animation="animate-fade-in-up" delay={`delay-${(index + 2) * 100}`}>
+                <Card 
+                  className="project-card bg-card border-border group cursor-pointer"
+                  onClick={() => setSelectedProject(project.id)}
+                >
+                  <CardHeader>
+                    <div className="flex items-center justify-center w-full h-40 bg-gradient-to-br from-muted to-muted/50 rounded-lg mb-4 relative overflow-hidden">
+                      <project.icon className="w-24 h-24 text-primary z-10" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <CardTitle className="text-primary">{project.title} ({project.year})</CardTitle>
+                        <Badge className={`${project.badgeColor} text-white`}>{project.badge}</Badge>
+                      </div>
+                      <Eye className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                    </div>
+                    <p className="text-muted-foreground">{project.description}</p>
+                  </CardHeader>
+                  <CardContent className="text-foreground space-y-4">
+                    <p className="text-sm leading-relaxed">{project.fullDescription}</p>
+                    
+                    {/* Tech Stack */}
+                    <div className="space-y-2">
+                      <h4 className="font-semibold text-sm text-primary">Tech Stack:</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {project.techStack.map((tech, techIndex) => (
+                          <Badge 
+                            key={techIndex} 
+                            variant="outline" 
+                            className="tech-badge text-xs border-primary/30 text-primary/80 hover:bg-primary/10"
+                          >
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Project Stats */}
+                    <div className="grid grid-cols-3 gap-4 pt-2">
+                      {Object.entries(project.stats).map(([key, value]) => (
+                        <div key={key} className="text-center">
+                          <div className="text-lg font-bold text-primary">{value}</div>
+                          <div className="text-xs text-muted-foreground capitalize">{key}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex gap-2 pt-2">
+                      {project.github && (
+                        <Button
+                          asChild
+                          variant="outline"
+                          size="sm"
+                          className="border-primary text-primary hover:bg-primary/10 bg-transparent"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <Link href={project.github} target="_blank" prefetch={false}>
+                            <Github className="w-4 h-4 mr-2" /> GitHub
+                          </Link>
+                        </Button>
+                      )}
+                      <Button
+                        asChild
+                        variant="outline"
+                        size="sm"
+                        className="border-primary text-primary hover:bg-primary/10 bg-transparent"
+                        onClick={(e) => e.stopPropagation()}
                       >
-                        <LinkIcon className="w-4 h-4 mr-2" /> Link al prototipo
-                      </Link>
-                    </Button>
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="border-primary text-primary hover:bg-primary/10 bg-transparent"
-                    >
-                      <Link href="https://body-life-teal.vercel.app/" target="_blank" prefetch={false}>
-                        <LinkIcon className="w-4 h-4 mr-2" /> Link al progetto
-                      </Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </RevealOnScroll>
+                        <Link href={project.liveUrl} target="_blank" prefetch={false}>
+                          <ExternalLink className="w-4 h-4 mr-2" /> Live Demo
+                        </Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </RevealOnScroll>
+            ))}
           </div>
         </section>
 
@@ -771,6 +843,114 @@ export default function HomePage() {
           </RevealOnScroll>
         </section>
       </main>
+
+      {/* Interactive Project Modal */}
+      {selectedProject && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div 
+            className="modal-overlay absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setSelectedProject(null)}
+          />
+          <div className="modal-content relative bg-card border border-border rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            {(() => {
+              const project = projects.find(p => p.id === selectedProject)
+              if (!project) return null
+              
+              return (
+                <div className="p-6 space-y-6">
+                  {/* Header */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <project.icon className="w-8 h-8 text-primary" />
+                      <div>
+                        <h2 className="text-2xl font-bold text-primary">{project.title}</h2>
+                        <p className="text-muted-foreground">{project.description}</p>
+                      </div>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setSelectedProject(null)}
+                      className="text-muted-foreground hover:text-foreground"
+                    >
+                      ✕
+                    </Button>
+                  </div>
+
+                  {/* Project Image/Preview */}
+                  <div className="aspect-video bg-gradient-to-br from-muted to-muted/50 rounded-lg flex items-center justify-center">
+                    <project.icon className="w-32 h-32 text-primary/50" />
+                  </div>
+
+                  {/* Description */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-primary mb-2">About the Project</h3>
+                    <p className="text-muted-foreground leading-relaxed">{project.fullDescription}</p>
+                  </div>
+
+                  {/* Features */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-primary mb-3">Key Features</h3>
+                    <div className="grid grid-cols-2 gap-2">
+                      {project.features.map((feature, index) => (
+                        <div key={index} className="flex items-center gap-2 text-sm">
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                          <span className="text-muted-foreground">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Tech Stack */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-primary mb-3">Technology Stack</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {project.techStack.map((tech, index) => (
+                        <Badge 
+                          key={index} 
+                          variant="outline" 
+                          className="tech-badge border-primary/30 text-primary"
+                        >
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Stats */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-primary mb-3">Project Statistics</h3>
+                    <div className="grid grid-cols-3 gap-4">
+                      {Object.entries(project.stats).map(([key, value]) => (
+                        <div key={key} className="text-center p-3 bg-muted/50 rounded-lg">
+                          <div className="text-2xl font-bold text-primary">{value}</div>
+                          <div className="text-sm text-muted-foreground capitalize">{key}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-3 pt-4">
+                    {project.github && (
+                      <Button asChild className="flex-1">
+                        <Link href={project.github} target="_blank" prefetch={false}>
+                          <Github className="w-4 h-4 mr-2" /> View Code
+                        </Link>
+                      </Button>
+                    )}
+                    <Button asChild variant="outline" className="flex-1">
+                      <Link href={project.liveUrl} target="_blank" prefetch={false}>
+                        <Play className="w-4 h-4 mr-2" /> Live Demo
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              )
+            })()}
+          </div>
+        </div>
+      )}
 
       {/* Scroll to Top Button */}
       {isMounted && scrollY > 500 && (

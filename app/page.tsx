@@ -784,7 +784,7 @@ export default function HomePage() {
                     </Link>
                   </Button>
                   <Button asChild variant="outline" size="lg" className="border-primary text-primary hover:bg-primary/10 px-8 py-3 text-lg">
-                    <Link href="/CV_Celzo_Mario.pdf" target="_blank" prefetch={false}>
+                    <Link href="/CV_MARIO_CELZO.pdf" target="_blank" prefetch={false}>
                       Scarica CV
                     </Link>
                   </Button>

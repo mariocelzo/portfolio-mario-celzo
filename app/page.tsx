@@ -452,7 +452,7 @@ export default function HomePage() {
                 </CardHeader>
                 <CardContent className="text-foreground">
                   <p>
-                    Percorso accademico incentrato su: Programmazione (Java, Python, C++), Sistemi Operativi, Basi di
+                    Percorso accademico incentrato su: Programmazione (Java, Python, C, C#), Sistemi Operativi, Basi di
                     Dati, Reti di Calcolatori, Ingegneria del Software, Interazione Uomo-Macchina.
                   </p>
                   <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">

@@ -174,18 +174,18 @@ export default function HomePage() {
       {/* Scroll Progress Bar */}
       {isMounted && (
         <div className="fixed top-0 left-0 w-full h-1 bg-muted z-50">
-          <div 
-            className="h-full bg-primary transition-all duration-300 ease-out"
-            style={{ 
-              width: `${(scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100}%` 
+          <div
+            className="h-full progress-gradient transition-all duration-300 ease-out"
+            style={{
+              width: `${(scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100}%`
             }}
           ></div>
         </div>
       )}
       
-      <header className="sticky top-0 z-50 w-full border-b border-border bg-background/90 backdrop-blur-sm">
+      <header className="sticky top-0 z-50 w-full border-b border-border bg-background/90 backdrop-blur-sm glass">
         <nav className="container flex h-16 items-center justify-between">
-          <Link href="#" className="text-2xl font-bold text-primary" prefetch={false}>
+          <Link href="#" className="text-2xl font-bold text-primary gradient-text font-display" prefetch={false}>
             Mario Celzo
           </Link>
           <div className="flex items-center gap-6">
@@ -331,12 +331,12 @@ export default function HomePage() {
             </div>
           </RevealOnScroll>
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-100" className="relative z-10">
-            <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight text-foreground drop-shadow-lg typing-animation">
+            <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight drop-shadow-lg typing-animation font-display gradient-text">
               Mario Celzo
             </h1>
           </RevealOnScroll>
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-200" className="relative z-10">
-            <p className="text-3xl md:text-4xl text-primary font-semibold drop-shadow-md">Software Developer</p>
+            <p className="text-3xl md:text-4xl font-semibold drop-shadow-md gradient-text font-display">Software Developer</p>
           </RevealOnScroll>
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-300" className="relative z-10">
             <p className="max-w-3xl text-xl md:text-2xl text-muted-foreground leading-relaxed">
@@ -360,12 +360,12 @@ export default function HomePage() {
 
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-500" className="relative z-10">
             <div className="flex flex-col sm:flex-row gap-4 pt-6">
-              <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg">
+              <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg btn-glow">
                 <Link href="#projects" prefetch={false}>
                   Esplora i miei Progetti
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10 px-8 py-3 text-lg">
+              <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10 px-8 py-3 text-lg btn-glow">
                 <Link href="#contact" prefetch={false}>
                   Assumimi Ora
                 </Link>
@@ -385,7 +385,7 @@ export default function HomePage() {
             <h2 className="text-4xl md:text-5xl font-bold text-center text-primary">Su di me</h2>
           </RevealOnScroll>
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
-            <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01]">
+            <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
               <CardContent className="pt-6 text-lg md:text-xl text-foreground leading-relaxed">
                 <p>
                   Attualmente frequento il corso di Laurea Triennale in Informatica presso l&apos;Università di Salerno.
@@ -438,7 +438,7 @@ export default function HomePage() {
           </RevealOnScroll>
           <div className="grid gap-6 md:grid-cols-2">
             <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
-              <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01]">
+              <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
                 <CardHeader>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
@@ -463,7 +463,7 @@ export default function HomePage() {
               </Card>
             </RevealOnScroll>
             <RevealOnScroll animation="animate-fade-in-up" delay="delay-300">
-              <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01]">
+              <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
                 <CardHeader>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
@@ -500,7 +500,7 @@ export default function HomePage() {
           
           {/* Interactive Skills Grid */}
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
-            <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300">
+            <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 card-elevate">
               <CardHeader>
                 <CardTitle className="text-primary text-center">Competenze Tecniche</CardTitle>
               </CardHeader>
@@ -536,7 +536,7 @@ export default function HomePage() {
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <RevealOnScroll animation="animate-fade-in-up" delay="delay-300">
-              <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01]">
+              <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
                 <CardHeader>
                   <CardTitle className="text-primary flex items-center gap-2">
                     <Users className="w-6 h-6" /> Soft Skills
@@ -567,7 +567,7 @@ export default function HomePage() {
               </Card>
             </RevealOnScroll>
             <RevealOnScroll animation="animate-fade-in-up" delay="delay-400">
-              <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01]">
+              <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
                 <CardHeader>
                   <CardTitle className="text-primary flex items-center gap-2">
                     <BookOpen className="w-6 h-6" /> Lingue
@@ -604,7 +604,7 @@ export default function HomePage() {
             {projects.map((project, index) => (
               <RevealOnScroll key={project.id} animation="animate-fade-in-up" delay={`delay-${(index + 2) * 100}`}>
                 <Card 
-                  className="project-card bg-card border-border group cursor-pointer"
+                  className="project-card bg-card border-border group cursor-pointer card-elevate"
                   onClick={() => setSelectedProject(project.id)}
                 >
                   <CardHeader>
@@ -692,7 +692,7 @@ export default function HomePage() {
             <h2 className="text-4xl md:text-5xl font-bold text-center text-primary">Esperienza Lavorativa</h2>
           </RevealOnScroll>
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
-            <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01]">
+            <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
               <CardHeader>
                 <CardTitle className="text-primary flex items-center gap-2">
                   <Briefcase className="w-6 h-6" /> Assistente gestione salone
@@ -733,7 +733,7 @@ export default function HomePage() {
           </RevealOnScroll>
           <div className="grid gap-6 md:grid-cols-3">
             <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
-              <Card className="bg-card border-border text-center p-6 hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01]">
+              <Card className="bg-card border-border text-center p-6 hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
                 <Car className="w-12 h-12 text-primary mx-auto mb-4" />
                 <CardTitle className="text-primary">Formula 1</CardTitle>
                 <CardContent className="text-foreground pt-2">
@@ -743,7 +743,7 @@ export default function HomePage() {
               </Card>
             </RevealOnScroll>
             <RevealOnScroll animation="animate-fade-in-up" delay="delay-300">
-              <Card className="bg-card border-border text-center p-6 hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01]">
+              <Card className="bg-card border-border text-center p-6 hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
                 <Globe className="w-12 h-12 text-primary mx-auto mb-4" />
                 <CardTitle className="text-primary">Tecnologia e Innovazione</CardTitle>
                 <CardContent className="text-foreground pt-2">
@@ -753,7 +753,7 @@ export default function HomePage() {
               </Card>
             </RevealOnScroll>
             <RevealOnScroll animation="animate-fade-in-up" delay="delay-400">
-              <Card className="bg-card border-border text-center p-6 hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01]">
+              <Card className="bg-card border-border text-center p-6 hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
                 <Gamepad className="w-12 h-12 text-primary mx-auto mb-4" />
                 <CardTitle className="text-primary">Videogiochi</CardTitle>
                 <CardContent className="text-foreground pt-2">
@@ -802,7 +802,7 @@ export default function HomePage() {
             <h2 className="text-4xl md:text-5xl font-bold text-center text-primary">Contatti</h2>
           </RevealOnScroll>
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
-            <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01]">
+            <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
               <CardContent className="pt-6 grid gap-4 text-lg text-foreground">
                 <div className="flex items-center gap-3 group hover:scale-105 transition-transform duration-300">
                   <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">

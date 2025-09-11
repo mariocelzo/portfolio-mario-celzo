@@ -257,6 +257,26 @@ section {
   50% { border-color: hsl(var(--primary)); }
 }
 
+/* Reusable typewriter container (blinking caret only) */
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid hsl(var(--primary));
+  animation: blink-caret 0.75s step-end infinite;
+}
+
+/* Animated gradient variant */
+.gradient-text-animated {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 /* ——— Aesthetic enhancements ——— */
 @layer base {
   /* Map Next.js font variables to usage */
@@ -327,4 +347,73 @@ body::before {
 /* Progress bar gradient */
 .progress-gradient {
   background-image: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary) / 0.7));
+}
+
+/* Project card sheen sweep */
+.project-card {
+  position: relative;
+  overflow: hidden;
+}
+.project-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(120deg, transparent 35%, hsl(var(--primary) / 0.25) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 600ms ease;
+  pointer-events: none;
+}
+.project-card:hover::before {
+  transform: translateX(120%);
+}
+
+/* Liquid glass header: animated glossy blobs + highlight */
+.liquid-glass {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: hsl(var(--background) / 0.55) !important;
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border-color: hsl(var(--border) / 0.6) !important;
+  box-shadow:
+    inset 0 1px 0 hsl(var(--foreground) / 0.10),
+    0 10px 30px hsl(var(--primary) / 0.12);
+}
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: -30% -10%;
+  pointer-events: none;
+  background:
+    radial-gradient(140px 180px at calc(var(--mx, 0.5) * 100%) calc(var(--my, 0.5) * 100%), hsl(var(--primary) / 0.35), transparent 60%),
+    radial-gradient(180px 140px at calc((1 - var(--mx, 0.5)) * 100%) 10%, hsl(var(--primary) / 0.25), transparent 60%),
+    radial-gradient(220px 220px at 50% 100%, hsl(var(--foreground) / 0.10), transparent 60%);
+  filter: blur(18px);
+  opacity: 0.95;
+  animation: liquid-move 12s ease-in-out infinite alternate;
+  z-index: 0;
+}
+.liquid-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, hsl(var(--foreground) / 0.12), transparent 35%),
+    linear-gradient(to top, hsl(var(--foreground) / 0.08), transparent 45%);
+  mix-blend-mode: screen;
+  opacity: 0.6;
+  z-index: 0;
+}
+
+@keyframes liquid-move {
+  0%   { transform: translateX(-2%) translateY(0%); }
+  50%  { transform: translateX(2%) translateY(1%); }
+  100% { transform: translateX(-2%) translateY(0%); }
+}
+
+/* Reduced-motion: disable heavy animations */
+@media (prefers-reduced-motion: reduce) {
+  .liquid-glass::before { animation: none !important; }
 }

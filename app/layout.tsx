@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
+import { Inter, Sora } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const sora = Sora({ subsets: ['latin'], variable: '--font-sora' })
 
 export const metadata: Metadata = {
   title: 'Mario Celzo - Software Developer',
@@ -14,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sora.variable}`}>
+      <body className="font-sans">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

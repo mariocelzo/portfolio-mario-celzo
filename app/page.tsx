@@ -35,17 +35,22 @@ import {
   Eye,
   GitBranch,
   Database,
-  Palette,
   Cpu,
   Shield,
   Rocket,
   Sparkles,
+  Copy,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { CommandPalette } from "@/components/command-palette"
+import Tilt from "@/components/tilt"
+import SpotlightNav from "@/components/spotlight-nav"
+import React from "react"
+import Typewriter from "@/components/typewriter"
 
 export default function HomePage() {
   const [scrollY, setScrollY] = useState(0)
@@ -54,6 +59,7 @@ export default function HomePage() {
   const [isMounted, setIsMounted] = useState(false)
   const [selectedProject, setSelectedProject] = useState<string | null>(null)
   const [showParticles, setShowParticles] = useState(false)
+  const [projectFilter, setProjectFilter] = useState<string>('All')
 
   useEffect(() => {
     setIsMounted(true)
@@ -117,6 +123,7 @@ export default function HomePage() {
       id: "target",
       title: "TARGET",
       year: "2024",
+      category: 'Web',
       description: "Piattaforma di compravendita tra privati",
       fullDescription: "Piattaforma ispirata a Vinted e Subito, sviluppata per l'esame di Ingegneria del Software. Facilita la compravendita tra privati con funzionalità di creazione annunci, ricerca prodotti e gestione vendite. Ho migliorato le mie competenze in collaborazione e progettazione centrata sull'utente.",
       image: "/images/target-preview.jpg",
@@ -134,6 +141,7 @@ export default function HomePage() {
       id: "bodylife",
       title: "BODYLIFE",
       year: "2025",
+      category: 'Mobile',
       description: "App per amanti del fitness",
       fullDescription: "Sviluppata per il corso di Interazione Uomo-Macchina, Body Life è un'app intuitiva per monitorare peso e attività fisica. Il lavoro di squadra ha rafforzato le mie competenze collaborative e organizzative.",
       image: "/images/bodylife-preview.jpg",
@@ -147,7 +155,29 @@ export default function HomePage() {
       demoUrl: "https://www.figma.com/design/FgrYVoi37erhxvlGQEtiBm/Gym-App--Community-?node-id=0-1&p=f",
       stats: { screens: "8+", features: "12+", rating: "4.6" }
     }
+    ,
+    {
+      id: "adas",
+      title: "ADAS Testing",
+      year: "2025",
+      category: 'Thesis',
+      description: "Tesi sperimentale su sistemi ADAS e pipeline di testing",
+      fullDescription: "Progetto di tesi focalizzato sul testing di sistemi ADAS (Advanced Driver Assistance Systems). Include pipeline per valutazione di modelli di visione (lane/vehicle detection), gestione dataset, metriche di accuratezza e automazione dei report.",
+      image: "/images/adas-preview.jpg",
+      icon: Car,
+      badge: "Thesis",
+      badgeColor: "bg-purple-500",
+      techStack: ["Python", "OpenCV", "PyTorch", "Jupyter", "Docker"],
+      features: ["Dataset Management", "Model Evaluation", "Metrics & Reports", "Automation Scripts", "Visualization"],
+      github: "https://github.com/mariocelzo/adas_testing",
+      liveUrl: "https://github.com/mariocelzo/adas_testing",
+      demoUrl: "https://github.com/mariocelzo/adas_testing",
+      stats: { experiments: "20+", modules: "6+", rating: "4.7" }
+    }
   ]
+
+  const categories = ['All', 'Web', 'Mobile', 'Thesis'] as const
+  const filteredProjects = projects.filter(p => projectFilter === 'All' ? true : p.category === projectFilter)
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -183,7 +213,7 @@ export default function HomePage() {
         </div>
       )}
       
-      <header className="sticky top-0 z-50 w-full border-b border-border bg-background/90 backdrop-blur-sm glass">
+      <header className="sticky top-0 z-50 w-full border-b border-border liquid-glass">
         <nav className="container flex h-16 items-center justify-between">
           <Link href="#" className="text-2xl font-bold text-primary gradient-text font-display" prefetch={false}>
             Mario Celzo
@@ -289,11 +319,42 @@ export default function HomePage() {
         </nav>
       </header>
 
+      {/* Command Palette (Cmd/Ctrl + K) */}
+      <CommandPalette />
+
+      {/* Spotlight side navigation */}
+      <SpotlightNav
+        active={activeSection}
+        items={[
+          { id: 'hero', label: 'Home' },
+          { id: 'about', label: 'Su di me' },
+          { id: 'education', label: 'Istruzione' },
+          { id: 'skills', label: 'Competenze' },
+          { id: 'projects', label: 'Progetti' },
+          { id: 'experience', label: 'Esperienza' },
+          { id: 'hobbies', label: 'Hobby' },
+          { id: 'contact', label: 'Contatti' },
+        ]}
+      />
+
       <main className="container py-12 space-y-24">
         {/* Hero Section with Parallax */}
         <section
           id="hero"
           className="relative flex flex-col items-center justify-center min-h-[90vh] text-center space-y-6 pt-12 pb-8 overflow-hidden"
+          onMouseMove={(e) => {
+            const el = e.currentTarget as HTMLElement
+            const r = el.getBoundingClientRect()
+            const mx = (e.clientX - r.left) / r.width
+            const my = (e.clientY - r.top) / r.height
+            el.style.setProperty('--mx', String(mx))
+            el.style.setProperty('--my', String(my))
+          }}
+          onMouseLeave={(e) => {
+            const el = e.currentTarget as HTMLElement
+            el.style.removeProperty('--mx')
+            el.style.removeProperty('--my')
+          }}
         >
           {/* Parallax background element */}
           <div
@@ -317,26 +378,45 @@ export default function HomePage() {
           </div>
           {/* Enhanced radial gradient overlay */}
           <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-transparent via-background/40 to-background"></div>
+          {/* Cursor spotlight overlay */}
+          <div
+            className="pointer-events-none absolute inset-0 z-0"
+            style={{
+              background:
+                'radial-gradient(220px 220px at calc(var(--mx, 0.5) * 100%) calc(var(--my, 0.5) * 100%), hsl(var(--primary) / 0.16), transparent 60%)',
+              transition: 'background-position 120ms ease-out'
+            }}
+          />
 
           {/* Content of the hero section (z-10 to be above parallax background) */}
           <RevealOnScroll animation="animate-fade-in" delay="delay-0" className="relative z-10">
-            <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-primary shadow-lg">
-              <Image
-                src="/images/mario-celzo.jpeg"
-                alt="Mario Celzo"
-                width={160}
-                height={160}
-                className="object-cover object-center-[50%_30%]"
-              />
-            </div>
+            <Tilt className="relative rounded-full" maxTilt={10} scale={1.02}>
+              <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-primary shadow-lg">
+                <Image
+                  src="/images/mario-celzo.jpeg"
+                  alt="Mario Celzo"
+                  width={160}
+                  height={160}
+                  className="object-cover object-center-[50%_30%]"
+                />
+              </div>
+            </Tilt>
           </RevealOnScroll>
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-100" className="relative z-10">
-            <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight drop-shadow-lg typing-animation font-display gradient-text">
-              Mario Celzo
+            <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight drop-shadow-lg font-display gradient-text gradient-text-animated">
+              <Typewriter texts={["Mario Celzo"]} pauseBeforeDelete={2400} />
             </h1>
           </RevealOnScroll>
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-200" className="relative z-10">
-            <p className="text-3xl md:text-4xl font-semibold drop-shadow-md gradient-text font-display">Software Developer</p>
+            <p className="text-3xl md:text-4xl font-semibold drop-shadow-md gradient-text font-display">
+              <Typewriter
+                texts={["Software Developer", "Frontend Developer", "Mobile Developer"]}
+                typingSpeed={60}
+                deleteSpeed={40}
+                pauseBeforeDelete={2000}
+                pauseBeforeType={300}
+              />
+            </p>
           </RevealOnScroll>
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-300" className="relative z-10">
             <p className="max-w-3xl text-xl md:text-2xl text-muted-foreground leading-relaxed">
@@ -600,59 +680,88 @@ export default function HomePage() {
           <RevealOnScroll animation="animate-fade-in-up">
             <h2 className="text-4xl md:text-5xl font-bold text-center text-primary">Progetti</h2>
           </RevealOnScroll>
-          <div className="grid gap-8 md:grid-cols-2">
-            {projects.map((project, index) => (
-              <RevealOnScroll key={project.id} animation="animate-fade-in-up" delay={`delay-${(index + 2) * 100}`}>
-                <Card 
-                  className="project-card bg-card border-border group cursor-pointer card-elevate"
-                  onClick={() => setSelectedProject(project.id)}
+          {/* Category Filters */}
+          <RevealOnScroll animation="animate-fade-in-up" delay="delay-100">
+            <div className="flex flex-wrap justify-center gap-2">
+              {categories.map(cat => (
+                <Button
+                  key={cat}
+                  size="sm"
+                  variant="outline"
+                  className={`px-4 ${projectFilter === cat ? 'border-primary text-primary bg-primary/10' : 'text-muted-foreground'}`}
+                  onClick={() => setProjectFilter(cat)}
                 >
-                  <CardHeader>
-                    <div className="flex items-center justify-center w-full h-40 bg-gradient-to-br from-muted to-muted/50 rounded-lg mb-4 relative overflow-hidden">
-                      <project.icon className="w-24 h-24 text-primary z-10" />
-                      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <CardTitle className="text-primary">{project.title} ({project.year})</CardTitle>
-                        <Badge className={`${project.badgeColor} text-white`}>{project.badge}</Badge>
+                  {cat}
+                </Button>
+              ))}
+            </div>
+          </RevealOnScroll>
+          <div className="grid gap-8 md:grid-cols-2">
+            {filteredProjects.map((project, index) => (
+              <RevealOnScroll key={project.id} animation="animate-fade-in-up" delay={`delay-${(index + 2) * 100}`}>
+                <Tilt className="relative rounded-xl">
+                  <Card 
+                    className="project-card bg-card border-border group cursor-pointer card-elevate relative"
+                    onClick={() => setSelectedProject(project.id)}
+                  >
+                    <CardHeader>
+                      <div className="flex items-center justify-center w-full h-40 bg-gradient-to-br from-muted to-muted/50 rounded-lg mb-4 relative overflow-hidden">
+                        <project.icon className="w-24 h-24 text-primary z-10" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       </div>
-                      <Eye className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                    </div>
-                    <p className="text-muted-foreground">{project.description}</p>
-                  </CardHeader>
-                  <CardContent className="text-foreground space-y-4">
-                    <p className="text-sm leading-relaxed">{project.fullDescription}</p>
-                    
-                    {/* Tech Stack */}
-                    <div className="space-y-2">
-                      <h4 className="font-semibold text-sm text-primary">Tech Stack:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {project.techStack.map((tech, techIndex) => (
-                          <Badge 
-                            key={techIndex} 
-                            variant="outline" 
-                            className="tech-badge text-xs border-primary/30 text-primary/80 hover:bg-primary/10"
-                          >
-                            {tech}
-                          </Badge>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <CardTitle className="text-primary">{project.title} ({project.year})</CardTitle>
+                          <Badge className={`${project.badgeColor} text-white`}>{project.badge}</Badge>
+                        </div>
+                        <Eye className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                      </div>
+                      <p className="text-muted-foreground">{project.description}</p>
+                    </CardHeader>
+                    <CardContent className="text-foreground space-y-4">
+                      <p className="text-sm leading-relaxed">{project.fullDescription}</p>
+                      
+                      {/* Tech Stack */}
+                      <div className="space-y-2">
+                        <h4 className="font-semibold text-sm text-primary">Tech Stack:</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {project.techStack.map((tech, techIndex) => (
+                            <Badge 
+                              key={techIndex} 
+                              variant="outline" 
+                              className="tech-badge text-xs border-primary/30 text-primary/80 hover:bg-primary/10"
+                            >
+                              {tech}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Project Stats */}
+                      <div className="grid grid-cols-3 gap-4 pt-2">
+                        {Object.entries(project.stats).map(([key, value]) => (
+                          <div key={key} className="text-center">
+                            <div className="text-lg font-bold text-primary">{value}</div>
+                            <div className="text-xs text-muted-foreground capitalize">{key}</div>
+                          </div>
                         ))}
                       </div>
-                    </div>
 
-                    {/* Project Stats */}
-                    <div className="grid grid-cols-3 gap-4 pt-2">
-                      {Object.entries(project.stats).map(([key, value]) => (
-                        <div key={key} className="text-center">
-                          <div className="text-lg font-bold text-primary">{value}</div>
-                          <div className="text-xs text-muted-foreground capitalize">{key}</div>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="flex gap-2 pt-2">
-                      {project.github && (
+                      {/* Action Buttons */}
+                      <div className="flex gap-2 pt-2">
+                        {project.github && (
+                          <Button
+                            asChild
+                            variant="outline"
+                            size="sm"
+                            className="border-primary text-primary hover:bg-primary/10 bg-transparent"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Link href={project.github} target="_blank" prefetch={false}>
+                              <Github className="w-4 h-4 mr-2" /> GitHub
+                            </Link>
+                          </Button>
+                        )}
                         <Button
                           asChild
                           variant="outline"
@@ -660,25 +769,14 @@ export default function HomePage() {
                           className="border-primary text-primary hover:bg-primary/10 bg-transparent"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <Link href={project.github} target="_blank" prefetch={false}>
-                            <Github className="w-4 h-4 mr-2" /> GitHub
+                          <Link href={project.liveUrl} target="_blank" prefetch={false}>
+                            <ExternalLink className="w-4 h-4 mr-2" /> Live Demo
                           </Link>
                         </Button>
-                      )}
-                      <Button
-                        asChild
-                        variant="outline"
-                        size="sm"
-                        className="border-primary text-primary hover:bg-primary/10 bg-transparent"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <Link href={project.liveUrl} target="_blank" prefetch={false}>
-                          <ExternalLink className="w-4 h-4 mr-2" /> Live Demo
-                        </Link>
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Tilt>
               </RevealOnScroll>
             ))}
           </div>
@@ -808,9 +906,7 @@ export default function HomePage() {
                   <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                     <Mail className="w-5 h-5 text-primary" />
                   </div>
-                  <Link href="mailto:mariocelzo003@gmail.com" className="hover:text-primary transition-colors font-medium" prefetch={false}>
-                    mariocelzo003@gmail.com
-                  </Link>
+                  <EmailCopy />
                 </div>
                 <div className="flex items-center gap-3 group hover:scale-105 transition-transform duration-300">
                   <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -972,6 +1068,32 @@ export default function HomePage() {
         <p className="mt-2">Sarno 27/06/2025</p>
         <p className="mt-1 font-semibold text-foreground">Mario Celzo</p>
       </footer>
+    </div>
+  )
+}
+
+function EmailCopy() {
+  const [copied, setCopied] = React.useState(false)
+  const email = "mariocelzo003@gmail.com"
+  const onCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(email)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1600)
+    } catch {}
+  }
+  return (
+    <div className="flex items-center gap-2">
+      <Link href={`mailto:${email}`} className="hover:text-primary transition-colors font-medium" prefetch={false}>
+        {email}
+      </Link>
+      <button
+        onClick={onCopy}
+        aria-label="Copia email"
+        className="text-xs px-2 py-1 rounded border border-border hover:border-primary/50 text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
+      >
+        <Copy className="w-3 h-3" /> {copied ? 'Copiato!' : 'Copia'}
+      </button>
     </div>
   )
 }

@@ -10,6 +10,11 @@ export const metadata: Metadata = {
   title: 'Mario Celzo - Software Developer',
   description: 'Portfolio di Mario Celzo, sviluppatore software appassionato di tecnologia e innovazione',
   generator: 'Next.js',
+  icons: {
+    icon: '/public/images/mario-celzo.jpeg',
+    shortcut: '/public/images/mario-celzo.jpeg',
+    apple: '/public/images/mario-celzo.jpeg',
+  },
 }
 
 export default function RootLayout({

@@ -102,9 +102,11 @@ export default function HomePage() {
     { name: "Python", level: 80, icon: "🐍", category: "Programming" },
     { name: "React", level: 80, icon: "⚛️", category: "Frontend" },
     { name: "Next.js", level: 70, icon: "⚡", category: "Frontend" },
+    { name: "Angular", level: 50, icon: "🔺", category: "Frontend" },
     { name: "JavaScript", level: 80, icon: "🟨", category: "Programming" },
     { name: "SQL", level: 75, icon: "🗄️", category: "Database" },
     { name: "Git", level: 85, icon: "📚", category: "Tools" },
+    { name: "Testing & Maintenance", level: 70, icon: "🔧", category: "Development" },
     { name: "Figma", level: 50, icon: "🎨", category: "Design" },
     { name: "Mobile Dev", level: 60, icon: "📱", category: "Development" },
   ]
@@ -173,6 +175,24 @@ export default function HomePage() {
       liveUrl: "https://github.com/mariocelzo/adas_testing",
       demoUrl: "https://github.com/mariocelzo/adas_testing",
       stats: { experiments: "20+", modules: "6+", rating: "4.7" }
+    },
+    {
+      id: "nearbite",
+      title: "NearBite",
+      year: "2025",
+      category: 'Web',
+      description: "Piattaforma per trovare i migliori locali vicino a te",
+      fullDescription: "NearBite è una piattaforma innovativa sia per cellulare che per web che permette di trovare i migliori locali vicino alla propria posizione. Utilizzando algoritmi di AI avanzati, l'app impara dalle scelte degli utenti e consiglia i locali che potrebbero preferire maggiormente nelle vicinanze, offrendo un'esperienza personalizzata e intelligente.",
+      image: "/images/nearbite-preview.jpg",
+      icon: Globe,
+      badge: "Prototype",
+      badgeColor: "bg-orange-500",
+      techStack: ["TypeScript", "React", "Supabase", "AI Algorithms", "Responsive Design"],
+      features: ["Location-based Search", "AI Recommendations", "Mobile & Web App", "User Preference Learning", "Local Discovery"],
+      github: "https://github.com/mariocelzo/resturant-finder",
+      liveUrl: "https://github.com/mariocelzo/resturant-finder",
+      demoUrl: "https://github.com/mariocelzo/resturant-finder",
+      stats: { features: "10+", components: "25+", rating: "4.5" }
     }
   ]
 

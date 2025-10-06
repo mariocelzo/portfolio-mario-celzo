@@ -902,9 +902,9 @@ export default function HomePage() {
                     </Link>
                   </Button>
                   <Button asChild variant="outline" size="lg" className="border-primary text-primary hover:bg-primary/10 px-8 py-3 text-lg">
-                  <Link href="/CV_CELZO_MARIO.pdf" target="_blank" prefetch={false}>
-                      Scarica CV
-                    </Link>
+                    <Link href="/CV_CELZO_MARIO.pdf" target="_blank" prefetch={false}>
+                    Scarica CV
+                   </Link>
                   </Button>
                 </div>
               </CardContent>

@@ -49,11 +49,8 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  icons: {
-    icon: '/images/mario-celzo.jpeg',
-    shortcut: '/images/mario-celzo.jpeg',
-    apple: '/images/mario-celzo.jpeg',
-  },
+  // La favicon viene gestita automaticamente dal file app/icon.png
+  // Next.js genera automaticamente tutte le varianti necessarie (favicon.ico, apple-touch-icon, etc.)
 }
 
 export default function RootLayout({
@@ -61,8 +58,47 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  // Structured Data (JSON-LD) per migliorare la SEO
+  // Descrive il profilo professionale di Mario Celzo per i motori di ricerca
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Mario Celzo",
+    "jobTitle": "Software Developer",
+    "description": "Software Developer specializzato in React, Next.js, Python e sviluppo mobile. Laureando in Informatica presso l'Università di Salerno.",
+    "url": process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+    "image": `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/images/mario-celzo.jpeg`,
+    "email": "mariocelzo003@gmail.com",
+    "alumniOf": {
+      "@type": "EducationalOrganization",
+      "name": "Università degli Studi di Salerno",
+      "url": "https://www.unisa.it"
+    },
+    "knowsAbout": [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Python",
+      "Java",
+      "Mobile Development",
+      "Web Development",
+      "Software Engineering"
+    ],
+    "sameAs": [
+      "https://github.com/mariocelzo",
+      "https://www.linkedin.com/in/mario-celzo-40917a2b9/"
+    ]
+  }
+
   return (
     <html lang="it" suppressHydrationWarning className={`${inter.variable} ${sora.variable}`}>
+      <head>
+        {/* Structured Data JSON-LD per SEO - Aiuta Google a comprendere meglio il contenuto */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+      </head>
       <body className="font-sans">
         <ThemeProvider
           attribute="class"

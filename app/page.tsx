@@ -47,14 +47,28 @@ import {
 import Image from "next/image"
 import Link from "next/link"
 import { useState, useEffect } from "react"
+import dynamic from "next/dynamic"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { CommandPalette } from "@/components/command-palette"
-import Tilt from "@/components/tilt"
-import SpotlightNav from "@/components/spotlight-nav"
 import React from "react"
-import Typewriter from "@/components/typewriter"
 import { track } from '@vercel/analytics'
+
+// Lazy load componenti pesanti con dynamic import
+const CommandPalette = dynamic(() => import("@/components/command-palette").then(mod => ({ default: mod.CommandPalette })), {
+  ssr: false,
+})
+const ContactForm = dynamic(() => import("@/components/contact-form").then(mod => ({ default: mod.ContactForm })), {
+  ssr: false,
+})
+const SpotlightNav = dynamic(() => import("@/components/spotlight-nav"), {
+  ssr: false,
+})
+const Tilt = dynamic(() => import("@/components/tilt"), {
+  ssr: false,
+})
+const Typewriter = dynamic(() => import("@/components/typewriter"), {
+  ssr: false,
+})
 
 export default function HomePage() {
   const [scrollY, setScrollY] = useState(0)
@@ -133,7 +147,7 @@ export default function HomePage() {
       category: 'Web',
       description: "Piattaforma di compravendita tra privati",
       fullDescription: "Piattaforma ispirata a Vinted e Subito, sviluppata per l'esame di Ingegneria del Software. Facilita la compravendita tra privati con funzionalità di creazione annunci, ricerca prodotti e gestione vendite. Ho migliorato le mie competenze in collaborazione e progettazione centrata sull'utente.",
-      image: "/images/target-preview.jpg",
+      image: "/foto_progetti/target.jpg",
       icon: Laptop,
       badge: "Live",
       badgeColor: "bg-green-500",
@@ -151,7 +165,7 @@ export default function HomePage() {
       category: 'Mobile',
       description: "App per amanti del fitness",
       fullDescription: "Sviluppata per il corso di Interazione Uomo-Macchina, Body Life è un'app intuitiva per monitorare peso e attività fisica. Il lavoro di squadra ha rafforzato le mie competenze collaborative e organizzative.",
-      image: "/images/bodylife-preview.jpg",
+      image: "/foto_progetti/bodylife.png",
       icon: Smartphone,
       badge: "Live",
       badgeColor: "bg-blue-500",
@@ -170,7 +184,7 @@ export default function HomePage() {
       category: 'Thesis',
       description: "Tesi sperimentale su sistemi ADAS e pipeline di testing",
       fullDescription: "Progetto di tesi focalizzato sul testing di sistemi ADAS (Advanced Driver Assistance Systems). Include pipeline per valutazione di modelli di visione (lane/vehicle detection), gestione dataset, metriche di accuratezza e automazione dei report.",
-      image: "/images/adas-preview.jpg",
+      image: null,
       icon: Car,
       badge: "Thesis",
       badgeColor: "bg-purple-500",
@@ -188,7 +202,7 @@ export default function HomePage() {
       category: 'Web',
       description: "Piattaforma per trovare i migliori locali vicino a te",
       fullDescription: "NearBite è una piattaforma innovativa sia per cellulare che per web che permette di trovare i migliori locali vicino alla propria posizione. Utilizzando algoritmi di AI avanzati, l'app impara dalle scelte degli utenti e consiglia i locali che potrebbero preferire maggiormente nelle vicinanze, offrendo un'esperienza personalizzata e intelligente.",
-      image: "/images/nearbite-preview.jpg",
+      image: null,
       icon: Globe,
       badge: "Prototype",
       badgeColor: "bg-orange-500",
@@ -532,6 +546,7 @@ export default function HomePage() {
                   alt="Mario Celzo"
                   width={160}
                   height={160}
+                  priority
                   className="object-cover object-center-[50%_30%]"
                 />
               </div>
@@ -835,13 +850,26 @@ export default function HomePage() {
             {filteredProjects.map((project, index) => (
               <RevealOnScroll key={project.id} animation="animate-fade-in-up" delay={`delay-${(index + 2) * 100}`}>
                 <Tilt className="relative rounded-xl">
-                  <Card 
+                  <Card
                     className="project-card bg-card border-border group cursor-pointer card-elevate relative"
                     onClick={() => setSelectedProject(project.id)}
                   >
                     <CardHeader>
                       <div className="flex items-center justify-center w-full h-40 bg-gradient-to-br from-muted to-muted/50 rounded-lg mb-4 relative overflow-hidden">
-                        <project.icon className="w-24 h-24 text-primary z-10" />
+                        {project.image ? (
+                          // Mostra l'immagine reale del progetto con lazy loading e effetto hover
+                          <Image
+                            src={project.image}
+                            alt={`${project.title} preview`}
+                            fill
+                            loading="lazy"
+                            className="object-cover group-hover:scale-110 transition-transform duration-300"
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                          />
+                        ) : (
+                          // Fallback all'icona se l'immagine non è disponibile
+                          <project.icon className="w-24 h-24 text-primary z-10" />
+                        )}
                         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       </div>
                       <div className="flex items-center justify-between">
@@ -1039,6 +1067,13 @@ export default function HomePage() {
           <RevealOnScroll animation="animate-fade-in-up">
             <h2 className="text-4xl md:text-5xl font-bold text-center text-primary">Contatti</h2>
           </RevealOnScroll>
+
+          {/* Form di contatto interattivo - Consente ai visitatori di inviare messaggi direttamente */}
+          <RevealOnScroll animation="animate-fade-in-up" delay="delay-100">
+            <ContactForm />
+          </RevealOnScroll>
+
+          {/* Link diretti ai social e canali di contatto alternativi */}
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
             <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
               <CardContent className="pt-6 grid gap-4 text-lg text-foreground">
@@ -1114,8 +1149,21 @@ export default function HomePage() {
                   </div>
 
                   {/* Project Image/Preview */}
-                  <div className="aspect-video bg-gradient-to-br from-muted to-muted/50 rounded-lg flex items-center justify-center">
-                    <project.icon className="w-32 h-32 text-primary/50" />
+                  <div className="aspect-video bg-gradient-to-br from-muted to-muted/50 rounded-lg flex items-center justify-center relative overflow-hidden">
+                    {project.image ? (
+                      // Mostra l'immagine reale del progetto nel modale
+                      <Image
+                        src={project.image}
+                        alt={`${project.title} preview`}
+                        fill
+                        loading="lazy"
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 900px"
+                      />
+                    ) : (
+                      // Fallback all'icona se l'immagine non è disponibile
+                      <project.icon className="w-32 h-32 text-primary/50" />
+                    )}
                   </div>
 
                   {/* Description */}
@@ -1212,16 +1260,18 @@ export default function HomePage() {
   )
 }
 
-function EmailCopy() {
+const EmailCopy = React.memo(function EmailCopy() {
   const [copied, setCopied] = React.useState(false)
   const email = "mariocelzo003@gmail.com"
-  const onCopy = async () => {
+
+  const onCopy = React.useCallback(async () => {
     try {
       await navigator.clipboard.writeText(email)
       setCopied(true)
       setTimeout(() => setCopied(false), 1600)
     } catch {}
-  }
+  }, [])
+
   return (
     <div className="flex items-center gap-2">
       <Link href={`mailto:${email}`} className="hover:text-primary transition-colors font-medium" prefetch={false}>
@@ -1236,4 +1286,4 @@ function EmailCopy() {
       </button>
     </div>
   )
-}
+})

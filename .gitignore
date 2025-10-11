@@ -16,8 +16,12 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files
+# env files (chiavi API, secrets)
 .env*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # vercel
 .vercel
@@ -26,5 +30,15 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-#ai file 
+# ai file
 *.md
+
+# File sensibili e configurazioni private
+# Aggiungi qui eventuali file con chiavi API o informazioni sensibili
+*.key
+*.pem
+*.p12
+.vscode/settings.json
+.idea/
+secrets/
+config/secrets.*

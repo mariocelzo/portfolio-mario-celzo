@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import {
   Mail,
   Github,
@@ -40,6 +41,8 @@ import {
   Rocket,
   Sparkles,
   Copy,
+  Menu,
+  X,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -51,6 +54,7 @@ import Tilt from "@/components/tilt"
 import SpotlightNav from "@/components/spotlight-nav"
 import React from "react"
 import Typewriter from "@/components/typewriter"
+import { track } from '@vercel/analytics'
 
 export default function HomePage() {
   const [scrollY, setScrollY] = useState(0)
@@ -60,6 +64,7 @@ export default function HomePage() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null)
   const [showParticles, setShowParticles] = useState(false)
   const [projectFilter, setProjectFilter] = useState<string>('All')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     setIsMounted(true)
@@ -238,14 +243,14 @@ export default function HomePage() {
           <Link href="#" className="text-2xl font-bold text-primary gradient-text font-display" prefetch={false}>
             Mario Celzo
           </Link>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4">
             <ul className="hidden md:flex gap-6">
               <li>
-                <Link 
-                  href="#about" 
+                <Link
+                  href="#about"
                   className={`transition-all duration-300 relative group ${
                     activeSection === 'about' ? 'text-primary' : 'hover:text-primary'
-                  }`} 
+                  }`}
                   prefetch={false}
                 >
                   Su di me
@@ -255,11 +260,11 @@ export default function HomePage() {
                 </Link>
               </li>
               <li>
-                <Link 
-                  href="#education" 
+                <Link
+                  href="#education"
                   className={`transition-all duration-300 relative group ${
                     activeSection === 'education' ? 'text-primary' : 'hover:text-primary'
-                  }`} 
+                  }`}
                   prefetch={false}
                 >
                   Istruzione
@@ -269,11 +274,11 @@ export default function HomePage() {
                 </Link>
               </li>
               <li>
-                <Link 
-                  href="#skills" 
+                <Link
+                  href="#skills"
                   className={`transition-all duration-300 relative group ${
                     activeSection === 'skills' ? 'text-primary' : 'hover:text-primary'
-                  }`} 
+                  }`}
                   prefetch={false}
                 >
                   Competenze
@@ -283,11 +288,11 @@ export default function HomePage() {
                 </Link>
               </li>
               <li>
-                <Link 
-                  href="#projects" 
+                <Link
+                  href="#projects"
                   className={`transition-all duration-300 relative group ${
                     activeSection === 'projects' ? 'text-primary' : 'hover:text-primary'
-                  }`} 
+                  }`}
                   prefetch={false}
                 >
                   Progetti
@@ -297,11 +302,11 @@ export default function HomePage() {
                 </Link>
               </li>
               <li>
-                <Link 
-                  href="#experience" 
+                <Link
+                  href="#experience"
                   className={`transition-all duration-300 relative group ${
                     activeSection === 'experience' ? 'text-primary' : 'hover:text-primary'
-                  }`} 
+                  }`}
                   prefetch={false}
                 >
                   Esperienza
@@ -311,11 +316,11 @@ export default function HomePage() {
                 </Link>
               </li>
               <li>
-                <Link 
-                  href="#contact" 
+                <Link
+                  href="#contact"
                   className={`transition-all duration-300 relative group ${
                     activeSection === 'contact' ? 'text-primary' : 'hover:text-primary'
-                  }`} 
+                  }`}
                   prefetch={false}
                 >
                   Contatti
@@ -325,11 +330,121 @@ export default function HomePage() {
                 </Link>
               </li>
             </ul>
+
+            {/* Mobile Menu */}
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              <SheetTrigger asChild className="md:hidden">
+                <Button variant="ghost" size="icon" aria-label="Menu">
+                  <Menu className="w-6 h-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                <SheetHeader>
+                  <SheetTitle className="text-primary">Menu</SheetTitle>
+                </SheetHeader>
+                <nav className="flex flex-col gap-4 mt-8">
+                  <Link
+                    href="#about"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`text-lg py-3 px-4 rounded-lg transition-all duration-300 ${
+                      activeSection === 'about'
+                        ? 'bg-primary/10 text-primary font-semibold'
+                        : 'hover:bg-primary/5 hover:text-primary'
+                    }`}
+                    prefetch={false}
+                  >
+                    Su di me
+                  </Link>
+                  <Link
+                    href="#education"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`text-lg py-3 px-4 rounded-lg transition-all duration-300 ${
+                      activeSection === 'education'
+                        ? 'bg-primary/10 text-primary font-semibold'
+                        : 'hover:bg-primary/5 hover:text-primary'
+                    }`}
+                    prefetch={false}
+                  >
+                    Istruzione
+                  </Link>
+                  <Link
+                    href="#skills"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`text-lg py-3 px-4 rounded-lg transition-all duration-300 ${
+                      activeSection === 'skills'
+                        ? 'bg-primary/10 text-primary font-semibold'
+                        : 'hover:bg-primary/5 hover:text-primary'
+                    }`}
+                    prefetch={false}
+                  >
+                    Competenze
+                  </Link>
+                  <Link
+                    href="#projects"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`text-lg py-3 px-4 rounded-lg transition-all duration-300 ${
+                      activeSection === 'projects'
+                        ? 'bg-primary/10 text-primary font-semibold'
+                        : 'hover:bg-primary/5 hover:text-primary'
+                    }`}
+                    prefetch={false}
+                  >
+                    Progetti
+                  </Link>
+                  <Link
+                    href="#experience"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`text-lg py-3 px-4 rounded-lg transition-all duration-300 ${
+                      activeSection === 'experience'
+                        ? 'bg-primary/10 text-primary font-semibold'
+                        : 'hover:bg-primary/5 hover:text-primary'
+                    }`}
+                    prefetch={false}
+                  >
+                    Esperienza
+                  </Link>
+                  <Link
+                    href="#contact"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`text-lg py-3 px-4 rounded-lg transition-all duration-300 ${
+                      activeSection === 'contact'
+                        ? 'bg-primary/10 text-primary font-semibold'
+                        : 'hover:bg-primary/5 hover:text-primary'
+                    }`}
+                    prefetch={false}
+                  >
+                    Contatti
+                  </Link>
+                  <Separator className="my-2" />
+                  <div className="flex flex-col gap-2 px-4">
+                    <Button asChild variant="default" className="w-full">
+                      <Link href="#projects" onClick={() => setMobileMenuOpen(false)} prefetch={false}>
+                        I miei Progetti
+                      </Link>
+                    </Button>
+                    <Button asChild variant="outline" className="w-full">
+                      <Link
+                        href="/CV_CELZO_MARIO_v2.pdf"
+                        target="_blank"
+                        onClick={() => {
+                          track('cv_download', { location: 'mobile_menu' })
+                          setMobileMenuOpen(false)
+                        }}
+                        prefetch={false}
+                      >
+                        Scarica CV
+                      </Link>
+                    </Button>
+                  </div>
+                </nav>
+              </SheetContent>
+            </Sheet>
+
             <Button
               onClick={() => setShowParticles(!showParticles)}
               variant="ghost"
-              size="sm"
-              className="w-10 h-10 p-0"
+              size="icon"
+              className="hidden sm:flex"
               title={showParticles ? "Hide particles" : "Show particles"}
             >
               <Sparkles className={`w-5 h-5 ${showParticles ? 'text-primary' : 'text-muted-foreground'}`} />
@@ -902,7 +1017,12 @@ export default function HomePage() {
                     </Link>
                   </Button>
                   <Button asChild variant="outline" size="lg" className="border-primary text-primary hover:bg-primary/10 px-8 py-3 text-lg">
-                  <Link href="/CV_CELZO_MARIO_v2.pdf" target="_blank" prefetch={false}>
+                  <Link
+                    href="/CV_CELZO_MARIO_v2.pdf"
+                    target="_blank"
+                    onClick={() => track('cv_download', { location: 'cta_section' })}
+                    prefetch={false}
+                  >
                     Scarica CV
                   </Link>
                   </Button>

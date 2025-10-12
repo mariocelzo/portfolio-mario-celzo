@@ -4,6 +4,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import { Inter, Sora } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const sora = Sora({ subsets: ['latin'], variable: '--font-sora' })
@@ -65,7 +66,7 @@ export default function RootLayout({
     "@type": "Person",
     "name": "Mario Celzo",
     "jobTitle": "Software Developer",
-    "description": "Software Developer specializzato in React, Next.js, Python e sviluppo mobile. Laureando in Informatica presso l'Università di Salerno.",
+    "description": "Software Developer specializzato in React, Next.js, Python e sviluppo mobile. Laureando in Informatica presso l\\'Università di Salerno.",
     "url": process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
     "image": `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/images/mario-celzo.jpeg`,
     "email": "mariocelzo003@gmail.com",
@@ -107,6 +108,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Toaster />
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />

@@ -77,12 +77,30 @@ export function ContactForm() {
       setStatus("success")
       setFormData({ name: "", email: "", subject: "", message: "" })
 
+      // Toast notification per successo
+      const { toast } = await import("@/hooks/use-toast")
+      toast({
+        variant: "success",
+        title: "Messaggio inviato!",
+        description: "Ti risponderò al più presto. Grazie per avermi contattato!",
+      })
+
       // Nascondi il messaggio di successo dopo 5 secondi
       setTimeout(() => setStatus("idle"), 5000)
     } catch (error) {
       // Gestione errori: mostra messaggio all'utente
+      const errorMsg = error instanceof Error ? error.message : "Errore sconosciuto"
       setStatus("error")
-      setErrorMessage(error instanceof Error ? error.message : "Errore sconosciuto")
+      setErrorMessage(errorMsg)
+
+      // Toast notification per errore
+      const { toast } = await import("@/hooks/use-toast")
+      toast({
+        variant: "destructive",
+        title: "Errore invio",
+        description: errorMsg,
+      })
+
       setTimeout(() => setStatus("idle"), 5000)
     }
   }

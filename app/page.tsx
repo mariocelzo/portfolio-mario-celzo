@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
+import { Skeleton } from "@/components/ui/skeleton"
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import {
   Mail,
@@ -19,6 +20,8 @@ import {
   Laptop,
   Smartphone,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   LinkIcon,
   Trophy,
   Star,
@@ -46,7 +49,7 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import dynamic from "next/dynamic"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -79,17 +82,52 @@ export default function HomePage() {
   const [showParticles, setShowParticles] = useState(false)
   const [projectFilter, setProjectFilter] = useState<string>('All')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [skillsVisible, setSkillsVisible] = useState(false)
+  const [imageLoading, setImageLoading] = useState<Record<string, boolean>>({})
+  const skillsRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setIsMounted(true)
   }, [])
+
+  // ESC key + Arrow keys listener per chiudere/navigare il modale
+  useEffect(() => {
+    const handleKeyboard = (e: KeyboardEvent) => {
+      if (!selectedProject) return
+
+      if (e.key === 'Escape') {
+        setSelectedProject(null)
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault()
+        const currentIndex = projects.findIndex(p => p.id === selectedProject)
+        const prevIndex = currentIndex > 0 ? currentIndex - 1 : projects.length - 1
+        setSelectedProject(projects[prevIndex].id)
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault()
+        const currentIndex = projects.findIndex(p => p.id === selectedProject)
+        const nextIndex = currentIndex < projects.length - 1 ? currentIndex + 1 : 0
+        setSelectedProject(projects[nextIndex].id)
+      }
+    }
+
+    if (selectedProject) {
+      document.addEventListener('keydown', handleKeyboard)
+      // Blocca scroll quando modale aperto
+      document.body.style.overflow = 'hidden'
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyboard)
+      document.body.style.overflow = 'unset'
+    }
+  }, [selectedProject])
 
   useEffect(() => {
     if (!isMounted) return
 
     const handleScroll = () => {
       setScrollY(window.scrollY)
-      
+
       // Track active section for navigation highlighting
       const sections = ['hero', 'about', 'education', 'skills', 'projects', 'experience', 'hobbies', 'contact']
       const currentSection = sections.find(section => {
@@ -100,7 +138,7 @@ export default function HomePage() {
         }
         return false
       })
-      
+
       if (currentSection && currentSection !== activeSection) {
         setActiveSection(currentSection)
       }
@@ -111,6 +149,34 @@ export default function HomePage() {
       window.removeEventListener("scroll", handleScroll)
     }
   }, [activeSection, isMounted])
+
+  // Intersection Observer per animare le progress bar quando entrano nel viewport
+  useEffect(() => {
+    if (!isMounted) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !skillsVisible) {
+          setSkillsVisible(true)
+        }
+      },
+      {
+        threshold: 0.3, // Attiva quando il 30% della sezione è visibile
+        rootMargin: '0px'
+      }
+    )
+
+    const currentRef = skillsRef.current
+    if (currentRef) {
+      observer.observe(currentRef)
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef)
+      }
+    }
+  }, [isMounted, skillsVisible])
 
   const parallaxOffset = scrollY * 0.3
   const smoothScrollY = scrollY * 0.5
@@ -440,6 +506,7 @@ export default function HomePage() {
                       <Link
                         href="/CV_CELZO_MARIO_v2.pdf"
                         target="_blank"
+                        rel="noopener noreferrer"
                         onClick={() => {
                           track('cv_download', { location: 'mobile_menu' })
                           setMobileMenuOpen(false)
@@ -730,7 +797,7 @@ export default function HomePage() {
           
           {/* Interactive Skills Grid */}
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
-            <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 card-elevate">
+            <Card ref={skillsRef} className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 card-elevate">
               <CardHeader>
                 <CardTitle className="text-primary text-center">Competenze Tecniche</CardTitle>
               </CardHeader>
@@ -750,11 +817,17 @@ export default function HomePage() {
                         </div>
                         <span className="text-sm text-muted-foreground">{skill.level}%</span>
                       </div>
-                      <Progress 
-                        value={skill.level} 
-                        className={`h-2 transition-all duration-500 ${
+                      <Progress
+                        value={skillsVisible ? skill.level : 0}
+                        className={`h-3 transition-all ease-out ${
                           activeSkill === skill.name ? 'scale-105' : ''
                         }`}
+                        style={{
+                          transitionDuration: '2000ms',
+                          transitionDelay: skillsVisible ? `${index * 150}ms` : '0ms',
+                          transform: skillsVisible ? 'scale(1)' : 'scale(0.95)',
+                          opacity: skillsVisible ? 1 : 0
+                        }}
                       />
                       <div className="text-xs text-muted-foreground">{skill.category}</div>
                     </div>
@@ -848,24 +921,46 @@ export default function HomePage() {
           </RevealOnScroll>
           <div className="grid gap-8 md:grid-cols-2">
             {filteredProjects.map((project, index) => (
-              <RevealOnScroll key={project.id} animation="animate-fade-in-up" delay={`delay-${(index + 2) * 100}`}>
+              <div
+                key={`${project.id}-${projectFilter}`}
+                className="animate-fade-in-up opacity-0"
+                style={{
+                  animationDelay: `${Math.min(index, 3) * 200}ms`,
+                  animationDuration: '800ms',
+                  animationFillMode: 'forwards'
+                }}
+              >
                 <Tilt className="relative rounded-xl">
                   <Card
-                    className="project-card bg-card border-border group cursor-pointer card-elevate relative"
+                    className="project-card bg-card border-border group cursor-pointer card-elevate relative transition-all duration-300 hover:scale-[1.02]"
                     onClick={() => setSelectedProject(project.id)}
                   >
                     <CardHeader>
                       <div className="flex items-center justify-center w-full h-40 bg-gradient-to-br from-muted to-muted/50 rounded-lg mb-4 relative overflow-hidden">
                         {project.image ? (
-                          // Mostra l'immagine reale del progetto con lazy loading e effetto hover
-                          <Image
-                            src={project.image}
-                            alt={`${project.title} preview`}
-                            fill
-                            loading="lazy"
-                            className="object-cover group-hover:scale-110 transition-transform duration-300"
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                          />
+                          <>
+                            {/* Skeleton loader mostrato durante il caricamento dell'immagine */}
+                            {imageLoading[`card-${project.id}`] !== false && (
+                              <Skeleton className="absolute inset-0 w-full h-full rounded-lg" />
+                            )}
+                            {/* Mostra l'immagine reale del progetto con lazy loading e effetto hover */}
+                            <Image
+                              src={project.image}
+                              alt={`${project.title} preview`}
+                              fill
+                              loading="lazy"
+                              className={`object-cover group-hover:scale-110 transition-transform duration-300 ${
+                                imageLoading[`card-${project.id}`] === false ? 'opacity-100' : 'opacity-0'
+                              }`}
+                              sizes="(max-width: 768px) 100vw, 50vw"
+                              onLoadingComplete={() => {
+                                setImageLoading(prev => ({ ...prev, [`card-${project.id}`]: false }))
+                              }}
+                              onError={() => {
+                                setImageLoading(prev => ({ ...prev, [`card-${project.id}`]: false }))
+                              }}
+                            />
+                          </>
                         ) : (
                           // Fallback all'icona se l'immagine non è disponibile
                           <project.icon className="w-24 h-24 text-primary z-10" />
@@ -920,7 +1015,7 @@ export default function HomePage() {
                             className="border-primary text-primary hover:bg-primary/10 bg-transparent"
                             onClick={(e) => e.stopPropagation()}
                           >
-                            <Link href={project.github} target="_blank" prefetch={false}>
+                            <Link href={project.github} target="_blank" rel="noopener noreferrer" prefetch={false}>
                               <Github className="w-4 h-4 mr-2" /> GitHub
                             </Link>
                           </Button>
@@ -932,7 +1027,7 @@ export default function HomePage() {
                           className="border-primary text-primary hover:bg-primary/10 bg-transparent"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <Link href={project.liveUrl} target="_blank" prefetch={false}>
+                          <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer" prefetch={false}>
                             <ExternalLink className="w-4 h-4 mr-2" /> Live Demo
                           </Link>
                         </Button>
@@ -940,7 +1035,7 @@ export default function HomePage() {
                     </CardContent>
                   </Card>
                 </Tilt>
-              </RevealOnScroll>
+              </div>
             ))}
           </div>
         </section>
@@ -1048,6 +1143,7 @@ export default function HomePage() {
                   <Link
                     href="/CV_CELZO_MARIO_v2.pdf"
                     target="_blank"
+                    rel="noopener noreferrer"
                     onClick={() => track('cv_download', { location: 'cta_section' })}
                     prefetch={false}
                   >
@@ -1090,6 +1186,7 @@ export default function HomePage() {
                   <Link
                     href="https://github.com/mariocelzo"
                     target="_blank"
+                    rel="noopener noreferrer"
                     className="hover:text-primary transition-colors font-medium"
                     prefetch={false}
                   >
@@ -1103,6 +1200,7 @@ export default function HomePage() {
                   <Link
                     href="https://www.linkedin.com/in/mario-celzo-40917a2b9/"
                     target="_blank"
+                    rel="noopener noreferrer"
                     className="hover:text-primary transition-colors font-medium"
                     prefetch={false}
                   >
@@ -1117,12 +1215,39 @@ export default function HomePage() {
 
       {/* Interactive Project Modal */}
       {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div 
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-4">
+          <div
             className="modal-overlay absolute inset-0 bg-black/50 backdrop-blur-sm"
             onClick={() => setSelectedProject(null)}
           />
-          <div className="modal-content relative bg-card border border-border rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+
+          {/* Previous Project Button - Hidden on mobile */}
+          <button
+            onClick={() => {
+              const currentIndex = projects.findIndex(p => p.id === selectedProject)
+              const prevIndex = currentIndex > 0 ? currentIndex - 1 : projects.length - 1
+              setSelectedProject(projects[prevIndex].id)
+            }}
+            className="hidden md:flex fixed left-4 top-1/2 -translate-y-1/2 z-[60] w-12 h-12 bg-card/90 hover:bg-card border border-border rounded-full items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg backdrop-blur-sm"
+            aria-label="Progetto precedente"
+          >
+            <ChevronLeft className="w-6 h-6 text-primary" />
+          </button>
+
+          {/* Next Project Button - Hidden on mobile */}
+          <button
+            onClick={() => {
+              const currentIndex = projects.findIndex(p => p.id === selectedProject)
+              const nextIndex = currentIndex < projects.length - 1 ? currentIndex + 1 : 0
+              setSelectedProject(projects[nextIndex].id)
+            }}
+            className="hidden md:flex fixed right-4 top-1/2 -translate-y-1/2 z-[60] w-12 h-12 bg-card/90 hover:bg-card border border-border rounded-full items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg backdrop-blur-sm"
+            aria-label="Progetto successivo"
+          >
+            <ChevronRight className="w-6 h-6 text-primary" />
+          </button>
+
+          <div className="modal-content relative bg-card border-0 md:border border-border rounded-none md:rounded-lg w-full h-full md:h-auto md:max-w-4xl md:max-h-[90vh] overflow-y-auto">
             {(() => {
               const project = projects.find(p => p.id === selectedProject)
               if (!project) return null
@@ -1143,6 +1268,8 @@ export default function HomePage() {
                       size="sm"
                       onClick={() => setSelectedProject(null)}
                       className="text-muted-foreground hover:text-foreground"
+                      autoFocus
+                      aria-label="Chiudi modale (ESC)"
                     >
                       ✕
                     </Button>
@@ -1151,15 +1278,29 @@ export default function HomePage() {
                   {/* Project Image/Preview */}
                   <div className="aspect-video bg-gradient-to-br from-muted to-muted/50 rounded-lg flex items-center justify-center relative overflow-hidden">
                     {project.image ? (
-                      // Mostra l'immagine reale del progetto nel modale
-                      <Image
-                        src={project.image}
-                        alt={`${project.title} preview`}
-                        fill
-                        loading="lazy"
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 900px"
-                      />
+                      <>
+                        {/* Skeleton loader mostrato durante il caricamento dell'immagine del modale */}
+                        {imageLoading[`modal-${project.id}`] !== false && (
+                          <Skeleton className="absolute inset-0 w-full h-full rounded-lg" />
+                        )}
+                        {/* Mostra l'immagine reale del progetto nel modale */}
+                        <Image
+                          src={project.image}
+                          alt={`${project.title} preview`}
+                          fill
+                          loading="lazy"
+                          className={`object-cover transition-opacity duration-300 ${
+                            imageLoading[`modal-${project.id}`] === false ? 'opacity-100' : 'opacity-0'
+                          }`}
+                          sizes="(max-width: 768px) 100vw, 900px"
+                          onLoadingComplete={() => {
+                            setImageLoading(prev => ({ ...prev, [`modal-${project.id}`]: false }))
+                          }}
+                          onError={() => {
+                            setImageLoading(prev => ({ ...prev, [`modal-${project.id}`]: false }))
+                          }}
+                        />
+                      </>
                     ) : (
                       // Fallback all'icona se l'immagine non è disponibile
                       <project.icon className="w-32 h-32 text-primary/50" />
@@ -1168,13 +1309,13 @@ export default function HomePage() {
 
                   {/* Description */}
                   <div>
-                    <h3 className="text-lg font-semibold text-primary mb-2">About the Project</h3>
+                    <h3 className="text-lg font-semibold text-primary mb-2">Sul Progetto</h3>
                     <p className="text-muted-foreground leading-relaxed">{project.fullDescription}</p>
                   </div>
 
                   {/* Features */}
                   <div>
-                    <h3 className="text-lg font-semibold text-primary mb-3">Key Features</h3>
+                    <h3 className="text-lg font-semibold text-primary mb-3">Funzionalità Principali</h3>
                     <div className="grid grid-cols-2 gap-2">
                       {project.features.map((feature, index) => (
                         <div key={index} className="flex items-center gap-2 text-sm">
@@ -1187,12 +1328,12 @@ export default function HomePage() {
 
                   {/* Tech Stack */}
                   <div>
-                    <h3 className="text-lg font-semibold text-primary mb-3">Technology Stack</h3>
+                    <h3 className="text-lg font-semibold text-primary mb-3">Stack Tecnologico</h3>
                     <div className="flex flex-wrap gap-2">
                       {project.techStack.map((tech, index) => (
-                        <Badge 
-                          key={index} 
-                          variant="outline" 
+                        <Badge
+                          key={index}
+                          variant="outline"
                           className="tech-badge border-primary/30 text-primary"
                         >
                           {tech}
@@ -1203,7 +1344,7 @@ export default function HomePage() {
 
                   {/* Stats */}
                   <div>
-                    <h3 className="text-lg font-semibold text-primary mb-3">Project Statistics</h3>
+                    <h3 className="text-lg font-semibold text-primary mb-3">Statistiche Progetto</h3>
                     <div className="grid grid-cols-3 gap-4">
                       {Object.entries(project.stats).map(([key, value]) => (
                         <div key={key} className="text-center p-3 bg-muted/50 rounded-lg">
@@ -1218,14 +1359,14 @@ export default function HomePage() {
                   <div className="flex gap-3 pt-4">
                     {project.github && (
                       <Button asChild className="flex-1">
-                        <Link href={project.github} target="_blank" prefetch={false}>
-                          <Github className="w-4 h-4 mr-2" /> View Code
+                        <Link href={project.github} target="_blank" rel="noopener noreferrer" prefetch={false}>
+                          <Github className="w-4 h-4 mr-2" /> Vedi Codice
                         </Link>
                       </Button>
                     )}
                     <Button asChild variant="outline" className="flex-1">
-                      <Link href={project.liveUrl} target="_blank" prefetch={false}>
-                        <Play className="w-4 h-4 mr-2" /> Live Demo
+                      <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer" prefetch={false}>
+                        <Play className="w-4 h-4 mr-2" /> Demo Live
                       </Link>
                     </Button>
                   </div>
@@ -1236,25 +1377,154 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* Scroll to Top Button */}
-      {isMounted && scrollY > 500 && (
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-8 right-8 z-50 w-12 h-12 bg-primary/90 hover:bg-primary text-primary-foreground rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 backdrop-blur-sm"
-          aria-label="Scroll to top"
-        >
-          <ChevronDown className="w-6 h-6 mx-auto transform rotate-180" />
-        </button>
-      )}
+      {/* Scroll to Top Button con fade in/out */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className={`fixed bottom-8 right-8 z-50 w-14 h-14 bg-primary/90 hover:bg-primary text-primary-foreground rounded-full shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-110 backdrop-blur-sm ${
+          isMounted && scrollY > 500
+            ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
+            : 'opacity-0 translate-y-12 scale-75 pointer-events-none'
+        }`}
+        aria-label="Scroll to top"
+      >
+        <ChevronDown className="w-6 h-6 mx-auto transform rotate-180" />
+      </button>
 
-      <footer className="bg-card border-t border-border py-8 text-center text-muted-foreground text-sm">
-        <p>
-          Autorizzo il trattamento dei miei dati personali presenti nel CV ai sensi dell&apos;art. 13 d. Igs. 30 giugno
-          2003 n. 196 &apos;Codice in materia di protezione dei dati personali&apos; e dell&apos;art. 13 GDPR 679/16 -
-          &apos;Regolamento europeo sulla protezione dei dati personali&apos;.
-        </p>
-        <p className="mt-2">Sarno 27/06/2025</p>
-        <p className="mt-1 font-semibold text-foreground">Mario Celzo</p>
+      {/* Enhanced Footer con sitemap, social links e informazioni complete */}
+      <footer className="bg-card border-t border-border">
+        <div className="container py-12">
+          {/* Footer Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            {/* Colonna 1: About */}
+            <div className="space-y-3">
+              <h3 className="font-bold text-lg text-primary gradient-text">Mario Celzo</h3>
+              <p className="text-sm text-muted-foreground">
+                Software Developer specializzato in React, Next.js e sviluppo mobile. Laureando in Informatica.
+              </p>
+            </div>
+
+            {/* Colonna 2: Quick Links */}
+            <div className="space-y-3">
+              <h4 className="font-semibold text-foreground">Quick Links</h4>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <Link href="#about" className="text-muted-foreground hover:text-primary transition-colors" prefetch={false}>
+                    Su di me
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#projects" className="text-muted-foreground hover:text-primary transition-colors" prefetch={false}>
+                    Progetti
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#skills" className="text-muted-foreground hover:text-primary transition-colors" prefetch={false}>
+                    Competenze
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#contact" className="text-muted-foreground hover:text-primary transition-colors" prefetch={false}>
+                    Contatti
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Colonna 3: Risorse */}
+            <div className="space-y-3">
+              <h4 className="font-semibold text-foreground">Risorse</h4>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <Link
+                    href="/CV_CELZO_MARIO_v2.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
+                    prefetch={false}
+                    onClick={() => track('cv_download', { location: 'footer' })}
+                  >
+                    <LinkIcon className="w-3 h-3" /> Scarica CV
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="https://github.com/mariocelzo"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
+                    prefetch={false}
+                  >
+                    <ExternalLink className="w-3 h-3" /> GitHub
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="https://www.linkedin.com/in/mario-celzo-40917a2b9/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
+                    prefetch={false}
+                  >
+                    <ExternalLink className="w-3 h-3" /> LinkedIn
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Colonna 4: Social */}
+            <div className="space-y-3">
+              <h4 className="font-semibold text-foreground">Seguimi</h4>
+              <div className="flex gap-3">
+                <Link
+                  href="https://github.com/mariocelzo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-11 h-11 rounded-full bg-muted hover:bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary transition-all duration-300"
+                  prefetch={false}
+                  aria-label="GitHub"
+                >
+                  <Github className="w-5 h-5" />
+                </Link>
+                <Link
+                  href="https://www.linkedin.com/in/mario-celzo-40917a2b9/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-11 h-11 rounded-full bg-muted hover:bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary transition-all duration-300"
+                  prefetch={false}
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="w-5 h-5" />
+                </Link>
+                <Link
+                  href="mailto:mariocelzo003@gmail.com"
+                  className="w-11 h-11 rounded-full bg-muted hover:bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary transition-all duration-300"
+                  prefetch={false}
+                  aria-label="Email"
+                >
+                  <Mail className="w-5 h-5" />
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <Separator className="mb-6" />
+
+          {/* Footer Bottom */}
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
+            <div className="text-center md:text-left">
+              <p>© {new Date().getFullYear()} Mario Celzo. Tutti i diritti riservati.</p>
+              <p className="mt-1 text-xs">
+                Built with Next.js, React, TypeScript & Tailwind CSS
+              </p>
+            </div>
+            <div className="text-center md:text-right text-xs">
+              <p>
+                Autorizzo il trattamento dei miei dati personali ai sensi dell&apos;art. 13 GDPR 679/16.
+              </p>
+              <p className="mt-1">Sarno, Italia • 27/06/2025</p>
+            </div>
+          </div>
+        </div>
       </footer>
     </div>
   )
@@ -1268,8 +1538,24 @@ const EmailCopy = React.memo(function EmailCopy() {
     try {
       await navigator.clipboard.writeText(email)
       setCopied(true)
+
+      // Toast notification per feedback immediato
+      const { toast } = await import("@/hooks/use-toast")
+      toast({
+        variant: "success",
+        title: "Email copiata!",
+        description: "L'indirizzo email è stato copiato negli appunti.",
+      })
+
       setTimeout(() => setCopied(false), 1600)
-    } catch {}
+    } catch {
+      const { toast } = await import("@/hooks/use-toast")
+      toast({
+        variant: "destructive",
+        title: "Errore",
+        description: "Impossibile copiare l'email negli appunti.",
+      })
+    }
   }, [])
 
   return (

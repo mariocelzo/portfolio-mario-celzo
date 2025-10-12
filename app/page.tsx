@@ -933,7 +933,11 @@ export default function HomePage() {
                 <Tilt className="relative rounded-xl">
                   <Card
                     className="project-card bg-card border-border group cursor-pointer card-elevate relative transition-all duration-300 hover:scale-[1.02]"
-                    onClick={() => setSelectedProject(project.id)}
+                    onClick={() => {
+                      // Track quando l'utente apre il modale di un progetto per vederne i dettagli
+                      track('project_opened', { project_id: project.id, project_title: project.title })
+                      setSelectedProject(project.id)
+                    }}
                   >
                     <CardHeader>
                       <div className="flex items-center justify-center w-full h-40 bg-gradient-to-br from-muted to-muted/50 rounded-lg mb-4 relative overflow-hidden">
@@ -1015,7 +1019,17 @@ export default function HomePage() {
                             className="border-primary text-primary hover:bg-primary/10 bg-transparent"
                             onClick={(e) => e.stopPropagation()}
                           >
-                            <Link href={project.github} target="_blank" rel="noopener noreferrer" prefetch={false}>
+                            <Link
+                              href={project.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              prefetch={false}
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                // Track quando l'utente clicca sul link GitHub di un progetto dalla card
+                                track('project_github_clicked', { project_id: project.id, project_title: project.title, location: 'project_card' })
+                              }}
+                            >
                               <Github className="w-4 h-4 mr-2" /> GitHub
                             </Link>
                           </Button>
@@ -1027,7 +1041,17 @@ export default function HomePage() {
                           className="border-primary text-primary hover:bg-primary/10 bg-transparent"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer" prefetch={false}>
+                          <Link
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            prefetch={false}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              // Track quando l'utente clicca sul link Demo di un progetto dalla card
+                              track('project_demo_clicked', { project_id: project.id, project_title: project.title, location: 'project_card' })
+                            }}
+                          >
                             <ExternalLink className="w-4 h-4 mr-2" /> Live Demo
                           </Link>
                         </Button>
@@ -1189,6 +1213,10 @@ export default function HomePage() {
                     rel="noopener noreferrer"
                     className="hover:text-primary transition-colors font-medium"
                     prefetch={false}
+                    onClick={() => {
+                      // Track quando l'utente clicca sul link GitHub nella sezione contatti
+                      track('social_link_clicked', { platform: 'github', location: 'contact_section' })
+                    }}
                   >
                     github.com/mariocelzo
                   </Link>
@@ -1203,6 +1231,10 @@ export default function HomePage() {
                     rel="noopener noreferrer"
                     className="hover:text-primary transition-colors font-medium"
                     prefetch={false}
+                    onClick={() => {
+                      // Track quando l'utente clicca sul link LinkedIn nella sezione contatti
+                      track('social_link_clicked', { platform: 'linkedin', location: 'contact_section' })
+                    }}
                   >
                     linkedin.com/in/mario-celzo
                   </Link>
@@ -1453,6 +1485,10 @@ export default function HomePage() {
                     rel="noopener noreferrer"
                     className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
                     prefetch={false}
+                    onClick={() => {
+                      // Track quando l'utente clicca sul link GitHub nel footer (sezione risorse)
+                      track('social_link_clicked', { platform: 'github', location: 'footer_resources' })
+                    }}
                   >
                     <ExternalLink className="w-3 h-3" /> GitHub
                   </Link>
@@ -1464,6 +1500,10 @@ export default function HomePage() {
                     rel="noopener noreferrer"
                     className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
                     prefetch={false}
+                    onClick={() => {
+                      // Track quando l'utente clicca sul link LinkedIn nel footer (sezione risorse)
+                      track('social_link_clicked', { platform: 'linkedin', location: 'footer_resources' })
+                    }}
                   >
                     <ExternalLink className="w-3 h-3" /> LinkedIn
                   </Link>
@@ -1482,6 +1522,10 @@ export default function HomePage() {
                   className="w-11 h-11 rounded-full bg-muted hover:bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary transition-all duration-300"
                   prefetch={false}
                   aria-label="GitHub"
+                  onClick={() => {
+                    // Track quando l'utente clicca sul bottone social GitHub nel footer
+                    track('social_link_clicked', { platform: 'github', location: 'footer_social' })
+                  }}
                 >
                   <Github className="w-5 h-5" />
                 </Link>
@@ -1492,6 +1536,10 @@ export default function HomePage() {
                   className="w-11 h-11 rounded-full bg-muted hover:bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary transition-all duration-300"
                   prefetch={false}
                   aria-label="LinkedIn"
+                  onClick={() => {
+                    // Track quando l'utente clicca sul bottone social LinkedIn nel footer
+                    track('social_link_clicked', { platform: 'linkedin', location: 'footer_social' })
+                  }}
                 >
                   <Linkedin className="w-5 h-5" />
                 </Link>

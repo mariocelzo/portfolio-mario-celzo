@@ -82,21 +82,48 @@ export function GitHubStats({ username = "mariocelzo" }: { username?: string }) 
   })
 
   useEffect(() => {
-    // Funzione per fetchare i dati dall'API GitHub
+    // Funzione per fetchare i dati dall'API GitHub con gestione errori migliorata
     const fetchGitHubData = async () => {
       try {
         setStats(prev => ({ ...prev, isLoading: true, error: null }))
 
-        // Fetch user data
-        const userResponse = await fetch(`https://api.github.com/users/${username}`)
-        if (!userResponse.ok) throw new Error("Impossibile recuperare i dati utente")
+        // Fetch user data con headers per migliorare rate limiting
+        const userResponse = await fetch(`https://api.github.com/users/${username}`, {
+          headers: {
+            'Accept': 'application/vnd.github.v3+json',
+          },
+        })
+
+        // Gestione errori specifici
+        if (userResponse.status === 403) {
+          throw new Error("Rate limit API GitHub raggiunto. Riprova tra qualche minuto.")
+        }
+        if (userResponse.status === 404) {
+          throw new Error("Utente GitHub non trovato")
+        }
+        if (!userResponse.ok) {
+          throw new Error(`Errore ${userResponse.status}: Impossibile recuperare i dati utente`)
+        }
+
         const userData: GitHubUser = await userResponse.json()
 
         // Fetch repositories (massimo 100 per non sovraccaricare)
         const reposResponse = await fetch(
-          `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`
+          `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`,
+          {
+            headers: {
+              'Accept': 'application/vnd.github.v3+json',
+            },
+          }
         )
-        if (!reposResponse.ok) throw new Error("Impossibile recuperare le repository")
+
+        if (reposResponse.status === 403) {
+          throw new Error("Rate limit API GitHub raggiunto. Riprova tra qualche minuto.")
+        }
+        if (!reposResponse.ok) {
+          throw new Error(`Errore ${reposResponse.status}: Impossibile recuperare le repository`)
+        }
+
         const reposData: GitHubRepo[] = await reposResponse.json()
 
         // Calcola il totale delle stelle (escludendo i fork)
@@ -162,14 +189,38 @@ export function GitHubStats({ username = "mariocelzo" }: { username?: string }) 
     )
   }
 
-  // Error state
+  // Error state con pulsante retry
   if (stats.error || !stats.user) {
     return (
       <Card className="border-destructive/50 bg-destructive/5">
-        <CardContent className="pt-6 text-center">
-          <p className="text-destructive">
-            {stats.error || "Impossibile caricare le statistiche GitHub"}
-          </p>
+        <CardContent className="pt-6 text-center space-y-4">
+          <div className="flex flex-col items-center gap-2">
+            <Github className="w-12 h-12 text-destructive/50" />
+            <p className="text-destructive font-medium">
+              {stats.error || "Impossibile caricare le statistiche GitHub"}
+            </p>
+            <p className="text-sm text-muted-foreground max-w-md">
+              {stats.error?.includes("Rate limit")
+                ? "L'API di GitHub ha un limite di 60 richieste all'ora. Riprova più tardi o visita direttamente il profilo GitHub."
+                : "Si è verificato un errore nel caricamento dei dati. Controlla la connessione e riprova."}
+            </p>
+          </div>
+          <div className="flex gap-3 justify-center">
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm"
+            >
+              Riprova
+            </button>
+            <Link
+              href="https://github.com/mariocelzo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 border border-primary text-primary rounded-lg hover:bg-primary/10 transition-colors text-sm inline-flex items-center gap-2"
+            >
+              Visita Profilo GitHub <ExternalLink className="w-3 h-3" />
+            </Link>
+          </div>
         </CardContent>
       </Card>
     )

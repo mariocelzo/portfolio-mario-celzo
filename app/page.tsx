@@ -51,10 +51,14 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState, useEffect, useRef } from "react"
 import dynamic from "next/dynamic"
-import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { ThemeToggle } from "@/components/theme-toggle"
 import React from "react"
 import { track } from '@vercel/analytics'
+import { motion } from "framer-motion"
+import AnimatedSection from "@/components/animated-section"
+import AnimatedCard from "@/components/animated-card"
+import AnimatedButton from "@/components/animated-button"
+import AnimatedSkillBar from "@/components/animated-skill-bar"
 
 // Lazy load componenti pesanti con dynamic import
 const CommandPalette = dynamic(() => import("@/components/command-palette").then(mod => ({ default: mod.CommandPalette })), {
@@ -664,8 +668,15 @@ export default function HomePage() {
             }}
           />
 
-          {/* Content of the hero section (z-10 to be above parallax background) */}
-          <RevealOnScroll animation="animate-fade-in" delay="delay-0" className="relative z-10">
+          {/* Content of the hero section (z-10 to be above parallax background) - Animazioni Framer Motion */}
+
+          {/* Immagine profilo - Fade in con scale */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            className="relative z-10"
+          >
             <Tilt className="relative rounded-full" maxTilt={10} scale={1.02}>
               <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-primary shadow-lg">
                 <Image
@@ -678,15 +689,27 @@ export default function HomePage() {
                 />
               </div>
             </Tilt>
-          </RevealOnScroll>
+          </motion.div>
 
-          <RevealOnScroll animation="animate-fade-in-up" delay="delay-100" className="relative z-10">
+          {/* Nome - Fade in + slide up */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+            className="relative z-10"
+          >
             <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight drop-shadow-lg font-display gradient-text gradient-text-animated">
               <Typewriter texts={["Mario Celzo"]} pauseBeforeDelete={2400} />
             </h1>
-          </RevealOnScroll>
+          </motion.div>
 
-          <RevealOnScroll animation="animate-fade-in-up" delay="delay-200" className="relative z-10">
+          {/* Titolo professionale - Fade in + slide up */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+            className="relative z-10"
+          >
             <p className="text-3xl md:text-4xl font-semibold drop-shadow-md gradient-text font-display">
               <Typewriter
                 texts={["Software Developer", "Frontend Developer", "Mobile Developer"]}
@@ -696,56 +719,115 @@ export default function HomePage() {
                 pauseBeforeType={300}
               />
             </p>
-          </RevealOnScroll>
+          </motion.div>
 
-          <RevealOnScroll animation="animate-fade-in-up" delay="delay-300" className="relative z-10">
+          {/* Descrizione - Fade in + slide up */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            className="relative z-10"
+          >
             <p className="max-w-3xl text-xl md:text-2xl text-muted-foreground leading-relaxed">
               Appassionato di tecnologia e innovazione, mi dedico con perseveranza al completamento della mia Laurea in
               Informatica. Pronto a mettere in pratica le mie conoscenze e a contribuire con soluzioni creative e
               funzionali.
             </p>
-          </RevealOnScroll>
+          </motion.div>
 
-          {/* Achievement badges in hero */}
-          <RevealOnScroll animation="animate-fade-in-up" delay="delay-400" className="relative z-10">
+          {/* Achievement badges - Fade in + stagger */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            className="relative z-10"
+          >
             <div className="flex flex-wrap justify-center gap-3 mt-6">
               {achievements.map((achievement, index) => (
-                <Badge key={index} className={`${achievement.color} text-white border-0 px-3 py-1`}>
-                  <achievement.icon className="w-3 h-3 mr-1" />
-                  {achievement.title}
-                </Badge>
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    duration: 0.4,
+                    delay: 0.8 + index * 0.1,
+                    ease: "easeOut"
+                  }}
+                >
+                  <Badge className={`${achievement.color} text-white border-0 px-3 py-1`}>
+                    <achievement.icon className="w-3 h-3 mr-1" />
+                    {achievement.title}
+                  </Badge>
+                </motion.div>
               ))}
             </div>
-          </RevealOnScroll>
+          </motion.div>
 
-          <RevealOnScroll animation="animate-fade-in-up" delay="delay-500" className="relative z-10">
+          {/* CTA Buttons - Fade in + slide up */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.0, ease: [0.25, 0.1, 0.25, 1] }}
+            className="relative z-10"
+          >
             <div className="flex flex-col sm:flex-row gap-4 pt-6">
-              <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg btn-glow">
-                <Link href="#projects" prefetch={false}>
-                  Esplora i miei Progetti
-                </Link>
-              </Button>
-              <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10 px-8 py-3 text-lg btn-glow">
-                <Link href="#contact" prefetch={false}>
-                  Assumimi Ora
-                </Link>
-              </Button>
+              <motion.div
+                whileHover={{ y: -4, scale: 1.02 }}
+                whileTap={{ y: -2, scale: 0.98 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg btn-glow w-full">
+                  <Link href="#projects" prefetch={false}>
+                    Esplora i miei Progetti
+                  </Link>
+                </Button>
+              </motion.div>
+              <motion.div
+                whileHover={{ y: -4, scale: 1.02 }}
+                whileTap={{ y: -2, scale: 0.98 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10 px-8 py-3 text-lg btn-glow w-full">
+                  <Link href="#contact" prefetch={false}>
+                    Assumimi Ora
+                  </Link>
+                </Button>
+              </motion.div>
             </div>
-          </RevealOnScroll>
+          </motion.div>
 
-          <RevealOnScroll animation="animate-bounce" delay="delay-800" className="relative z-10 pt-12">
-            <ChevronDown className="w-10 h-10 text-primary" />
-          </RevealOnScroll>
+          {/* Chevron Down - Bounce animation */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.6,
+              delay: 1.2,
+              ease: [0.25, 0.1, 0.25, 1]
+            }}
+            className="relative z-10 pt-12"
+          >
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <ChevronDown className="w-10 h-10 text-primary" />
+            </motion.div>
+          </motion.div>
         </section>
 
         <Separator className="bg-border" />
 
         {/* About Me Section */}
         <section id="about" className="space-y-8 scroll-mt-16">
-          <RevealOnScroll animation="animate-fade-in-up">
+          <AnimatedSection>
             <h2 className="text-4xl md:text-5xl font-bold text-center text-primary">Su di me</h2>
-          </RevealOnScroll>
-          <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
+          </AnimatedSection>
+          <AnimatedSection delay={0.2}>
             <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
               <CardContent className="pt-6 text-lg md:text-xl text-foreground leading-relaxed">
                 <p>
@@ -787,35 +869,35 @@ export default function HomePage() {
                 </div>
               </CardContent>
             </Card>
-          </RevealOnScroll>
+          </AnimatedSection>
         </section>
 
         <Separator className="bg-border" />
 
         {/* Timeline Section - Visualizzazione cronologica interattiva del percorso */}
         <section id="timeline" className="space-y-8 scroll-mt-16">
-          <RevealOnScroll animation="animate-fade-in-up">
+          <AnimatedSection>
             <h2 className="text-4xl md:text-5xl font-bold text-center text-primary">Il Mio Percorso</h2>
             <p className="text-center text-muted-foreground mt-4 max-w-2xl mx-auto">
               Una visualizzazione cronologica del mio viaggio professionale e accademico,
               dai progetti più recenti alle esperienze formative.
             </p>
-          </RevealOnScroll>
-          <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
+          </AnimatedSection>
+          <AnimatedSection delay={0.2}>
             <InteractiveTimeline />
-          </RevealOnScroll>
+          </AnimatedSection>
         </section>
 
         <Separator className="bg-border" />
 
         {/* Education Section */}
         <section id="education" className="space-y-8 scroll-mt-16">
-          <RevealOnScroll animation="animate-fade-in-up">
+          <AnimatedSection>
             <h2 className="text-4xl md:text-5xl font-bold text-center text-primary">Istruzione e Formazione</h2>
-          </RevealOnScroll>
+          </AnimatedSection>
           <div className="grid gap-6 md:grid-cols-2">
-            <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
-              <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
+            <AnimatedCard index={0}>
+              <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 card-elevate h-full">
                 <CardHeader>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
@@ -838,9 +920,9 @@ export default function HomePage() {
                   </div>
                 </CardContent>
               </Card>
-            </RevealOnScroll>
-            <RevealOnScroll animation="animate-fade-in-up" delay="delay-300">
-              <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
+            </AnimatedCard>
+            <AnimatedCard index={1}>
+              <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 card-elevate h-full">
                 <CardHeader>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
@@ -863,7 +945,7 @@ export default function HomePage() {
                   </div>
                 </CardContent>
               </Card>
-            </RevealOnScroll>
+            </AnimatedCard>
           </div>
         </section>
 
@@ -871,55 +953,36 @@ export default function HomePage() {
 
         {/* Skills Section */}
         <section id="skills" className="space-y-8 scroll-mt-16">
-          <RevealOnScroll animation="animate-fade-in-up">
+          <AnimatedSection>
             <h2 className="text-4xl md:text-5xl font-bold text-center text-primary">Competenze</h2>
-          </RevealOnScroll>
-          
-          {/* Interactive Skills Grid */}
-          <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
-            <Card ref={skillsRef} className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 card-elevate">
+          </AnimatedSection>
+
+          {/* Interactive Skills Grid con AnimatedSkillBar */}
+          <AnimatedSection delay={0.2}>
+            <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 card-elevate">
               <CardHeader>
                 <CardTitle className="text-primary text-center">Competenze Tecniche</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid gap-4 md:grid-cols-2">
                   {skills.map((skill, index) => (
-                    <div
+                    <AnimatedSkillBar
                       key={index}
-                      className="space-y-2 cursor-pointer transition-all duration-300 hover:scale-105"
-                      onMouseEnter={() => setActiveSkill(skill.name)}
-                      onMouseLeave={() => setActiveSkill(null)}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <span className="text-2xl">{skill.icon}</span>
-                          <span className="font-medium">{skill.name}</span>
-                        </div>
-                        <span className="text-sm text-muted-foreground">{skill.level}%</span>
-                      </div>
-                      <Progress
-                        value={skillsVisible ? skill.level : 0}
-                        className={`h-3 transition-all ease-out ${
-                          activeSkill === skill.name ? 'scale-105' : ''
-                        }`}
-                        style={{
-                          transitionDuration: '2000ms',
-                          transitionDelay: skillsVisible ? `${index * 150}ms` : '0ms',
-                          transform: skillsVisible ? 'scale(1)' : 'scale(0.95)',
-                          opacity: skillsVisible ? 1 : 0
-                        }}
-                      />
-                      <div className="text-xs text-muted-foreground">{skill.category}</div>
-                    </div>
+                      name={skill.name}
+                      level={skill.level}
+                      icon={skill.icon}
+                      index={index}
+                      className="space-y-2"
+                    />
                   ))}
                 </div>
               </CardContent>
             </Card>
-          </RevealOnScroll>
+          </AnimatedSection>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <RevealOnScroll animation="animate-fade-in-up" delay="delay-300">
-              <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
+            <AnimatedCard index={0}>
+              <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 card-elevate h-full">
                 <CardHeader>
                   <CardTitle className="text-primary flex items-center gap-2">
                     <Users className="w-6 h-6" /> Soft Skills
@@ -948,9 +1011,9 @@ export default function HomePage() {
                   </p>
                 </CardContent>
               </Card>
-            </RevealOnScroll>
-            <RevealOnScroll animation="animate-fade-in-up" delay="delay-400">
-              <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
+            </AnimatedCard>
+            <AnimatedCard index={1}>
+              <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 card-elevate h-full">
                 <CardHeader>
                   <CardTitle className="text-primary flex items-center gap-2">
                     <BookOpen className="w-6 h-6" /> Lingue
@@ -972,33 +1035,64 @@ export default function HomePage() {
                   </ul>
                 </CardContent>
               </Card>
-            </RevealOnScroll>
+            </AnimatedCard>
           </div>
+        </section>
+
+        <Separator className="bg-border" />
+
+        {/* GitHub Stats Section */}
+        <section id="github" className="space-y-6 scroll-mt-16">
+          <AnimatedSection>
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-primary">Attività GitHub</h2>
+            <p className="text-center text-muted-foreground mt-2 max-w-2xl mx-auto text-sm">
+              Statistiche in tempo reale dal mio profilo GitHub.
+            </p>
+          </AnimatedSection>
+          <AnimatedSection delay={0.2}>
+            <GitHubStats username="mariocelzo" />
+          </AnimatedSection>
         </section>
 
         <Separator className="bg-border" />
 
         {/* Enhanced Projects Section */}
         <section id="projects" className="space-y-8 scroll-mt-16">
-          <RevealOnScroll animation="animate-fade-in-up">
+          <AnimatedSection>
             <h2 className="text-4xl md:text-5xl font-bold text-center text-primary">Progetti</h2>
-          </RevealOnScroll>
-          {/* Category Filters */}
-          <RevealOnScroll animation="animate-fade-in-up" delay="delay-100">
+          </AnimatedSection>
+          {/* Category Filters con animazioni */}
+          <AnimatedSection delay={0.1}>
             <div className="flex flex-wrap justify-center gap-2">
-              {categories.map(cat => (
-                <Button
+              {categories.map((cat, index) => (
+                <motion.div
                   key={cat}
-                  size="sm"
-                  variant="outline"
-                  className={`px-4 ${projectFilter === cat ? 'border-primary text-primary bg-primary/10' : 'text-muted-foreground'}`}
-                  onClick={() => setProjectFilter(cat)}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: 0.4,
+                    delay: 0.1 + index * 0.05,
+                    ease: "easeOut"
+                  }}
                 >
-                  {cat}
-                </Button>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className={`px-4 ${projectFilter === cat ? 'border-primary text-primary bg-primary/10' : 'text-muted-foreground'}`}
+                      onClick={() => setProjectFilter(cat)}
+                    >
+                      {cat}
+                    </Button>
+                  </motion.div>
+                </motion.div>
               ))}
             </div>
-          </RevealOnScroll>
+          </AnimatedSection>
           <div className="grid gap-8 md:grid-cols-2">
             {filteredProjects.map((project, index) => (
               <div
@@ -1146,28 +1240,13 @@ export default function HomePage() {
 
         <Separator className="bg-border" />
 
-        {/* GitHub Stats Section - Statistiche in tempo reale dal profilo GitHub */}
-        <section id="github" className="space-y-6 scroll-mt-16">
-          <RevealOnScroll animation="animate-fade-in-up">
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-primary">Attività GitHub</h2>
-            <p className="text-center text-muted-foreground mt-2 max-w-2xl mx-auto text-sm">
-              Statistiche in tempo reale dal mio profilo GitHub.
-            </p>
-          </RevealOnScroll>
-          <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
-            <GitHubStats username="mariocelzo" />
-          </RevealOnScroll>
-        </section>
-
-        <Separator className="bg-border" />
-
         {/* Work Experience Section */}
         <section id="experience" className="space-y-8 scroll-mt-16">
-          <RevealOnScroll animation="animate-fade-in-up">
+          <AnimatedSection>
             <h2 className="text-4xl md:text-5xl font-bold text-center text-primary">Esperienza Lavorativa</h2>
-          </RevealOnScroll>
-          <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
-            <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
+          </AnimatedSection>
+          <AnimatedSection delay={0.2}>
+            <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 card-elevate">
               <CardHeader>
                 <CardTitle className="text-primary flex items-center gap-2">
                   <Briefcase className="w-6 h-6" /> Assistente gestione salone
@@ -1196,19 +1275,19 @@ export default function HomePage() {
                 </p>
               </CardContent>
             </Card>
-          </RevealOnScroll>
+          </AnimatedSection>
         </section>
 
         <Separator className="bg-border" />
 
         {/* Hobbies Section */}
         <section id="hobbies" className="space-y-8 scroll-mt-16">
-          <RevealOnScroll animation="animate-fade-in-up">
+          <AnimatedSection>
             <h2 className="text-4xl md:text-5xl font-bold text-center text-primary">Hobby e Interessi</h2>
-          </RevealOnScroll>
+          </AnimatedSection>
           <div className="grid gap-6 md:grid-cols-3">
-            <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
-              <Card className="bg-card border-border text-center p-6 hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
+            <AnimatedCard index={0}>
+              <Card className="bg-card border-border text-center p-6 hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 card-elevate h-full">
                 <Car className="w-12 h-12 text-primary mx-auto mb-4" />
                 <CardTitle className="text-primary">Formula 1</CardTitle>
                 <CardContent className="text-foreground pt-2">
@@ -1216,9 +1295,9 @@ export default function HomePage() {
                   pensiero critico e capacità decisionali sotto pressione.
                 </CardContent>
               </Card>
-            </RevealOnScroll>
-            <RevealOnScroll animation="animate-fade-in-up" delay="delay-300">
-              <Card className="bg-card border-border text-center p-6 hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
+            </AnimatedCard>
+            <AnimatedCard index={1}>
+              <Card className="bg-card border-border text-center p-6 hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 card-elevate h-full">
                 <Globe className="w-12 h-12 text-primary mx-auto mb-4" />
                 <CardTitle className="text-primary">Tecnologia e Innovazione</CardTitle>
                 <CardContent className="text-foreground pt-2">
@@ -1226,9 +1305,9 @@ export default function HomePage() {
                   affinare l&apos;apprendimento continuo.
                 </CardContent>
               </Card>
-            </RevealOnScroll>
-            <RevealOnScroll animation="animate-fade-in-up" delay="delay-400">
-              <Card className="bg-card border-border text-center p-6 hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
+            </AnimatedCard>
+            <AnimatedCard index={2}>
+              <Card className="bg-card border-border text-center p-6 hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 card-elevate h-full">
                 <Gamepad className="w-12 h-12 text-primary mx-auto mb-4" />
                 <CardTitle className="text-primary">Videogiochi</CardTitle>
                 <CardContent className="text-foreground pt-2">
@@ -1236,7 +1315,7 @@ export default function HomePage() {
                   collaborazione in team dinamici.
                 </CardContent>
               </Card>
-            </RevealOnScroll>
+            </AnimatedCard>
           </div>
         </section>
 
@@ -1244,7 +1323,7 @@ export default function HomePage() {
 
         {/* Call to Action Section */}
         <section className="space-y-8 scroll-mt-16">
-          <RevealOnScroll animation="animate-fade-in-up">
+          <AnimatedSection>
             <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20 text-center p-12">
               <CardContent className="space-y-6">
                 <h2 className="text-4xl md:text-5xl font-bold text-primary">Pronto per la prossima sfida?</h2>
@@ -1253,44 +1332,56 @@ export default function HomePage() {
                   Insieme possiamo creare soluzioni innovative che fanno la differenza.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg">
-                    <Link href="#contact" prefetch={false}>
-                      Contattami Ora
-                    </Link>
-                  </Button>
-                  <Button asChild variant="outline" size="lg" className="border-primary text-primary hover:bg-primary/10 px-8 py-3 text-lg">
-                  <Link
-                    href="/CV_CELZO_MARIO_v2.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => track('cv_download', { location: 'cta_section' })}
-                    prefetch={false}
+                  <motion.div
+                    whileHover={{ y: -4, scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    Scarica CV
-                  </Link>
-                  </Button>
+                    <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg w-full">
+                      <Link href="#contact" prefetch={false}>
+                        Contattami Ora
+                      </Link>
+                    </Button>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ y: -4, scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Button asChild variant="outline" size="lg" className="border-primary text-primary hover:bg-primary/10 px-8 py-3 text-lg w-full">
+                      <Link
+                        href="/CV_CELZO_MARIO_v2.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => track('cv_download', { location: 'cta_section' })}
+                        prefetch={false}
+                      >
+                        Scarica CV
+                      </Link>
+                    </Button>
+                  </motion.div>
                 </div>
               </CardContent>
             </Card>
-          </RevealOnScroll>
+          </AnimatedSection>
         </section>
 
         <Separator className="bg-border" />
 
         {/* Contact Section */}
         <section id="contact" className="space-y-8 scroll-mt-16">
-          <RevealOnScroll animation="animate-fade-in-up">
+          <AnimatedSection>
             <h2 className="text-4xl md:text-5xl font-bold text-center text-primary">Contatti</h2>
-          </RevealOnScroll>
+          </AnimatedSection>
 
           {/* Form di contatto interattivo - Consente ai visitatori di inviare messaggi direttamente */}
-          <RevealOnScroll animation="animate-fade-in-up" delay="delay-100">
+          <AnimatedSection delay={0.1}>
             <ContactForm />
-          </RevealOnScroll>
+          </AnimatedSection>
 
           {/* Link diretti ai social e canali di contatto alternativi */}
-          <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
-            <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
+          <AnimatedSection delay={0.2}>
+            <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 card-elevate">
               <CardContent className="pt-6 grid gap-4 text-lg text-foreground">
                 <div className="flex items-center gap-3 group hover:scale-105 transition-transform duration-300">
                   <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -1336,7 +1427,7 @@ export default function HomePage() {
                 </div>
               </CardContent>
             </Card>
-          </RevealOnScroll>
+          </AnimatedSection>
         </section>
       </main>
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -16,6 +16,7 @@ import {
   Code
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { motion } from "framer-motion"
 
 // Definizione dei tipi per gli eventi della timeline
 type TimelineEventType = "education" | "work" | "project"
@@ -133,46 +134,9 @@ const timelineEvents: TimelineEvent[] = [
 
 export function InteractiveTimeline() {
   const [activeEvent, setActiveEvent] = useState<string | null>(null)
-  const [visibleEvents, setVisibleEvents] = useState<Set<string>>(new Set())
-  const observerRef = useRef<IntersectionObserver | null>(null)
 
-  // Intersection Observer per animare gli eventi quando entrano nel viewport
-  useEffect(() => {
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const eventId = entry.target.getAttribute("data-event-id")
-            if (eventId) {
-              setVisibleEvents((prev) => new Set(prev).add(eventId))
-            }
-          }
-        })
-      },
-      {
-        threshold: 0.2,
-        rootMargin: "0px 0px -100px 0px"
-      }
-    )
-
-    return () => {
-      observerRef.current?.disconnect()
-    }
-  }, [])
-
-  // Osserva gli elementi della timeline quando vengono montati
-  useEffect(() => {
-    const elements = document.querySelectorAll("[data-event-id]")
-    elements.forEach((el) => {
-      observerRef.current?.observe(el)
-    })
-
-    return () => {
-      elements.forEach((el) => {
-        observerRef.current?.unobserve(el)
-      })
-    }
-  }, [])
+  // NOTA: Non usiamo containerVariants perché vogliamo che ogni card
+  // si animi INDIVIDUALMENTE quando entra nel viewport, non tutte insieme!
 
   // Mappa dei colori per tipo di evento
   const getTypeColor = (type: TimelineEventType) => {
@@ -223,22 +187,29 @@ export function InteractiveTimeline() {
         {/* Linea verticale centrale */}
         <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-primary/50 to-transparent" />
 
-        {/* Eventi della timeline */}
+        {/* Eventi della timeline - OGNI CARD si anima INDIVIDUALMENTE quando entra nel viewport */}
         <div className="space-y-12">
           {timelineEvents.map((event, index) => {
-            const isVisible = visibleEvents.has(event.id)
             const isActive = activeEvent === event.id
             const Icon = event.icon
 
             return (
-              <div
+              <motion.div
                 key={event.id}
-                data-event-id={event.id}
-                className={cn(
-                  "relative transition-all duration-700 ease-out",
-                  isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
-                )}
-                style={{ transitionDelay: `${index * 100}ms` }}
+                className="relative"
+                // Ogni card si anima quando LEI entra nel viewport - Animazione molto lenta e cinematografica
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{
+                  once: true,       // Anima solo una volta
+                  amount: 0.6,      // Trigger quando il 60% della card è visibile (più visibile prima di animare)
+                  margin: "0px 0px 20px 0px"  // Anticipa solo di 20px (molto meno aggressivo)
+                }}
+                transition={{
+                  duration: 1.0,    // Aumentato da 0.8s a 1.0s - ancora più lento e cinematografico
+                  delay: 0,         // Nessun delay - parte immediatamente quando la card entra
+                  ease: [0.25, 0.1, 0.25, 1]  // Easing Apple-like
+                }}
               >
                 {/* Layout responsive: mobile = sinistra, desktop = alternato */}
                 <div className={cn(
@@ -343,7 +314,7 @@ export function InteractiveTimeline() {
                     </Card>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )
           })}
         </div>

@@ -72,6 +72,12 @@ const Tilt = dynamic(() => import("@/components/tilt"), {
 const Typewriter = dynamic(() => import("@/components/typewriter"), {
   ssr: false,
 })
+const InteractiveTimeline = dynamic(() => import("@/components/interactive-timeline").then(mod => ({ default: mod.InteractiveTimeline })), {
+  ssr: false,
+})
+const GitHubStats = dynamic(() => import("@/components/github-stats").then(mod => ({ default: mod.GitHubStats })), {
+  ssr: false,
+})
 
 export default function HomePage() {
   const [scrollY, setScrollY] = useState(0)
@@ -129,7 +135,7 @@ export default function HomePage() {
       setScrollY(window.scrollY)
 
       // Track active section for navigation highlighting
-      const sections = ['hero', 'about', 'education', 'skills', 'projects', 'experience', 'hobbies', 'contact']
+      const sections = ['hero', 'about', 'timeline', 'education', 'skills', 'github', 'projects', 'experience', 'hobbies', 'contact']
       const currentSection = sections.find(section => {
         const element = document.getElementById(section)
         if (element) {
@@ -341,6 +347,20 @@ export default function HomePage() {
               </li>
               <li>
                 <Link
+                  href="#timeline"
+                  className={`transition-all duration-300 relative group ${
+                    activeSection === 'timeline' ? 'text-primary' : 'hover:text-primary'
+                  }`}
+                  prefetch={false}
+                >
+                  Timeline
+                  <span className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                    activeSection === 'timeline' ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}></span>
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="#education"
                   className={`transition-all duration-300 relative group ${
                     activeSection === 'education' ? 'text-primary' : 'hover:text-primary'
@@ -364,6 +384,20 @@ export default function HomePage() {
                   Competenze
                   <span className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300 ${
                     activeSection === 'skills' ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}></span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#github"
+                  className={`transition-all duration-300 relative group ${
+                    activeSection === 'github' ? 'text-primary' : 'hover:text-primary'
+                  }`}
+                  prefetch={false}
+                >
+                  GitHub
+                  <span className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                    activeSection === 'github' ? 'w-full' : 'w-0 group-hover:w-full'
                   }`}></span>
                 </Link>
               </li>
@@ -436,6 +470,18 @@ export default function HomePage() {
                     Su di me
                   </Link>
                   <Link
+                    href="#timeline"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`text-lg py-3 px-4 rounded-lg transition-all duration-300 ${
+                      activeSection === 'timeline'
+                        ? 'bg-primary/10 text-primary font-semibold'
+                        : 'hover:bg-primary/5 hover:text-primary'
+                    }`}
+                    prefetch={false}
+                  >
+                    Timeline
+                  </Link>
+                  <Link
                     href="#education"
                     onClick={() => setMobileMenuOpen(false)}
                     className={`text-lg py-3 px-4 rounded-lg transition-all duration-300 ${
@@ -458,6 +504,18 @@ export default function HomePage() {
                     prefetch={false}
                   >
                     Competenze
+                  </Link>
+                  <Link
+                    href="#github"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`text-lg py-3 px-4 rounded-lg transition-all duration-300 ${
+                      activeSection === 'github'
+                        ? 'bg-primary/10 text-primary font-semibold'
+                        : 'hover:bg-primary/5 hover:text-primary'
+                    }`}
+                    prefetch={false}
+                  >
+                    GitHub
                   </Link>
                   <Link
                     href="#projects"
@@ -544,8 +602,10 @@ export default function HomePage() {
         items={[
           { id: 'hero', label: 'Home' },
           { id: 'about', label: 'Su di me' },
+          { id: 'timeline', label: 'Timeline' },
           { id: 'education', label: 'Istruzione' },
           { id: 'skills', label: 'Competenze' },
+          { id: 'github', label: 'GitHub' },
           { id: 'projects', label: 'Progetti' },
           { id: 'experience', label: 'Esperienza' },
           { id: 'hobbies', label: 'Hobby' },
@@ -619,11 +679,13 @@ export default function HomePage() {
               </div>
             </Tilt>
           </RevealOnScroll>
+
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-100" className="relative z-10">
             <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight drop-shadow-lg font-display gradient-text gradient-text-animated">
               <Typewriter texts={["Mario Celzo"]} pauseBeforeDelete={2400} />
             </h1>
           </RevealOnScroll>
+
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-200" className="relative z-10">
             <p className="text-3xl md:text-4xl font-semibold drop-shadow-md gradient-text font-display">
               <Typewriter
@@ -635,6 +697,7 @@ export default function HomePage() {
               />
             </p>
           </RevealOnScroll>
+
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-300" className="relative z-10">
             <p className="max-w-3xl text-xl md:text-2xl text-muted-foreground leading-relaxed">
               Appassionato di tecnologia e innovazione, mi dedico con perseveranza al completamento della mia Laurea in
@@ -642,7 +705,7 @@ export default function HomePage() {
               funzionali.
             </p>
           </RevealOnScroll>
-          
+
           {/* Achievement badges in hero */}
           <RevealOnScroll animation="animate-fade-in-up" delay="delay-400" className="relative z-10">
             <div className="flex flex-wrap justify-center gap-3 mt-6">
@@ -669,6 +732,7 @@ export default function HomePage() {
               </Button>
             </div>
           </RevealOnScroll>
+
           <RevealOnScroll animation="animate-bounce" delay="delay-800" className="relative z-10 pt-12">
             <ChevronDown className="w-10 h-10 text-primary" />
           </RevealOnScroll>
@@ -723,6 +787,22 @@ export default function HomePage() {
                 </div>
               </CardContent>
             </Card>
+          </RevealOnScroll>
+        </section>
+
+        <Separator className="bg-border" />
+
+        {/* Timeline Section - Visualizzazione cronologica interattiva del percorso */}
+        <section id="timeline" className="space-y-8 scroll-mt-16">
+          <RevealOnScroll animation="animate-fade-in-up">
+            <h2 className="text-4xl md:text-5xl font-bold text-center text-primary">Il Mio Percorso</h2>
+            <p className="text-center text-muted-foreground mt-4 max-w-2xl mx-auto">
+              Una visualizzazione cronologica del mio viaggio professionale e accademico,
+              dai progetti più recenti alle esperienze formative.
+            </p>
+          </RevealOnScroll>
+          <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
+            <InteractiveTimeline />
           </RevealOnScroll>
         </section>
 
@@ -1062,6 +1142,21 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+        </section>
+
+        <Separator className="bg-border" />
+
+        {/* GitHub Stats Section - Statistiche in tempo reale dal profilo GitHub */}
+        <section id="github" className="space-y-6 scroll-mt-16">
+          <RevealOnScroll animation="animate-fade-in-up">
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-primary">Attività GitHub</h2>
+            <p className="text-center text-muted-foreground mt-2 max-w-2xl mx-auto text-sm">
+              Statistiche in tempo reale dal mio profilo GitHub.
+            </p>
+          </RevealOnScroll>
+          <RevealOnScroll animation="animate-fade-in-up" delay="delay-200">
+            <GitHubStats username="mariocelzo" />
+          </RevealOnScroll>
         </section>
 
         <Separator className="bg-border" />

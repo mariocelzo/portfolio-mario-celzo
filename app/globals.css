@@ -1,3 +1,5 @@
+/* Direttive Tailwind CSS - processate da PostCSS durante il build */
+/* postcss-ignore */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -416,4 +418,40 @@ body::before {
 /* Reduced-motion: disable heavy animations */
 @media (prefers-reduced-motion: reduce) {
   .liquid-glass::before { animation: none !important; }
+}
+
+/* Gradient animation per avatar GitHub Stats */
+@keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 3s ease infinite;
+}
+
+/* ============================================
+   DARK/LIGHT MODE SMOOTH TRANSITIONS
+   ============================================ */
+
+/* Transizione smooth tra temi - si attiva quando si cambia tema */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              fill 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              stroke 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Perspective per animazioni 3D */
+.perspective-1000 {
+  perspective: 1000px;
 }

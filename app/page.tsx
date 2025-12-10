@@ -47,6 +47,29 @@ import {
   Menu,
   X,
 } from "lucide-react"
+// React Icons - icone ufficiali dei linguaggi/framework
+import { 
+  FaJava, 
+  FaPython, 
+  FaReact, 
+  FaAngular, 
+  FaJs, 
+  FaGitAlt, 
+  FaDocker, 
+  FaFigma,
+  FaMobileAlt,
+  FaSearch,
+  FaPencilRuler,
+  FaFlask
+} from "react-icons/fa"
+import { 
+  SiNextdotjs, 
+  SiTypescript,
+  SiGithubactions,
+  SiPostgresql
+} from "react-icons/si"
+import { VscAzureDevops } from "react-icons/vsc"
+import { MdBuild } from "react-icons/md"
 import Image from "next/image"
 import Link from "next/link"
 import { useState, useEffect, useRef } from "react"
@@ -59,6 +82,11 @@ import AnimatedSection from "@/components/animated-section"
 import AnimatedCard from "@/components/animated-card"
 import AnimatedButton from "@/components/animated-button"
 import AnimatedSkillBar from "@/components/animated-skill-bar"
+
+// Nuovi componenti estetici
+const CursorGlow = dynamic(() => import("@/components/cursor-glow"), {
+  ssr: false,
+})
 
 // Lazy load componenti pesanti con dynamic import
 const CommandPalette = dynamic(() => import("@/components/command-palette").then(mod => ({ default: mod.CommandPalette })), {
@@ -191,19 +219,25 @@ export default function HomePage() {
   const parallaxOffset = scrollY * 0.3
   const smoothScrollY = scrollY * 0.5
 
-  // Skill data with proficiency levels
+  // Skill data with proficiency levels - usando icone ufficiali da react-icons
   const skills = [
-    { name: "Java", level: 70, icon: "☕", category: "Programming" },
-    { name: "Python", level: 80, icon: "🐍", category: "Programming" },
-    { name: "React", level: 80, icon: "⚛️", category: "Frontend" },
-    { name: "Next.js", level: 70, icon: "⚡", category: "Frontend" },
-    { name: "Angular", level: 50, icon: "🔺", category: "Frontend" },
-    { name: "JavaScript", level: 80, icon: "🟨", category: "Programming" },
-    { name: "SQL", level: 75, icon: "🗄️", category: "Database" },
-    { name: "Git", level: 85, icon: "📚", category: "Tools" },
-    { name: "Testing & Maintenance", level: 70, icon: "🔧", category: "Development" },
-    { name: "Figma", level: 50, icon: "🎨", category: "Design" },
-    { name: "Mobile Dev", level: 60, icon: "📱", category: "Development" },
+    { name: "Java", level: 70, icon: FaJava, category: "Programming" },
+    { name: "Python", level: 80, icon: FaPython, category: "Programming" },
+    { name: "React", level: 80, icon: FaReact, category: "Frontend" },
+    { name: "Next.js", level: 70, icon: SiNextdotjs, category: "Frontend" },
+    { name: "Angular", level: 50, icon: FaAngular, category: "Frontend" },
+    { name: "JavaScript", level: 80, icon: FaJs, category: "Programming" },
+    { name: "SQL", level: 75, icon: SiPostgresql, category: "Database" },
+    { name: "Git", level: 85, icon: FaGitAlt, category: "Tools" },
+    { name: "Testing & Maintenance", level: 70, icon: MdBuild, category: "Development" },
+    { name: "Figma", level: 60, icon: FaFigma, category: "Design" },
+    { name: "Mobile Dev", level: 65, icon: FaMobileAlt, category: "Development" },
+    { name: "Docker", level: 65, icon: FaDocker, category: "DevOps" },
+    { name: "CI/CD", level: 60, icon: VscAzureDevops, category: "DevOps" },
+    { name: "GitHub Actions", level: 70, icon: SiGithubactions, category: "DevOps" },
+    { name: "User Research", level: 70, icon: FaSearch, category: "HCI" },
+    { name: "Prototyping", level: 75, icon: FaPencilRuler, category: "HCI" },
+    { name: "Usability Testing", level: 65, icon: FaFlask, category: "HCI" },
   ]
 
   // Achievement badges
@@ -235,24 +269,77 @@ export default function HomePage() {
       stats: { features: "15+", components: "50+", rating: "4.8" }
     },
     {
+      id: "biblioflow",
+      title: "BiblioFlow",
+      year: "2025",
+      category: 'Web',
+      description: "Sistema collaborativo per gestione biblioteca universitaria",
+      fullDescription: "Sistema collaborativo per la gestione intelligente della biblioteca universitaria sviluppato per Human Computer Interaction. Analisi dell'ecosistema complesso: prenotazione posti studio con sensori di presenza, sistema prestiti RFID self-service, chatbot per reference desk. Focus su post-human interaction, accessibilità, sostenibilità. Creazione personas, scenari d'uso e prototipi interattivi.",
+      image: null,
+      icon: BookOpen,
+      badge: "HCI",
+      badgeColor: "bg-pink-500",
+      techStack: ["Figma", "User Research", "Personas", "Prototyping", "Accessibility"],
+      features: ["Seat Booking", "RFID Self-service", "Chatbot Reference", "Accessibility Focus", "Post-human Interaction"],
+      github: null,
+      liveUrl: "https://www.figma.com/design/BiblioFlow",
+      demoUrl: "https://www.figma.com/design/BiblioFlow",
+      stats: { personas: "3+", scenarios: "5+", rating: "4.7" }
+    },
+    {
       id: "bodylife",
       title: "BODYLIFE",
       year: "2025",
       category: 'Mobile',
       description: "App per amanti del fitness",
-      fullDescription: "Sviluppata per il corso di Interazione Uomo-Macchina, Body Life è un'app intuitiva per monitorare peso e attività fisica. Il lavoro di squadra ha rafforzato le mie competenze collaborative e organizzative.",
+      fullDescription: "Sviluppata per il corso di Interazione Uomo-Macchina, Body Life è un'app intuitiva per monitorare peso e attività fisica. Processo UX/UI completo: wireframing, prototipazione su Figma, test usabilità. Implementata con React e Next.js.",
       image: "/foto_progetti/bodylife.png",
       icon: Smartphone,
       badge: "Live",
       badgeColor: "bg-blue-500",
-      techStack: ["React Native", "Expo", "Figma", "TypeScript", "Local Storage"],
+      techStack: ["React", "Next.js", "Figma", "TypeScript", "UX Design"],
       features: ["Fitness Tracking", "Progress Analytics", "Goal Setting", "Nutrition Log", "UI/UX Design"],
       github: null,
       liveUrl: "https://body-life-teal.vercel.app/",
       demoUrl: "https://www.figma.com/design/FgrYVoi37erhxvlGQEtiBm/Gym-App--Community-?node-id=0-1&p=f",
       stats: { screens: "8+", features: "12+", rating: "4.6" }
-    }
-    ,
+    },
+    {
+      id: "nearbite",
+      title: "NearBite",
+      year: "2025",
+      category: 'Mobile',
+      description: "App per trovare i migliori locali vicino a te",
+      fullDescription: "NearBite è un'app mobile cross-platform sviluppata con React Native ed Expo per la ricerca di ristoranti e locali nelle vicinanze. Stack tecnologico: Supabase per database e autenticazione, Google Places API per dati sui locali, geolocalizzazione real-time, sistema di raccomandazioni basato su AI. Design moderno con animazioni fluide.",
+      image: null,
+      icon: Globe,
+      badge: "Prototype",
+      badgeColor: "bg-orange-500",
+      techStack: ["React Native", "Expo", "Supabase", "Google Places API", "AI Recommendations"],
+      features: ["Location-based Search", "AI Recommendations", "Mobile Cross-platform", "User Preference Learning", "Real-time Geolocation"],
+      github: "https://github.com/mariocelzo/resturant-finder",
+      liveUrl: "https://github.com/mariocelzo/resturant-finder",
+      demoUrl: "https://github.com/mariocelzo/resturant-finder",
+      stats: { features: "10+", components: "25+", rating: "4.5" }
+    },
+    {
+      id: "petclinic",
+      title: "PetClinic Dependability",
+      year: "2025",
+      category: 'Thesis',
+      description: "Analisi dependability e pipeline DevOps",
+      fullDescription: "Analisi completa della dependability di Spring PetClinic per il corso di Software Dependability. Tecniche applicate: fault injection con Chaos Monkey, reliability analysis con calcolo MTTF/MTTR, failure mode assessment (FMEA). Pipeline DevOps completa: GitHub Actions per CI/CD, containerizzazione Docker, quality gate con SonarCloud, test automatizzati.",
+      image: null,
+      icon: Shield,
+      badge: "DevOps",
+      badgeColor: "bg-cyan-500",
+      techStack: ["Docker", "GitHub Actions", "SonarCloud", "Chaos Monkey", "CI/CD"],
+      features: ["Fault Injection", "FMEA Analysis", "Reliability Metrics", "CI/CD Pipeline", "Quality Gates"],
+      github: "https://github.com/mariocelzo/petclinic-dependability-analysis",
+      liveUrl: "https://github.com/mariocelzo/petclinic-dependability-analysis",
+      demoUrl: "https://github.com/mariocelzo/petclinic-dependability-analysis",
+      stats: { tests: "50+", metrics: "10+", rating: "4.8" }
+    },
     {
       id: "adas",
       title: "ADAS Testing",
@@ -270,24 +357,6 @@ export default function HomePage() {
       liveUrl: "https://github.com/mariocelzo/adas_testing",
       demoUrl: "https://github.com/mariocelzo/adas_testing",
       stats: { experiments: "20+", modules: "6+", rating: "4.7" }
-    },
-    {
-      id: "nearbite",
-      title: "NearBite",
-      year: "2025",
-      category: 'Web',
-      description: "Piattaforma per trovare i migliori locali vicino a te",
-      fullDescription: "NearBite è una piattaforma innovativa sia per cellulare che per web che permette di trovare i migliori locali vicino alla propria posizione. Utilizzando algoritmi di AI avanzati, l'app impara dalle scelte degli utenti e consiglia i locali che potrebbero preferire maggiormente nelle vicinanze, offrendo un'esperienza personalizzata e intelligente.",
-      image: null,
-      icon: Globe,
-      badge: "Prototype",
-      badgeColor: "bg-orange-500",
-      techStack: ["TypeScript", "React", "Supabase", "AI Algorithms", "Responsive Design"],
-      features: ["Location-based Search", "AI Recommendations", "Mobile & Web App", "User Preference Learning", "Local Discovery"],
-      github: "https://github.com/mariocelzo/resturant-finder",
-      liveUrl: "https://github.com/mariocelzo/resturant-finder",
-      demoUrl: "https://github.com/mariocelzo/resturant-finder",
-      stats: { features: "10+", components: "25+", rating: "4.5" }
     }
   ]
 
@@ -295,7 +364,10 @@ export default function HomePage() {
   const filteredProjects = projects.filter(p => projectFilter === 'All' ? true : p.category === projectFilter)
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
+      {/* Cursor Glow Effect (solo desktop) */}
+      <CursorGlow />
+      
       {/* Particle Effects */}
       {showParticles && (
         <div className="particles">
@@ -566,7 +638,7 @@ export default function HomePage() {
                     </Button>
                     <Button asChild variant="outline" className="w-full">
                       <Link
-                        href="/CV_CELZO_MARIO_v2.pdf"
+                        href="/cv-mario-celzo.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={() => {
@@ -729,9 +801,8 @@ export default function HomePage() {
             className="relative z-10"
           >
             <p className="max-w-3xl text-xl md:text-2xl text-muted-foreground leading-relaxed">
-              Appassionato di tecnologia e innovazione, mi dedico con perseveranza al completamento della mia Laurea in
-              Informatica. Pronto a mettere in pratica le mie conoscenze e a contribuire con soluzioni creative e
-              funzionali.
+              Laureato in Informatica, appassionato di tecnologia e innovazione. Pronto a mettere in pratica le mie 
+              conoscenze e a contribuire con soluzioni creative e funzionali.
             </p>
           </motion.div>
 
@@ -831,14 +902,13 @@ export default function HomePage() {
             <Card className="bg-card border-border hover:shadow-primary/30 hover:shadow-2xl transition-shadow duration-300 transform hover:scale-[1.01] card-elevate">
               <CardContent className="pt-6 text-lg md:text-xl text-foreground leading-relaxed">
                 <p>
-                  Attualmente frequento il corso di Laurea Triennale in Informatica presso l&apos;Università di Salerno.
-                  Questa fase della mia formazione è dedicata all&apos;acquisizione di solide basi teoriche e pratiche,
+                  Ho conseguito la Laurea Triennale in Informatica presso l&apos;Università di Salerno.
+                  Il percorso formativo mi ha fornito solide basi teoriche e pratiche,
                   con un focus particolare su algoritmi, strutture dati, programmazione orientata agli oggetti e
                   ingegneria del software.
                 </p>
                 <p className="mt-4">
-                  La mia priorità è completare il percorso accademico con la massima dedizione, per poi inserirmi
-                  rapidamente nel mondo professionale. Sono entusiasta all&apos;idea di applicare concretamente le
+                  Sono pronto ad inserirmi nel mondo professionale ed entusiasta all&apos;idea di applicare concretamente le
                   conoscenze maturate e di affrontare nuove sfide nel campo dello sviluppo software e
                   dell&apos;innovazione tecnologica.
                 </p>
@@ -915,8 +985,8 @@ export default function HomePage() {
                     Dati, Reti di Calcolatori, Ingegneria del Software, Interazione Uomo-Macchina.
                   </p>
                   <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
-                    <Clock className="w-4 h-4" />
-                    <span>In corso - 90% completato</span>
+                    <CheckCircle className="w-4 h-4 text-green-500" />
+                    <span>Completata</span>
                   </div>
                 </CardContent>
               </Card>
@@ -1350,7 +1420,7 @@ export default function HomePage() {
                   >
                     <Button asChild variant="outline" size="lg" className="border-primary text-primary hover:bg-primary/10 px-8 py-3 text-lg w-full">
                       <Link
-                        href="/CV_CELZO_MARIO_v2.pdf"
+                        href="/cv-mario-celzo.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={() => track('cv_download', { location: 'cta_section' })}
@@ -1654,7 +1724,7 @@ export default function HomePage() {
               <ul className="space-y-2 text-sm">
                 <li>
                   <Link
-                    href="/CV_CELZO_MARIO_v2.pdf"
+                    href="/cv-mario-celzo.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"

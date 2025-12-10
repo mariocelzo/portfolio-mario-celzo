@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { IconType } from "react-icons";
+import React from "react";
 
 /**
  * Componente AnimatedSkillBar - Barra di progresso animata per skills
@@ -14,7 +16,7 @@ import { motion } from "framer-motion";
  *
  * @param name - Nome della skill
  * @param level - Livello di competenza (0-100)
- * @param icon - Emoji/icona della skill (opzionale)
+ * @param icon - Componente icona React (da react-icons) o stringa emoji
  * @param index - Indice per stagger effect (opzionale)
  * @param className - Classi CSS aggiuntive
  */
@@ -22,7 +24,7 @@ import { motion } from "framer-motion";
 interface AnimatedSkillBarProps {
   name: string;
   level: number;
-  icon?: string;
+  icon?: IconType | string;
   index?: number;
   className?: string;
 }
@@ -30,10 +32,20 @@ interface AnimatedSkillBarProps {
 export default function AnimatedSkillBar({
   name,
   level,
-  icon,
+  icon: Icon,
   index = 0,
   className = ""
 }: AnimatedSkillBarProps) {
+  // Renderizza l'icona: se è un componente React lo istanzia, altrimenti mostra la stringa
+  const renderIcon = () => {
+    if (!Icon) return null;
+    if (typeof Icon === "string") {
+      return <span className="text-lg">{Icon}</span>;
+    }
+    // È un componente React (IconType) - mantiene i colori originali
+    return <Icon className="w-5 h-5" />;
+  };
+
   return (
     <motion.div
       initial={{
@@ -58,7 +70,7 @@ export default function AnimatedSkillBar({
       {/* Nome skill e percentuale */}
       <div className="flex justify-between items-center mb-2">
         <div className="flex items-center gap-2">
-          {icon && <span className="text-lg">{icon}</span>}
+          {renderIcon()}
           <span className="font-medium text-foreground">{name}</span>
         </div>
 

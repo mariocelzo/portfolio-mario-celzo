@@ -455,3 +455,205 @@ body::before {
 .perspective-1000 {
   perspective: 1000px;
 }
+
+/* ============================================
+   NEW AESTHETIC ENHANCEMENTS 2025
+   ============================================ */
+
+/* Glassmorphism migliorato */
+.glass-card {
+  background: hsl(var(--card) / 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid hsl(var(--border) / 0.5);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: hsl(var(--card) / 0.8);
+  border-color: hsl(var(--primary) / 0.3);
+}
+
+/* Glow effect per elementi importanti */
+.glow-primary {
+  box-shadow: 
+    0 0 20px hsl(var(--primary) / 0.3),
+    0 0 40px hsl(var(--primary) / 0.1);
+}
+
+.glow-primary-hover:hover {
+  box-shadow: 
+    0 0 30px hsl(var(--primary) / 0.4),
+    0 0 60px hsl(var(--primary) / 0.15);
+}
+
+/* Animated border gradient */
+.border-gradient {
+  position: relative;
+  background: hsl(var(--card));
+  border-radius: 1rem;
+}
+
+.border-gradient::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary)) 0%,
+    transparent 50%,
+    hsl(var(--primary) / 0.5) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 2px;
+  z-index: -1;
+}
+
+/* Text gradient shimmer effect */
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--primary) / 0.6) 40%,
+    hsl(var(--primary)) 80%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 200% 0; }
+  50% { background-position: 0 0; }
+}
+
+/* Smooth image reveal */
+.image-reveal {
+  clip-path: inset(0 100% 0 0);
+  animation: reveal 1s ease-out forwards;
+}
+
+@keyframes reveal {
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* Floating animation for decorative elements */
+.float {
+  animation: floating 6s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+/* Pulse glow animation */
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px hsl(var(--primary) / 0.4);
+  }
+}
+
+/* Magnetic hover effect */
+.magnetic {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.magnetic:hover {
+  transform: scale(1.05);
+}
+
+/* Staggered fade in animation */
+.stagger-fade > * {
+  opacity: 0;
+  animation: stagger-fade-in 0.6s ease-out forwards;
+}
+
+.stagger-fade > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-fade > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-fade > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-fade > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-fade > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-fade > *:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes stagger-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hero title animation */
+.hero-title {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--foreground)) 0%,
+    hsl(var(--primary)) 50%,
+    hsl(var(--foreground)) 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: hero-gradient 8s ease-in-out infinite;
+}
+
+@keyframes hero-gradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Subtle scale on scroll */
+.scale-on-scroll {
+  transition: transform 0.3s ease-out;
+}
+
+.scale-on-scroll:hover {
+  transform: scale(1.02);
+}
+
+/* Neon border effect */
+.neon-border {
+  position: relative;
+}
+
+.neon-border::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(
+    45deg,
+    hsl(var(--primary)),
+    hsl(var(--primary) / 0.5),
+    hsl(var(--primary))
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.neon-border:hover::after {
+  opacity: 1;
+}

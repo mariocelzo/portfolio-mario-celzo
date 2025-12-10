@@ -13,7 +13,9 @@ import {
   Calendar,
   MapPin,
   ChevronRight,
-  Code
+  Code,
+  Library,
+  Shield
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
@@ -112,7 +114,7 @@ const timelineEvents: TimelineEvent[] = [
     location: "Fisciano (SA), Italia",
     date: "2022 - 2025",
     dateStart: new Date("2025-09-01"), // Data modificata per posizionare dopo i progetti nella timeline
-    description: "Percorso accademico incentrato su Programmazione, Algoritmi, Basi di Dati, Ingegneria del Software e Interazione Uomo-Macchina. Attualmente al 90% del completamento con focus su sistemi ADAS per la tesi.",
+    description: "Percorso accademico incentrato su Programmazione, Algoritmi, Basi di Dati, Ingegneria del Software e Interazione Uomo-Macchina. Tesi sperimentale su sistemi ADAS. Completata con successo.",
     icon: BookOpen,
     color: "bg-blue-500",
     tags: ["Java", "Python", "SQL", "Software Engineering"]
@@ -129,6 +131,32 @@ const timelineEvents: TimelineEvent[] = [
     icon: Code,
     color: "bg-indigo-500",
     tags: ["Software Architecture", "Project Management", "DevOps", "Agile"]
+  },
+  {
+    id: "biblioflow",
+    type: "project" as TimelineEventType,
+    title: "BiblioFlow - Sistema Bibliotecario",
+    subtitle: "Progetto HCI - Magistrale",
+    date: "2025",
+    dateStart: new Date("2025-11-01"),
+    description: "Sistema di gestione bibliotecaria sviluppato con approccio Human-Centered Design: User Research, Personas, Wireframing, Prototyping e Usability Testing.",
+    icon: Library,
+    color: "bg-teal-500",
+    tags: ["React", "Figma", "User Research", "Usability Testing"],
+    link: "https://github.com/mariocelzo/BiblioFlow"
+  },
+  {
+    id: "petclinic",
+    type: "project" as TimelineEventType,
+    title: "PetClinic Dependability",
+    subtitle: "Progetto DevOps - Magistrale",
+    date: "2025",
+    dateStart: new Date("2025-12-01"),
+    description: "Analisi e miglioramento dell'affidabilità di Spring PetClinic: pipeline CI/CD con GitHub Actions, analisi statica con SonarCloud e containerizzazione Docker.",
+    icon: Shield,
+    color: "bg-orange-500",
+    tags: ["Java", "Spring Boot", "Docker", "CI/CD", "SonarCloud"],
+    link: "https://github.com/mariocelzo/spring-petclinic"
   }
 ].sort((a, b) => a.dateStart.getTime() - b.dateStart.getTime()) // Ordine cronologico: dal più vecchio al più recente
 

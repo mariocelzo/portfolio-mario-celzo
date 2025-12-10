@@ -28,7 +28,7 @@ export function CommandPalette() {
 
   const actions: CommandItem[] = [
     { id: "github", label: "Apri GitHub", hint: "g", group: "Azioni", action: () => window.open("https://github.com/mariocelzo", "_blank") },
-    { id: "cv", label: "Scarica CV", hint: "d", group: "Azioni", action: () => window.open("/CV_MARIO_CELZO.pdf", "_blank") },
+    { id: "cv", label: "Scarica CV", hint: "d", group: "Azioni", action: () => window.open("/cv-mario-celzo.pdf", "_blank") },
     { id: "theme", label: theme === "dark" ? "Tema: chiaro" : "Tema: scuro", group: "Azioni", action: () => setTheme(theme === "dark" ? "light" : "dark") },
   ]
 

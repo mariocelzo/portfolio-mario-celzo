@@ -1,19 +1,26 @@
 import { Card } from "./ui/card";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { motion } from "motion/react";
+import { Terminal, Database, Server, Workflow } from "lucide-react";
 
 export function About() {
   return (
-    <section id="about" className="py-24 bg-background">
-      <div className="container mx-auto px-4">
+    <section id="about" className="py-24 bg-background relative overflow-hidden">
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-20"
+          className="text-center mb-20 flex flex-col items-center"
         >
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-foreground">About Me</h2>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-secondary/50 border border-border/50 font-mono text-sm text-primary mb-4 shadow-sm">
+            <Terminal className="size-4" />
+            <span>cat whoami.md</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">About Me</h2>
         </motion.div>
         
         <div className="grid md:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
@@ -24,17 +31,43 @@ export function About() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="relative"
           >
-            <div className="aspect-[4/3] rounded-[2rem] overflow-hidden shadow-[0_20px_40px_rgb(0,0,0,0.08)] border border-border/40 bg-muted/50 p-2">
-              <div className="w-full h-full rounded-2xl overflow-hidden">
+            {/* Terminal Window Wrapper for Image */}
+            <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-2xl border border-border/60 bg-card/60 backdrop-blur-xl flex flex-col">
+              <div className="h-10 border-b border-border/60 bg-muted/40 flex items-center px-4 gap-2 shrink-0">
+                <div className="flex gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-[#FF5F56]"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#27C93F]"></div>
+                </div>
+                <div className="mx-auto flex items-center text-xs text-muted-foreground font-mono">
+                  workspace.jpg
+                </div>
+              </div>
+              <div className="w-full h-full relative">
+                <div className="absolute inset-0 bg-primary/10 mix-blend-overlay z-10"></div>
                 <ImageWithFallback
                   src="https://images.unsplash.com/photo-1607743386760-88ac62b89b8a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2RpbmclMjBsYXB0b3AlMjBuaWdodHxlbnwxfHx8fDE3NzMxNjEwNTR8MA&ixlib=rb-4.1.0&q=80&w=1080"
                   alt="Coding workspace"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover grayscale-[20%]"
                 />
               </div>
             </div>
-            <div className="absolute -bottom-8 -right-8 w-40 h-40 bg-primary/5 rounded-full blur-[60px] -z-10"></div>
-            <div className="absolute -top-8 -left-8 w-40 h-40 bg-secondary/10 rounded-full blur-[60px] -z-10"></div>
+            
+            {/* Floating badges */}
+            <motion.div 
+              animate={{ y: [-5, 5, -5] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -bottom-6 -right-6 bg-background/90 backdrop-blur-md p-4 rounded-xl border border-border/60 shadow-lg text-primary"
+            >
+              <Workflow className="size-6" />
+            </motion.div>
+            <motion.div 
+              animate={{ y: [5, -5, 5] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              className="absolute -top-6 -left-6 bg-background/90 backdrop-blur-md p-4 rounded-xl border border-border/60 shadow-lg text-primary"
+            >
+              <Database className="size-6" />
+            </motion.div>
           </motion.div>
 
           <motion.div 
@@ -44,53 +77,50 @@ export function About() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="space-y-8"
           >
-            <div className="space-y-6">
-              <p className="text-lg text-foreground/80 leading-relaxed font-medium">
-                I'm a passionate Junior Developer currently pursuing my Master's degree in 
+            <div className="space-y-6 font-mono">
+              <p className="text-[15px] text-foreground/80 leading-relaxed">
+                <span className="text-primary font-bold">{">"}</span> I'm a passionate <span className="text-primary font-bold">Junior DevOps Engineer</span> currently pursuing my Master's degree in 
                 Software Engineering & IT Management at the University of Salerno. 
-                I specialize in full-stack development with a strong focus on UX/UI design 
-                and user-centered applications.
+                I specialize in building resilient infrastructures and automated pipelines.
               </p>
               
-              <p className="text-lg text-foreground/80 leading-relaxed font-medium">
-                My journey in software development has been driven by curiosity and a desire 
-                to create meaningful digital experiences. I'm particularly interested in 
-                practical DevOps, cloud-native development, and building applications 
-                that solve real-world problems. I thrive in collaborative environments 
-                using Agile methodologies.
+              <p className="text-[15px] text-foreground/80 leading-relaxed">
+                <span className="text-primary font-bold">{">"}</span> My journey in tech is driven by curiosity and a desire to optimize systems. 
+                I thrive in creating cloud-native environments, containerizing applications with Docker & Kubernetes, 
+                and ensuring seamless deployments using Agile methodologies.
               </p>
             </div>
 
-            <Card className="p-8 bg-card/50 backdrop-blur-xl border-border/40 shadow-sm rounded-3xl">
-              <div className="grid grid-cols-2 gap-8">
+            <Card className="p-6 bg-card/40 backdrop-blur-md border-border/60 shadow-sm rounded-xl font-mono text-sm">
+              <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1.5 font-medium">Location</p>
+                  <p className="text-muted-foreground mb-1">{"// location"}</p>
                   <p className="font-semibold text-foreground">Italy (Remote)</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1.5 font-medium">Status</p>
-                  <p className="font-semibold text-foreground">Graduate Student</p>
+                  <p className="text-muted-foreground mb-1">{"// status"}</p>
+                  <p className="font-semibold text-foreground">Active_Deploy</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1.5 font-medium">Education</p>
-                  <p className="font-semibold text-foreground">Master's in Software Eng.</p>
+                  <p className="text-muted-foreground mb-1">{"// education"}</p>
+                  <p className="font-semibold text-foreground">MSc. Software Eng.</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1.5 font-medium">Languages</p>
-                  <p className="font-semibold text-foreground">IT, EN (B2), AR (B2)</p>
+                  <p className="text-muted-foreground mb-1">{"// langs"}</p>
+                  <p className="font-semibold text-foreground">[IT, EN, AR]</p>
                 </div>
               </div>
             </Card>
 
             <div className="flex flex-wrap gap-3 pt-2">
-              <div className="px-5 py-2.5 bg-secondary/30 rounded-full border border-border/40 backdrop-blur-sm">
-                <p className="text-sm font-medium text-foreground">🎯 Problem Solving</p>
+              <div className="px-4 py-2 bg-secondary/50 rounded-md border border-border/60 backdrop-blur-sm">
+                <p className="text-xs font-mono font-medium text-foreground">--flags="Problem Solving"</p>
               </div>
-              <div className="px-5 py-2.5 bg-secondary/30 rounded-full border border-border/40 backdrop-blur-sm">
-                <p className="text-sm font-medium text-foreground">🤝 Team Collaboration</p>
+              <div className="px-4 py-2 bg-secondary/50 rounded-md border border-border/60 backdrop-blur-sm">
+                <p className="text-xs font-mono font-medium text-foreground">--flags="Team Collaboration"</p>
               </div>
-              <div className="px-5 py-2.5 bg-secondary/30 rounded-full border border-border/40 backdrop-blur-sm">
-                <p className="text-sm font-medium text-foreground">🚀 Quick Learner</p>
+              <div className="px-4 py-2 bg-secondary/50 rounded-md border border-border/60 backdrop-blur-sm">
+                <p className="text-xs font-mono font-medium text-foreground">--flags="Agile Methodology"</p>
               </div>
             </div>
           </motion.div>

@@ -1,4 +1,4 @@
-import { Menu, X } from "lucide-react";
+import { Menu, X, Terminal } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { ThemeToggle } from "./ThemeToggle";
@@ -33,16 +33,17 @@ export function Header() {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${scrolled ? 'py-3' : 'py-5'}`}>
       <div className={`mx-auto max-w-5xl px-6 transition-all duration-500 ${scrolled ? 'w-full px-4' : 'w-[95%]'}`}>
-        <div className={`flex items-center justify-between rounded-full px-6 py-3 transition-all duration-500 ${
+        <div className={`flex items-center justify-between rounded-lg px-6 py-3 transition-all duration-500 ${
           scrolled 
-            ? 'bg-background/70 backdrop-blur-xl border border-border/40 shadow-[0_8px_30px_rgb(0,0,0,0.04)]' 
-            : 'bg-transparent'
+            ? 'bg-background/80 backdrop-blur-xl border border-border/60 shadow-lg' 
+            : 'bg-transparent border border-transparent'
         }`}>
           <button 
             onClick={() => scrollToSection('top')} 
-            className="text-lg font-semibold tracking-tight hover:opacity-80 transition-opacity"
+            className="text-base font-bold font-mono tracking-tight hover:text-primary transition-colors flex items-center gap-2"
           >
-            Mario Celzo
+            <Terminal className="size-4" />
+            mario.sh
           </button>
           
           {/* Desktop Navigation */}
@@ -51,12 +52,12 @@ export function Header() {
               <button 
                 key={item.id}
                 onClick={() => scrollToSection(item.id)} 
-                className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+                className="text-[13px] font-mono font-medium text-foreground/70 hover:text-primary transition-colors"
               >
-                {item.name}
+                ./{item.name.toLowerCase()}
               </button>
             ))}
-            <div className="w-px h-4 bg-border/50 mx-2"></div>
+            <div className="w-px h-4 bg-border/60 mx-2"></div>
             <ThemeToggle />
           </nav>
 
@@ -66,7 +67,7 @@ export function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full hover:bg-black/5 dark:hover:bg-white/10 h-9 w-9"
+              className="rounded-md hover:bg-secondary/50 h-9 w-9 border border-transparent hover:border-border/60"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="size-4" /> : <Menu className="size-4" />}
@@ -85,14 +86,15 @@ export function Header() {
             transition={{ duration: 0.2 }}
             className="absolute top-full left-0 right-0 px-4 pt-2 md:hidden"
           >
-            <div className="bg-background/90 backdrop-blur-xl border border-border/40 rounded-3xl p-6 shadow-2xl flex flex-col gap-4">
+            <div className="bg-background/95 backdrop-blur-xl border border-border/60 rounded-xl p-6 shadow-2xl flex flex-col gap-4">
               {navItems.map((item) => (
                 <button 
                   key={item.id}
                   onClick={() => scrollToSection(item.id)} 
-                  className="text-left text-lg font-medium text-foreground/80 hover:text-foreground transition-colors py-2 border-b border-border/20 last:border-0"
+                  className="text-left font-mono text-sm font-medium text-foreground/80 hover:text-primary transition-colors py-3 border-b border-border/40 last:border-0"
                 >
-                  {item.name}
+                  <span className="text-primary mr-2">{">"}</span>
+                  {item.name.toLowerCase()}
                 </button>
               ))}
             </div>

@@ -1,4 +1,4 @@
-import { ExternalLink, Github, Globe } from "lucide-react";
+import { ExternalLink, Github, Globe, Box, Code2 } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
@@ -73,18 +73,24 @@ export function Projects() {
   };
 
   return (
-    <section id="projects" className="py-24">
-      <div className="container mx-auto px-4">
+    <section id="projects" className="py-24 bg-muted/20 relative">
+      <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-secondary/20 rounded-full blur-[120px] -z-10 mix-blend-multiply dark:mix-blend-screen pointer-events-none"></div>
+      
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          className="text-center mb-16 flex flex-col items-center"
         >
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">Selected Work</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            A collection of projects showcasing my journey in software engineering.
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-secondary/50 border border-border/50 font-mono text-sm text-primary mb-4 shadow-sm">
+            <Box className="size-4" />
+            <span>kubectl get deployments</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">Deployed Work</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-mono text-sm">
+            {"// A collection of microservices, apps, and platforms I've built."}
           </p>
         </motion.div>
         
@@ -96,55 +102,63 @@ export function Projects() {
           viewport={{ once: true, margin: "-100px" }}
         >
           {projects.map((project, index) => (
-            <motion.div key={index} variants={itemVariants}>
-              <Card className="h-full flex flex-col overflow-hidden hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] dark:hover:shadow-[0_20px_40px_rgb(255,255,255,0.05)] transition-all duration-500 border-border/40 bg-card/50 backdrop-blur-sm rounded-3xl">
-                <div className="aspect-[16/10] relative overflow-hidden bg-muted group p-2">
-                  <div className="w-full h-full relative rounded-2xl overflow-hidden shadow-sm">
-                    <ImageWithFallback
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    />
-                  </div>
+            <motion.div key={index} variants={itemVariants} className="h-full">
+              <Card className="h-full flex flex-col overflow-hidden hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 border-border/60 bg-card/60 backdrop-blur-xl rounded-xl group relative">
+                {/* Simulated Container Header */}
+                <div className="h-8 bg-muted/50 border-b border-border/60 flex items-center px-3 gap-2">
+                  <Code2 className="size-3 text-muted-foreground" />
+                  <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest">{project.title.toLowerCase()}.yaml</span>
+                </div>
+
+                <div className="aspect-[16/10] relative overflow-hidden bg-background">
+                  <div className="absolute inset-0 bg-primary/10 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <ImageWithFallback
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-105 group-hover:grayscale-[20%] transition-all duration-700 ease-out"
+                  />
                   {project.featured && (
-                    <div className="absolute top-5 right-5 bg-background/80 backdrop-blur-md text-foreground px-3 py-1 rounded-full text-xs font-semibold shadow-sm border border-border/50">
-                      Featured
+                    <div className="absolute top-3 right-3 z-20 bg-background/90 backdrop-blur-md text-primary px-2.5 py-1 rounded-md text-[10px] font-mono font-bold shadow-sm border border-border/60 uppercase tracking-wider">
+                      ★ Active
                     </div>
                   )}
                 </div>
                 
-                <div className="p-6 md:p-8 flex flex-col flex-grow">
-                  <div className="flex items-start justify-between mb-3 gap-2">
-                    <h3 className="text-xl font-bold leading-tight tracking-tight">{project.title}</h3>
-                    <Badge variant="secondary" className="font-mono text-xs shrink-0 rounded-full bg-secondary/50">{project.year}</Badge>
+                <div className="p-6 md:p-8 flex flex-col flex-grow bg-card/50">
+                  <div className="flex items-start justify-between mb-4 gap-2">
+                    <h3 className="text-xl font-bold leading-tight tracking-tight text-foreground">{project.title}</h3>
+                    <Badge variant="outline" className="font-mono text-xs shrink-0 rounded-md border-border/60 bg-background">
+                      v{project.year}.0
+                    </Badge>
                   </div>
-                  <p className="text-muted-foreground mb-6 text-sm flex-grow leading-relaxed">
+                  <p className="text-muted-foreground mb-6 text-sm flex-grow leading-relaxed font-mono">
+                    <span className="text-primary mr-1">{">"}</span>
                     {project.description}
                   </p>
                   
                   <div className="flex flex-wrap gap-2 mb-8">
                     {project.tags.map((tag, idx) => (
-                      <Badge key={idx} variant="outline" className="text-xs bg-transparent border-border/60 rounded-full font-medium text-foreground/80">
+                      <span key={idx} className="text-[11px] font-mono bg-secondary/50 text-foreground/80 border border-border/60 rounded px-2 py-0.5">
                         {tag}
-                      </Badge>
+                      </span>
                     ))}
                   </div>
                   
                   <div className="flex gap-3 mt-auto">
                     {project.demo ? (
-                      <Button size="sm" variant="default" className="flex-1 gap-2 rounded-full shadow-sm hover:shadow-md transition-shadow font-medium" asChild>
+                      <Button size="sm" variant="default" className="flex-1 gap-2 rounded-md shadow-sm hover:shadow-md transition-shadow font-mono text-xs font-semibold" asChild>
                         <a href={project.demo} target="_blank" rel="noopener noreferrer">
                           <Globe className="size-3.5" />
-                          Live Demo
+                          [Live_Demo]
                         </a>
                       </Button>
                     ) : (
-                      <Button size="sm" variant="secondary" className="flex-1 gap-2 rounded-full shadow-sm font-medium opacity-50 cursor-not-allowed hover:bg-secondary">
+                      <Button size="sm" variant="secondary" className="flex-1 gap-2 rounded-md shadow-sm font-mono text-xs opacity-50 cursor-not-allowed hover:bg-secondary">
                         <Globe className="size-3.5" />
-                        Internal Repo
+                        [Private_Repo]
                       </Button>
                     )}
-                    <Button size="sm" variant="outline" className="gap-2 shrink-0 rounded-full hover:bg-secondary/50 border-border/60" asChild>
+                    <Button size="sm" variant="outline" className="gap-2 shrink-0 rounded-md hover:bg-secondary/50 border-border/60" asChild>
                       <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} on GitHub`}>
                         <Github className="size-4" />
                       </a>
@@ -163,13 +177,13 @@ export function Projects() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="mt-20 text-center"
         >
-          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto text-lg">
-            Looking for more academic projects in Algorithms, Databases, Web Programming, and Operating Systems?
+          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto font-mono text-sm">
+            {"/* Looking for more academic projects in Algorithms, Databases, Web Programming, and OS? */"}
           </p>
-          <Button variant="outline" size="lg" className="rounded-full shadow-sm hover:shadow-md transition-all border-border/60 font-medium px-8" asChild>
+          <Button variant="outline" size="lg" className="rounded-md shadow-sm hover:-translate-y-1 transition-all border-border/60 font-mono text-sm px-8 bg-background/50 backdrop-blur-sm" asChild>
             <a href="https://github.com/mariocelzo" target="_blank" rel="noopener noreferrer">
               <Github className="size-4 mr-2" />
-              View All on GitHub
+              cd ~/github/repositories
             </a>
           </Button>
         </motion.div>

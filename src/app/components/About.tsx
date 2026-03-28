@@ -23,13 +23,15 @@ export function About() {
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">About Me</h2>
         </motion.div>
         
-        <div className="grid md:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
-          <motion.div 
+        {/* Gap ridotto su mobile per compensare la mancanza dei badge floating nascosti */}
+        <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center max-w-6xl mx-auto">
+          {/* mb-8 aggiunto su mobile per dare spazio al badge -bottom-6 che sporge dalla card immagine */}
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative"
+            className="relative mb-8 sm:mb-0"
           >
             {/* Terminal Window Wrapper for Image */}
             <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-2xl border border-border/60 bg-card/60 backdrop-blur-xl flex flex-col">
@@ -53,18 +55,18 @@ export function About() {
               </div>
             </div>
             
-            {/* Floating badges */}
-            <motion.div 
+            {/* Badge floating: nascosti su mobile per evitare overflow/scroll orizzontale, visibili da sm in su */}
+            <motion.div
               animate={{ y: [-5, 5, -5] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -bottom-6 -right-6 bg-background/90 backdrop-blur-md p-4 rounded-xl border border-border/60 shadow-lg text-primary"
+              className="hidden sm:block absolute -bottom-6 -right-6 bg-background/90 backdrop-blur-md p-4 rounded-xl border border-border/60 shadow-lg text-primary"
             >
               <Workflow className="size-6" />
             </motion.div>
-            <motion.div 
+            <motion.div
               animate={{ y: [5, -5, 5] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute -top-6 -left-6 bg-background/90 backdrop-blur-md p-4 rounded-xl border border-border/60 shadow-lg text-primary"
+              className="hidden sm:block absolute -top-6 -left-6 bg-background/90 backdrop-blur-md p-4 rounded-xl border border-border/60 shadow-lg text-primary"
             >
               <Database className="size-6" />
             </motion.div>

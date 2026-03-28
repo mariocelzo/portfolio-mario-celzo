@@ -2,7 +2,8 @@ import { Github, Linkedin, Mail, Download, Terminal, Code2, GitBranch, TerminalS
 import { Button } from "./ui/button";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { motion } from "motion/react";
-import profilePic from "figma:asset/f867b45042a06e7a23ba35ed122025885f6d57dd.png";
+// Import locale dell'immagine profilo (già inclusa negli assets del progetto)
+import profilePic from "../../assets/f867b45042a06e7a23ba35ed122025885f6d57dd.png";
 
 export function Hero() {
   const containerVariants = {
@@ -30,7 +31,8 @@ export function Hero() {
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -z-10 translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
 
       <div className="container mx-auto px-6 md:px-12 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-8">
+        {/* Gap ridotto su mobile per evitare eccessivo spazio verticale tra i due blocchi */}
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
           
           {/* Left Content */}
           <motion.div 
@@ -40,9 +42,10 @@ export function Hero() {
             animate="visible"
           >
             <motion.div variants={itemVariants}>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-secondary/50 border border-border/50 font-mono text-sm text-primary mb-6 shadow-sm backdrop-blur-md">
-                <Terminal className="size-4" />
-                <span>$ ./start-devops-journey.sh</span>
+              {/* Testo del badge ridotto su schermi piccoli e troncato per evitare overflow orizzontale */}
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-secondary/50 border border-border/50 font-mono text-xs sm:text-sm text-primary mb-6 shadow-sm backdrop-blur-md max-w-full overflow-hidden">
+                <Terminal className="size-4 shrink-0" />
+                <span className="truncate">$ ./start-devops-journey.sh</span>
               </div>
             </motion.div>
             
@@ -65,7 +68,8 @@ export function Hero() {
                 Initialize_Contact
               </Button>
               <Button size="lg" variant="outline" className="gap-2 rounded-md font-mono px-8 shadow-sm hover:bg-secondary/80 transition-all duration-300 border-border/60 h-14 text-base bg-background/50 backdrop-blur-sm" asChild>
-                <a href="https://mario-celzo.vercel.app" target="_blank" rel="noopener noreferrer">
+                {/* Download diretto del CV dalla cartella public */}
+                <a href="/cv-mario-celzo.pdf" download="CV-Mario-Celzo.pdf">
                   <Download className="size-5" />
                   CV.pdf
                 </a>
@@ -87,8 +91,9 @@ export function Hero() {
           </motion.div>
 
           {/* Right Content (Terminal Window & Profile Pic) */}
-          <motion.div 
-            className="flex-1 w-full max-w-lg relative mt-10 lg:mt-0"
+          {/* padding-bottom per dare spazio al badge foto profilo che sporge -bottom-6 */}
+          <motion.div
+            className="flex-1 w-full max-w-lg relative mt-10 lg:mt-0 pb-12 lg:pb-8"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}

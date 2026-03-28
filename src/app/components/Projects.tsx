@@ -13,8 +13,8 @@ const projects = [
     image: "https://images.unsplash.com/photo-1758270704025-0e1a1793e1ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwc3R1ZHlpbmclMjBzdHVkZW50cyUyMG5vdGVzfGVufDF8fHx8MTc3MzI1NTgyMHww&ixlib=rb-4.1.0&q=80&w=1080",
     tags: ["UX/UI Design", "Agile", "Social Platform", "Figma"],
     featured: true,
-    github: "https://github.com/MarioCelzo/target-platform",
-    demo: "https://target-platform.vercel.app"
+    github: "https://github.com/mariocelzo/Target",
+    demo: "https://v0-target-svp6klexsij.vercel.app"
   },
   {
     title: "NearBite",
@@ -23,18 +23,18 @@ const projects = [
     image: "https://images.unsplash.com/photo-1760888549280-4aef010720bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbW9iaWxlJTIwYXBwJTIwcGhvbmUlMjBmb29kfGVufDF8fHx8MTc3MzI1NTgyMHww&ixlib=rb-4.1.0&q=80&w=1080",
     tags: ["React Native", "Expo", "AI", "Google Maps API"],
     featured: true,
-    github: "https://github.com/MarioCelzo/nearbite",
-    demo: "https://nearbite.vercel.app"
+    // Repo reale: resturant-finder su GitHub (nessuna demo pubblica disponibile)
+    github: "https://github.com/mariocelzo/resturant-finder"
   },
   {
     title: "BiblioFlow",
     year: "2023",
     description: "Intelligent university library management system with sensor-based study post tracking, interactive dashboard, and focus on accessibility and sustainability.",
     image: "https://images.unsplash.com/photo-1762512346990-22d810fe4252?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwbGlicmFyeSUyMG1vZGVybiUyMHJlYWRpbmd8ZW58MXx8fHwxNzczMjU1ODIwfDA&ixlib=rb-4.1.0&q=80&w=1080",
-    tags: ["Human Computation", "IoT", "Dashboard", "Accessibility"],
+    tags: ["Human Computation", "IoT", "Next.js", "PWA", "Accessibility"],
     featured: true,
-    github: "https://github.com/MarioCelzo/biblioflow",
-    demo: "https://biblioflow.vercel.app"
+    github: "https://github.com/mariocelzo/biblioflow-app",
+    demo: "https://biblioflow-app.vercel.app"
   },
   {
     title: "BODY-LIFE",
@@ -43,7 +43,8 @@ const projects = [
     image: "https://images.unsplash.com/photo-1591311630200-ffa9120a540f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwYXBwJTIwbW9iaWxlJTIwd29ya291dHxlbnwxfHx8fDE3NzMyNTU4MjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
     tags: ["React", "Java", "Figma", "Wireframing"],
     featured: false,
-    github: "https://github.com/MarioCelzo/body-life"
+    github: "https://github.com/mariocelzo/body-life",
+    demo: "https://body-life-teal.vercel.app"
   },
   {
     title: "PetClinic Dependability",
@@ -52,7 +53,7 @@ const projects = [
     image: "https://images.unsplash.com/photo-1744868562210-fffb7fa882d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZXJ2ZXIlMjByb29tJTIwZGF0YSUyMGNlbnRlcnxlbnwxfHx8fDE3NzMxNzgxNTJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
     tags: ["DevOps", "CI/CD", "Docker", "SonarCloud", "GitHub Actions"],
     featured: false,
-    github: "https://github.com/MarioCelzo/petclinic-dependability"
+    github: "https://github.com/mariocelzo/petclinic-dependability-analysis"
   }
 ];
 
@@ -94,8 +95,9 @@ export function Projects() {
           </p>
         </motion.div>
         
-        <motion.div 
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
+        {/* Gap ridotto su mobile (gap-5) per contenere le card senza troppo spazio vuoto */}
+        <motion.div
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8 max-w-7xl mx-auto"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"

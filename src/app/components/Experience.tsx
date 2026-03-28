@@ -109,8 +109,9 @@ export function Experience() {
             </h3>
             
             <div className="space-y-8">
+              {/* Padding ridotto su mobile (p-5) per evitare che la card sia troppo compressa su schermi piccoli */}
               {experiences.map((exp, index) => (
-                <Card key={index} className="p-8 hover:shadow-[0_20px_40px_rgb(0,0,0,0.06)] transition-all duration-500 border-border/60 bg-card/60 backdrop-blur-xl rounded-xl relative overflow-hidden group">
+                <Card key={index} className="p-5 md:p-8 hover:shadow-[0_20px_40px_rgb(0,0,0,0.06)] transition-all duration-500 border-border/60 bg-card/60 backdrop-blur-xl rounded-xl relative overflow-hidden group">
                   <div className="absolute top-0 left-0 w-1 h-full bg-primary/40 group-hover:bg-primary transition-colors"></div>
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-6">
                     <div className="flex items-start gap-4 mb-4 md:mb-0">
@@ -133,7 +134,8 @@ export function Experience() {
                   
                   <div className="space-y-3 bg-background/50 p-5 rounded-lg border border-border/40 font-mono text-sm">
                     <p className="font-semibold text-primary uppercase tracking-wider text-xs">{"// Responsibilities"}</p>
-                    <ul className="grid md:grid-cols-2 gap-x-6 gap-y-3">
+                    {/* grid-cols-1 esplicito su mobile per leggibilità, 2 colonne da md in su */}
+                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
                       {exp.responsibilities.map((resp, idx) => (
                         <li key={idx} className="flex items-start gap-2 text-muted-foreground/90">
                           <span className="text-primary mt-0.5">-</span>

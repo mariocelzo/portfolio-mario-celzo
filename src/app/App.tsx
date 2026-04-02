@@ -7,6 +7,8 @@ import { Projects } from "./components/Projects";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 import { ThemeProvider } from "./components/ThemeProvider";
+// Vercel Analytics: traccia visitatori, paesi, dispositivi — attivo automaticamente su Vercel
+import { Analytics } from "@vercel/analytics/react";
 
 export default function App() {
   return (
@@ -22,6 +24,8 @@ export default function App() {
           <Contact />
         </main>
         <Footer />
+        {/* Componente Analytics: invisibile, si attiva solo su Vercel */}
+        <Analytics />
       </div>
     </ThemeProvider>
   );

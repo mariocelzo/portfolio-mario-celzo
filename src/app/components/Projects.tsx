@@ -23,8 +23,8 @@ const projects = [
     image: "https://images.unsplash.com/photo-1760888549280-4aef010720bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbW9iaWxlJTIwYXBwJTIwcGhvbmUlMjBmb29kfGVufDF8fHx8MTc3MzI1NTgyMHww&ixlib=rb-4.1.0&q=80&w=1080",
     tags: ["React Native", "Expo", "AI", "Google Maps API"],
     featured: true,
-    // Repo reale: resturant-finder su GitHub (nessuna demo pubblica disponibile)
-    github: "https://github.com/mariocelzo/resturant-finder"
+    github: "https://github.com/mariocelzo/resturant-finder",
+    demoSoon: true
   },
   {
     title: "BiblioFlow",
@@ -147,6 +147,7 @@ export function Projects() {
                   </div>
                   
                   <div className="flex gap-3 mt-auto">
+                    {/* Bottone demo: live se esiste, "coming soon" se demoSoon, assente se né l'uno né l'altro */}
                     {project.demo ? (
                       <Button size="sm" variant="default" className="flex-1 gap-2 rounded-md shadow-sm hover:shadow-md transition-shadow font-mono text-xs font-semibold" asChild>
                         <a href={project.demo} target="_blank" rel="noopener noreferrer">
@@ -154,12 +155,12 @@ export function Projects() {
                           [Live_Demo]
                         </a>
                       </Button>
-                    ) : (
-                      <Button size="sm" variant="secondary" className="flex-1 gap-2 rounded-md shadow-sm font-mono text-xs opacity-50 cursor-not-allowed hover:bg-secondary">
+                    ) : project.demoSoon ? (
+                      <Button size="sm" variant="secondary" className="flex-1 gap-2 rounded-md shadow-sm font-mono text-xs opacity-60 cursor-not-allowed hover:bg-secondary">
                         <Globe className="size-3.5" />
-                        [Private_Repo]
+                        [Demo_Soon]
                       </Button>
-                    )}
+                    ) : null}
                     <Button size="sm" variant="outline" className="gap-2 shrink-0 rounded-md hover:bg-secondary/50 border-border/60" asChild>
                       <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} on GitHub`}>
                         <Github className="size-4" />

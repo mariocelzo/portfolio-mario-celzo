@@ -109,7 +109,7 @@ export function About() {
                 </div>
                 <div>
                   <p className="text-muted-foreground mb-1">{"// langs"}</p>
-                  <p className="font-semibold text-foreground">[IT, EN, AR]</p>
+                  <p className="font-semibold text-foreground">[IT, EN]</p>
                 </div>
               </div>
             </Card>

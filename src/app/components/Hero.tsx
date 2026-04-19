@@ -161,7 +161,7 @@ export function Hero() {
               <BrandButton
                 variant="ghost"
                 size="icon"
-                href="https://linkedin.com/in/mario-celzo"
+                href="https://www.linkedin.com/in/mario-celzo-40917a2b9/"
                 aria-label="LinkedIn"
               >
                 <Linkedin size={20} />

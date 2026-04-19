@@ -61,18 +61,39 @@ export function About() {
                   flex: 1,
                   position: "relative",
                   overflow: "hidden",
-                  background: "#0A142F",
+                  // Background con gradient brand + highlight radiale per dare profondità
+                  background:
+                    "radial-gradient(circle at 50% 35%, #2A3B61 0%, #0A142F 70%)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
-                {/* Foto profilo — dal /public */}
+                {/* Pattern grid sottile di sfondo */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    backgroundImage:
+                      "linear-gradient(rgba(137,207,240,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(137,207,240,0.06) 1px, transparent 1px)",
+                    backgroundSize: "24px 24px",
+                    pointerEvents: "none",
+                  }}
+                />
+                {/* Foto profilo — centrata come avatar circolare, dimensione contenuta per evitare lo stretch */}
                 <img
                   src="/favicon.png"
                   alt="Mario Celzo"
                   style={{
-                    width: "100%",
-                    height: "100%",
+                    width: "55%",
+                    aspectRatio: "1 / 1",
                     objectFit: "cover",
-                    display: "block",
+                    borderRadius: "50%",
+                    border: "3px solid rgba(137,207,240,0.4)",
+                    boxShadow:
+                      "0 20px 60px -10px rgba(10,20,47,0.8), 0 0 0 8px rgba(137,207,240,0.08)",
+                    position: "relative",
+                    zIndex: 1,
                   }}
                 />
                 {/* Gradiente in basso per migliorare leggibilità metadata EXIF */}

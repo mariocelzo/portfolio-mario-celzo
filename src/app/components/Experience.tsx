@@ -1,211 +1,432 @@
-import { Briefcase, Calendar, GraduationCap, Terminal, GitCommit, GitBranch } from "lucide-react";
-import { Card } from "./ui/card";
-import { Badge } from "./ui/badge";
-import { motion } from "motion/react";
+/**
+ * Experience.tsx — "git log --oneline" section.
+ *
+ * Tre "branch" in stile git log:
+ *  1. feature/career       → card esperienze lavorative
+ *  2. feature/education    → timeline commit-dot verticale
+ *  3. docs/certs           → chip certificazioni
+ *
+ * Riferimento design: bundle Experience.jsx
+ */
+import { Terminal, GitBranch, GitCommit, Calendar, Check } from "lucide-react";
+import { Pill } from "./brand/Primitives";
+
+/* ===== Dati hardcoded — stessi del bundle ===== */
+const experiences = [
+  {
+    title: "Junior DevOps Engineer",
+    company: "Lutech",
+    period: "Jan 2026 - Present",
+    description:
+      "Managing infrastructure, deployments, and occasionally assisting with frontend development.",
+    responsibilities: [
+      "Building and maintaining CI/CD pipelines",
+      "Creating, managing, and fixing Kubernetes clusters",
+      "Docker containerization and microservices",
+      "Frontend dashboards using Angular",
+      "Microsoft Azure and Cosmos DB",
+    ],
+  },
+  {
+    title: "Salon Management Assistant",
+    company: "Perceberi Seby'Chic",
+    period: "Summer 2018-2019",
+    description: "Family business managing customer service and operations.",
+    responsibilities: [
+      "Customer service and promotions",
+      "Inventory control and stock",
+      "Multitasking during peak hours",
+      "Shift management and opening procedures",
+    ],
+  },
+];
 
 const education = [
   {
     degree: "Master's Degree in Software Engineering & IT Management",
     institution: "Università degli Studi di Salerno",
     period: "2025 - Present",
-    description: "Advanced studies in software engineering, IT management, and modern development practices.",
+    description:
+      "Advanced studies in software engineering, IT management, and modern development practices.",
   },
   {
     degree: "Bachelor's Degree in Computer Science",
     institution: "Università degli Studi di Salerno",
     period: "2022 - Dec. 2025",
-    description: "Comprehensive foundation in computer science, algorithms, data structures, and software development.",
+    description:
+      "Comprehensive foundation in computer science, algorithms, and software development.",
   },
   {
     degree: "Scientific High School Diploma",
     institution: "Liceo Tito Lucrezio Caro",
     period: "2017 - 2022",
-    description: "Strong foundation in mathematics, sciences, and analytical thinking.",
-  }
-];
-
-const experiences = [
-  {
-    title: "Junior DevOps Engineer",
-    company: "Lutech",
-    period: "Jan 2026 - Present",
-    description: "Working as a DevOps Engineer managing infrastructure, deployments, and occasionally assisting with frontend development.",
-    responsibilities: [
-      "Building and maintaining CI/CD pipelines",
-      "Creating, managing, and fixing Kubernetes clusters",
-      "Docker containerization and microservices management",
-      "Frontend development tasks and dashboards using Angular",
-      "Learning and implementing Microsoft Azure and Cosmos DB"
-    ]
+    description:
+      "Strong foundation in mathematics, sciences, and analytical thinking.",
   },
-  {
-    title: "Salon Management Assistant",
-    company: "Perceberi Seby'Chic",
-    period: "Summer 2018-2019",
-    description: "Family business activity managing customer service and operations.",
-    responsibilities: [
-      "Customer service and promotions management",
-      "Inventory control and stock management",
-      "Multitasking during peak hours",
-      "Shift management and opening procedures"
-    ]
-  }
 ];
 
-const certifications = [
-  "AI Fundamentals Course",
-  "Git & GitHub Basics",
-  "React Development"
-];
+const certs = ["AI Fundamentals Course", "Git & GitHub Basics", "React Development"];
 
 export function Experience() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-  };
-
   return (
-    <section id="experience" className="py-24 bg-muted/30 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+    <section
+      id="experience"
+      className="mc-section"
+      style={{ background: "color-mix(in oklab, var(--muted) 30%, transparent)" }}
+    >
+      <div
+        className="mc-grid-bg"
+        style={{
+          position: "absolute",
+          inset: 0,
+          opacity: 0.5,
+          pointerEvents: "none",
+        }}
+      />
+      <div className="mc-container" style={{ position: "relative" }}>
+        <div className="mc-section__head">
+          <Pill icon={Terminal}>git log --oneline</Pill>
+          <h2 className="mc-section-title">Timeline &amp; Experience</h2>
+        </div>
 
-      <div className="container mx-auto px-6 md:px-12 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-20 flex flex-col items-center"
+        <div
+          style={{
+            maxWidth: 880,
+            margin: "0 auto",
+            display: "flex",
+            flexDirection: "column",
+            gap: 80,
+          }}
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-secondary/50 border border-border/50 font-mono text-sm text-primary mb-4 shadow-sm">
-            <Terminal className="size-4" />
-            <span>git log --oneline</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">Timeline & Experience</h2>
-        </motion.div>
-        
-        <div className="max-w-4xl mx-auto space-y-20">
-          
-          {/* Work Experience Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-8"
-          >
-            <h3 className="text-2xl font-mono font-bold mb-8 flex items-center gap-3 text-foreground">
-              <GitBranch className="size-6 text-primary" />
-              <span>branch: <span className="text-primary">feature/career</span></span>
+          {/* ===== Branch feature/career — esperienze ===== */}
+          <div>
+            <h3
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 22,
+                fontWeight: 700,
+                marginBottom: 32,
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+              }}
+            >
+              <GitBranch size={22} style={{ color: "var(--primary)" }} />
+              <span>
+                branch:{" "}
+                <span style={{ color: "var(--primary)" }}>feature/career</span>
+              </span>
             </h3>
-            
-            <div className="space-y-8">
-              {/* Padding ridotto su mobile (p-5) per evitare che la card sia troppo compressa su schermi piccoli */}
-              {experiences.map((exp, index) => (
-                <Card key={index} className="p-5 md:p-8 hover:shadow-[0_20px_40px_rgb(0,0,0,0.06)] transition-all duration-500 border-border/60 bg-card/60 backdrop-blur-xl rounded-xl relative overflow-hidden group">
-                  <div className="absolute top-0 left-0 w-1 h-full bg-primary/40 group-hover:bg-primary transition-colors"></div>
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-6">
-                    <div className="flex items-start gap-4 mb-4 md:mb-0">
-                      <div>
-                        <h4 className="text-2xl font-bold tracking-tight text-foreground mb-1">{exp.title}</h4>
-                        <div className="flex items-center gap-2 text-primary font-mono text-sm">
-                          <span>@ {exp.company}</span>
-                        </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+              {experiences.map((e, i) => (
+                <div
+                  key={i}
+                  className="mc-card"
+                  style={{ padding: 32, position: "relative" }}
+                >
+                  {/* Bordo sinistro primary — signature del brand */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: 3,
+                      height: "100%",
+                      background:
+                        "color-mix(in oklab, var(--primary) 40%, transparent)",
+                    }}
+                  />
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
+                      gap: 16,
+                      marginBottom: 20,
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <div>
+                      <div
+                        style={{
+                          fontSize: 24,
+                          fontWeight: 700,
+                          letterSpacing: "-0.015em",
+                          marginBottom: 4,
+                        }}
+                      >
+                        {e.title}
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: "var(--font-mono)",
+                          color: "var(--primary)",
+                          fontSize: 14,
+                        }}
+                      >
+                        @ {e.company}
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 text-muted-foreground bg-muted/50 border border-border/40 px-3 py-1.5 rounded-md font-mono text-xs shrink-0 shadow-sm">
-                      <Calendar className="size-3" />
-                      <span>{exp.period}</span>
+                    {/* Chip periodo con icona calendario */}
+                    <div
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 8,
+                        padding: "6px 12px",
+                        background:
+                          "color-mix(in oklab, var(--muted) 50%, transparent)",
+                        border:
+                          "1px solid color-mix(in oklab, var(--border) 40%, transparent)",
+                        borderRadius: 10,
+                        fontFamily: "var(--font-mono)",
+                        fontSize: 12,
+                        color: "var(--muted-foreground)",
+                      }}
+                    >
+                      <Calendar size={14} />
+                      {e.period}
                     </div>
                   </div>
-                  
-                  <p className="text-foreground/80 mb-6 leading-relaxed font-mono text-[14px]">
-                    <span className="text-primary">{">"}</span> {exp.description}
+
+                  <p
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 14,
+                      lineHeight: 1.6,
+                      color: "color-mix(in oklab, var(--foreground) 80%, transparent)",
+                      marginBottom: 20,
+                    }}
+                  >
+                    <span style={{ color: "var(--primary)" }}>&gt;</span>{" "}
+                    {e.description}
                   </p>
-                  
-                  <div className="space-y-3 bg-background/50 p-5 rounded-lg border border-border/40 font-mono text-sm">
-                    <p className="font-semibold text-primary uppercase tracking-wider text-xs">{"// Responsibilities"}</p>
-                    {/* grid-cols-1 esplicito su mobile per leggibilità, 2 colonne da md in su */}
-                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
-                      {exp.responsibilities.map((resp, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-muted-foreground/90">
-                          <span className="text-primary mt-0.5">-</span>
-                          <span>{resp}</span>
+
+                  {/* Box "Responsibilities" */}
+                  <div
+                    style={{
+                      padding: 20,
+                      background:
+                        "color-mix(in oklab, var(--background) 50%, transparent)",
+                      borderRadius: 10,
+                      border:
+                        "1px solid color-mix(in oklab, var(--border) 40%, transparent)",
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 13,
+                    }}
+                  >
+                    <div
+                      style={{
+                        color: "var(--primary)",
+                        fontWeight: 600,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.1em",
+                        fontSize: 11,
+                        marginBottom: 12,
+                      }}
+                    >
+                      {"// Responsibilities"}
+                    </div>
+                    <ul
+                      className="mc-resp-grid"
+                      style={{
+                        listStyle: "none",
+                        padding: 0,
+                        margin: 0,
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1fr",
+                        gap: "12px 24px",
+                      }}
+                    >
+                      {e.responsibilities.map((r, idx) => (
+                        <li
+                          key={idx}
+                          style={{
+                            display: "flex",
+                            alignItems: "flex-start",
+                            gap: 8,
+                            color:
+                              "color-mix(in oklab, var(--muted-foreground) 90%, transparent)",
+                          }}
+                        >
+                          <span style={{ color: "var(--primary)", marginTop: 2 }}>
+                            -
+                          </span>
+                          <span>{r}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
-                </Card>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          {/* Education Section */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="pt-8"
-          >
-            <motion.h3 variants={itemVariants} className="text-2xl font-mono font-bold mb-8 flex items-center gap-3 text-foreground">
-              <GitBranch className="size-6 text-primary" />
-              <span>branch: <span className="text-primary">feature/education</span></span>
-            </motion.h3>
-            
-            <div className="space-y-6 relative before:absolute before:inset-0 before:ml-[1.4rem] md:before:mx-auto md:before:translate-x-0 before:h-full before:w-[2px] before:bg-border/60">
-              {education.map((edu, index) => (
-                <motion.div key={index} variants={itemVariants} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                  <div className="flex items-center justify-center w-12 h-12 rounded-full border-4 border-background bg-secondary text-primary shadow-sm shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
-                    <GitCommit className="size-5" />
-                  </div>
-                  <Card className="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] p-6 hover:shadow-lg transition-all duration-300 border-border/60 bg-card/60 backdrop-blur-xl rounded-xl">
-                    <div className="flex flex-col mb-3">
-                      <div className="flex items-center gap-2 text-muted-foreground mb-3 font-mono text-xs bg-muted/50 border border-border/40 w-fit px-2 py-1 rounded-md">
-                        <Calendar className="size-3" />
-                        <span>{edu.period}</span>
-                      </div>
-                      <h4 className="text-lg font-bold leading-tight tracking-tight text-foreground">{edu.degree}</h4>
-                      <p className="text-primary font-mono text-xs mt-2">@ {edu.institution}</p>
-                    </div>
-                    <p className="text-muted-foreground/90 text-sm leading-relaxed font-mono mt-3">{"//"} {edu.description}</p>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Certifications Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="pt-8"
-          >
-            <h3 className="text-2xl font-mono font-bold mb-8 flex items-center gap-3 text-foreground">
-              <GitBranch className="size-6 text-primary" />
-              <span>branch: <span className="text-primary">docs/certs</span></span>
+          {/* ===== Branch feature/education — timeline verticale ===== */}
+          <div>
+            <h3
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 22,
+                fontWeight: 700,
+                marginBottom: 32,
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+              }}
+            >
+              <GitBranch size={22} style={{ color: "var(--primary)" }} />
+              <span>
+                branch:{" "}
+                <span style={{ color: "var(--primary)" }}>feature/education</span>
+              </span>
             </h3>
-            <Card className="p-6 border-border/60 bg-card/60 backdrop-blur-xl rounded-xl">
-              <div className="flex flex-wrap gap-3">
-                {certifications.map((cert, index) => (
-                  <div key={index} className="flex items-center text-sm py-2 px-4 shadow-sm bg-background border border-border/60 hover:bg-secondary/50 transition-colors rounded-md font-mono text-foreground/80">
-                    <span className="text-primary mr-2">✓</span> {cert}
+            <div style={{ position: "relative" }}>
+              {/* Linea verticale che collega i commit dot */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: 23,
+                  top: 0,
+                  bottom: 0,
+                  width: 2,
+                  background: "color-mix(in oklab, var(--border) 60%, transparent)",
+                }}
+              />
+              {education.map((ed, i) => (
+                <div
+                  key={i}
+                  style={{
+                    display: "flex",
+                    gap: 32,
+                    marginBottom: 24,
+                    position: "relative",
+                  }}
+                >
+                  {/* Commit dot */}
+                  <div
+                    style={{
+                      width: 48,
+                      height: 48,
+                      borderRadius: "50%",
+                      border: "4px solid var(--background)",
+                      background: "var(--secondary)",
+                      color: "var(--primary)",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                      position: "relative",
+                      zIndex: 1,
+                      boxShadow: "var(--shadow-sm)",
+                    }}
+                  >
+                    <GitCommit size={18} />
+                  </div>
+                  <div className="mc-card" style={{ flex: 1, padding: 20 }}>
+                    <div
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 6,
+                        padding: "4px 10px",
+                        background:
+                          "color-mix(in oklab, var(--muted) 50%, transparent)",
+                        border:
+                          "1px solid color-mix(in oklab, var(--border) 40%, transparent)",
+                        borderRadius: 8,
+                        fontFamily: "var(--font-mono)",
+                        fontSize: 11,
+                        color: "var(--muted-foreground)",
+                        marginBottom: 10,
+                      }}
+                    >
+                      <Calendar size={12} />
+                      {ed.period}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: 17,
+                        fontWeight: 700,
+                        letterSpacing: "-0.01em",
+                        lineHeight: 1.3,
+                      }}
+                    >
+                      {ed.degree}
+                    </div>
+                    <div
+                      style={{
+                        color: "var(--primary)",
+                        fontFamily: "var(--font-mono)",
+                        fontSize: 12,
+                        marginTop: 6,
+                      }}
+                    >
+                      @ {ed.institution}
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: 13,
+                        lineHeight: 1.6,
+                        color: "var(--muted-foreground)",
+                        marginTop: 12,
+                      }}
+                    >
+                      // {ed.description}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ===== Branch docs/certs — chip certificazioni ===== */}
+          <div>
+            <h3
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 22,
+                fontWeight: 700,
+                marginBottom: 32,
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+              }}
+            >
+              <GitBranch size={22} style={{ color: "var(--primary)" }} />
+              <span>
+                branch:{" "}
+                <span style={{ color: "var(--primary)" }}>docs/certs</span>
+              </span>
+            </h3>
+            <div className="mc-card" style={{ padding: 24 }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+                {certs.map((c) => (
+                  <div
+                    key={c}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "10px 16px",
+                      background: "var(--background)",
+                      border: "1px solid color-mix(in oklab, var(--border) 60%, transparent)",
+                      borderRadius: 10,
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 13,
+                      color: "color-mix(in oklab, var(--foreground) 80%, transparent)",
+                    }}
+                  >
+                    <span style={{ color: "var(--primary)" }}>
+                      <Check size={14} />
+                    </span>
+                    {c}
                   </div>
                 ))}
               </div>
-            </Card>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

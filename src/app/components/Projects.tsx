@@ -1,195 +1,308 @@
-import { ExternalLink, Github, Globe, Box, Code2 } from "lucide-react";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
-import { Card } from "./ui/card";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { motion } from "motion/react";
+/**
+ * Projects.tsx — "kubectl get deployments" section.
+ *
+ * 5 card con gradient visuals:
+ *  - TARGET, NearBite, BiblioFlow, BODY-LIFE, PetClinic Dependability
+ * Ogni card ha:
+ *  - card__header con codice YAML
+ *  - visual con gradient + label centrale
+ *  - version badge, tag chip
+ *  - bottoni: [Live_Demo] o [Demo_Soon] + GitHub icon
+ *
+ * NOTE BACKEND preservate:
+ *  - Link GitHub reali
+ *  - NearBite con demoSoon:true → mostra [Demo_Soon] disabilitato
+ *  - PetClinic senza demo → solo GitHub
+ *
+ * Riferimento design: bundle Projects.jsx
+ */
+import { Box, Code2, Globe, Github } from "lucide-react";
+import { BrandButton, Pill, VersionBadge } from "./brand/Primitives";
 
-const projects = [
+type Project = {
+  title: string;
+  year: string;
+  description: string;
+  tags: string[];
+  featured?: boolean;
+  demo?: string;
+  demoSoon?: boolean;
+  github: string;
+  gradient: string;
+};
+
+const projects: Project[] = [
   {
     title: "TARGET",
     year: "2024",
-    description: "Platform for students to buy/sell university notes with social features. Built with a team of 3 using Agile methodology with strong focus on UX/UI design.",
-    image: "https://images.unsplash.com/photo-1758270704025-0e1a1793e1ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwc3R1ZHlpbmclMjBzdHVkZW50cyUyMG5vdGVzfGVufDF8fHx8MTc3MzI1NTgyMHww&ixlib=rb-4.1.0&q=80&w=1080",
+    description:
+      "Platform for students to buy/sell university notes with social features. Team of 3, Agile, strong UX/UI focus.",
     tags: ["UX/UI Design", "Agile", "Social Platform", "Figma"],
     featured: true,
+    demo: "https://v0-target-svp6klexsij.vercel.app",
     github: "https://github.com/mariocelzo/Target",
-    demo: "https://v0-target-svp6klexsij.vercel.app"
+    gradient: "linear-gradient(135deg, #2A3B61, #89CFF0)",
   },
   {
     title: "NearBite",
     year: "2025",
-    description: "Cross-platform mobile app for restaurant reviews with real-time updates, Google Maps integration, and AI-powered recommendations with modern fluid animations.",
-    image: "https://images.unsplash.com/photo-1760888549280-4aef010720bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbW9iaWxlJTIwYXBwJTIwcGhvbmUlMjBmb29kfGVufDF8fHx8MTc3MzI1NTgyMHww&ixlib=rb-4.1.0&q=80&w=1080",
+    description:
+      "Cross-platform mobile app for restaurant reviews with real-time updates, Google Maps, and AI recommendations.",
     tags: ["React Native", "Expo", "AI", "Google Maps API"],
     featured: true,
+    demoSoon: true,
     github: "https://github.com/mariocelzo/resturant-finder",
-    demoSoon: true
+    gradient: "linear-gradient(135deg, #0A142F, #506182)",
   },
   {
     title: "BiblioFlow",
     year: "2023",
-    description: "Intelligent university library management system with sensor-based study post tracking, interactive dashboard, and focus on accessibility and sustainability.",
-    image: "https://images.unsplash.com/photo-1762512346990-22d810fe4252?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwbGlicmFyeSUyMG1vZGVybiUyMHJlYWRpbmd8ZW58MXx8fHwxNzczMjU1ODIwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    description:
+      "University library management with sensor-based study-post tracking, dashboard, accessibility & sustainability focus.",
     tags: ["Human Computation", "IoT", "Next.js", "PWA", "Accessibility"],
     featured: true,
+    demo: "https://biblioflow-app.vercel.app",
     github: "https://github.com/mariocelzo/biblioflow-app",
-    demo: "https://biblioflow-app.vercel.app"
+    gradient: "linear-gradient(135deg, #506182, #D1DDEB)",
   },
   {
     title: "BODY-LIFE",
     year: "2023",
-    description: "Complete fitness app with social features and Human-Machine Interaction monitoring. Includes interactive dashboard, personalized workouts, and full UX/UI design in Figma.",
-    image: "https://images.unsplash.com/photo-1591311630200-ffa9120a540f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwYXBwJTIwbW9iaWxlJTIwd29ya291dHxlbnwxfHx8fDE3NzMyNTU4MjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    description:
+      "Fitness app with social features and HMI monitoring. Interactive dashboard, workouts, full UX/UI in Figma.",
     tags: ["React", "Java", "Figma", "Wireframing"],
-    featured: false,
     github: "https://github.com/mariocelzo/body-life",
-    demo: "https://body-life-teal.vercel.app"
+    demo: "https://body-life-teal.vercel.app",
+    gradient: "linear-gradient(135deg, #1E2B4A, #829EC2)",
   },
   {
     title: "PetClinic Dependability",
     year: "2023",
-    description: "Software dependability analysis for Spring PetClinic with fault injection using Chaos Monkey, FMEA, reliability analysis, and complete DevOps CI/CD pipeline.",
-    image: "https://images.unsplash.com/photo-1744868562210-fffb7fa882d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZXJ2ZXIlMjByb29tJTIwZGF0YSUyMGNlbnRlcnxlbnwxfHx8fDE3NzMxNzgxNTJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    description:
+      "Software dependability analysis for Spring PetClinic — fault injection, FMEA, reliability analysis, DevOps pipeline.",
     tags: ["DevOps", "CI/CD", "Docker", "SonarCloud", "GitHub Actions"],
-    featured: false,
-    github: "https://github.com/mariocelzo/petclinic-dependability-analysis"
-  }
+    github: "https://github.com/mariocelzo/petclinic-dependability-analysis",
+    gradient: "linear-gradient(135deg, #0A142F, #2A3B61)",
+  },
 ];
 
 export function Projects() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-  };
-
   return (
-    <section id="projects" className="py-24 bg-muted/20 relative">
-      <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-secondary/20 rounded-full blur-[120px] -z-10 mix-blend-multiply dark:mix-blend-screen pointer-events-none"></div>
-      
-      <div className="container mx-auto px-6 md:px-12 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16 flex flex-col items-center"
-        >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-secondary/50 border border-border/50 font-mono text-sm text-primary mb-4 shadow-sm">
-            <Box className="size-4" />
-            <span>kubectl get deployments</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">Deployed Work</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-mono text-sm">
-            {"// A collection of microservices, apps, and platforms I've built."}
+    <section
+      id="projects"
+      className="mc-section"
+      style={{ background: "color-mix(in oklab, var(--muted) 20%, transparent)" }}
+    >
+      <div className="mc-container" style={{ position: "relative" }}>
+        <div className="mc-section__head">
+          <Pill icon={Box}>kubectl get deployments</Pill>
+          <h2 className="mc-section-title">Deployed Work</h2>
+          <p className="mc-comment" style={{ fontSize: 14, margin: 0 }}>
+            A collection of microservices, apps, and platforms I've built.
           </p>
-        </motion.div>
-        
-        {/* Gap ridotto su mobile (gap-5) per contenere le card senza troppo spazio vuoto */}
-        <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8 max-w-7xl mx-auto"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: 24,
+            maxWidth: 1200,
+            margin: "0 auto",
+          }}
         >
-          {projects.map((project, index) => (
-            <motion.div key={index} variants={itemVariants} className="h-full">
-              <Card className="h-full flex flex-col overflow-hidden hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 border-border/60 bg-card/60 backdrop-blur-xl rounded-xl group relative">
-                {/* Simulated Container Header */}
-                <div className="h-8 bg-muted/50 border-b border-border/60 flex items-center px-3 gap-2">
-                  <Code2 className="size-3 text-muted-foreground" />
-                  <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest">{project.title.toLowerCase()}.yaml</span>
+          {projects.map((p, i) => (
+            <div
+              key={i}
+              className="mc-card"
+              style={{ display: "flex", flexDirection: "column" }}
+            >
+              {/* Header della card — nome file YAML */}
+              <div className="mc-card__header">
+                <Code2 size={12} /> <span>{p.title.toLowerCase()}.yaml</span>
+              </div>
+
+              {/* Visual con gradient + titolo centrato */}
+              <div
+                style={{
+                  aspectRatio: "16/10",
+                  background: p.gradient,
+                  position: "relative",
+                }}
+              >
+                {/* Highlight diagonale per dare profondità */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background:
+                      "radial-gradient(circle at 30% 20%, rgba(255,255,255,0.15), transparent 60%)",
+                  }}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontFamily: "var(--font-mono)",
+                    fontWeight: 700,
+                    fontSize: 28,
+                    color: "rgba(255,255,255,0.92)",
+                    letterSpacing: "-0.02em",
+                    textShadow: "0 2px 12px rgba(0,0,0,0.3)",
+                  }}
+                >
+                  {p.title}
+                </div>
+                {/* Badge "★ ACTIVE" per i progetti featured */}
+                {p.featured && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: 12,
+                      right: 12,
+                      background: "color-mix(in oklab, var(--card) 90%, transparent)",
+                      backdropFilter: "blur(10px)",
+                      color: "var(--primary)",
+                      padding: "4px 10px",
+                      borderRadius: 6,
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 10,
+                      fontWeight: 700,
+                      border: "1px solid color-mix(in oklab, var(--border) 60%, transparent)",
+                      letterSpacing: "0.1em",
+                    }}
+                  >
+                    ★ ACTIVE
+                  </div>
+                )}
+              </div>
+
+              {/* Body della card */}
+              <div
+                style={{
+                  padding: 28,
+                  display: "flex",
+                  flexDirection: "column",
+                  flex: 1,
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                    gap: 8,
+                    marginBottom: 14,
+                  }}
+                >
+                  <h3
+                    style={{
+                      fontSize: 22,
+                      fontWeight: 700,
+                      letterSpacing: "-0.015em",
+                      margin: 0,
+                      lineHeight: 1.2,
+                    }}
+                  >
+                    {p.title}
+                  </h3>
+                  <VersionBadge>v{p.year}.0</VersionBadge>
                 </div>
 
-                <div className="aspect-[16/10] relative overflow-hidden bg-background">
-                  <div className="absolute inset-0 bg-primary/10 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <ImageWithFallback
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-105 group-hover:grayscale-[20%] transition-all duration-700 ease-out"
-                  />
-                  {project.featured && (
-                    <div className="absolute top-3 right-3 z-20 bg-background/90 backdrop-blur-md text-primary px-2.5 py-1 rounded-md text-[10px] font-mono font-bold shadow-sm border border-border/60 uppercase tracking-wider">
-                      ★ Active
-                    </div>
-                  )}
+                <p
+                  style={{
+                    color: "var(--muted-foreground)",
+                    fontSize: 13,
+                    flexGrow: 1,
+                    lineHeight: 1.6,
+                    fontFamily: "var(--font-mono)",
+                    marginBottom: 20,
+                  }}
+                >
+                  <span style={{ color: "var(--primary)", marginRight: 4 }}>&gt;</span>
+                  {p.description}
+                </p>
+
+                {/* Tags */}
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: 6,
+                    marginBottom: 24,
+                  }}
+                >
+                  {p.tags.map((t) => (
+                    <span
+                      key={t}
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: 11,
+                        background: "color-mix(in oklab, var(--secondary) 50%, transparent)",
+                        color: "color-mix(in oklab, var(--foreground) 80%, transparent)",
+                        border: "1px solid color-mix(in oklab, var(--border) 60%, transparent)",
+                        borderRadius: 4,
+                        padding: "2px 8px",
+                      }}
+                    >
+                      {t}
+                    </span>
+                  ))}
                 </div>
-                
-                <div className="p-6 md:p-8 flex flex-col flex-grow bg-card/50">
-                  <div className="flex items-start justify-between mb-4 gap-2">
-                    <h3 className="text-xl font-bold leading-tight tracking-tight text-foreground">{project.title}</h3>
-                    <Badge variant="outline" className="font-mono text-xs shrink-0 rounded-md border-border/60 bg-background">
-                      v{project.year}.0
-                    </Badge>
-                  </div>
-                  <p className="text-muted-foreground mb-6 text-sm flex-grow leading-relaxed font-mono">
-                    <span className="text-primary mr-1">{">"}</span>
-                    {project.description}
-                  </p>
-                  
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {project.tags.map((tag, idx) => (
-                      <span key={idx} className="text-[11px] font-mono bg-secondary/50 text-foreground/80 border border-border/60 rounded px-2 py-0.5">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  <div className="flex gap-3 mt-auto">
-                    {/* Bottone demo: live se esiste, "coming soon" se demoSoon, assente se né l'uno né l'altro */}
-                    {project.demo ? (
-                      <Button size="sm" variant="default" className="flex-1 gap-2 rounded-md shadow-sm hover:shadow-md transition-shadow font-mono text-xs font-semibold" asChild>
-                        <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                          <Globe className="size-3.5" />
-                          [Live_Demo]
-                        </a>
-                      </Button>
-                    ) : project.demoSoon ? (
-                      <Button size="sm" variant="secondary" className="flex-1 gap-2 rounded-md shadow-sm font-mono text-xs opacity-60 cursor-not-allowed hover:bg-secondary">
-                        <Globe className="size-3.5" />
-                        [Demo_Soon]
-                      </Button>
-                    ) : null}
-                    <Button size="sm" variant="outline" className="gap-2 shrink-0 rounded-md hover:bg-secondary/50 border-border/60" asChild>
-                      <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} on GitHub`}>
-                        <Github className="size-4" />
-                      </a>
-                    </Button>
-                  </div>
+
+                {/* Action buttons — demo / demoSoon / solo GitHub */}
+                <div style={{ display: "flex", gap: 10, marginTop: "auto" }}>
+                  {p.demo ? (
+                    <BrandButton
+                      size="sm"
+                      variant="primary"
+                      href={p.demo}
+                      style={{ flex: 1 }}
+                    >
+                      <Globe size={14} /> [Live_Demo]
+                    </BrandButton>
+                  ) : p.demoSoon ? (
+                    <BrandButton
+                      size="sm"
+                      variant="secondary"
+                      disabled
+                      style={{ flex: 1, opacity: 0.6, cursor: "not-allowed" }}
+                    >
+                      <Globe size={14} /> [Demo_Soon]
+                    </BrandButton>
+                  ) : null}
+                  <BrandButton
+                    size="sm"
+                    variant="outline"
+                    href={p.github}
+                    aria-label="GitHub"
+                    style={{ padding: "0 12px" }}
+                  >
+                    <Github size={16} />
+                  </BrandButton>
                 </div>
-              </Card>
-            </motion.div>
+              </div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-20 text-center"
-        >
-          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto font-mono text-sm">
-            {"/* Looking for more academic projects in Algorithms, Databases, Web Programming, and OS? */"}
+        {/* CTA finale — cd ~/github/repositories */}
+        <div style={{ marginTop: 80, textAlign: "center" }}>
+          <p className="mc-comment" style={{ fontSize: 14, marginBottom: 24 }}>
+            Looking for more academic projects in Algorithms, Databases, Web
+            Programming, and OS?
           </p>
-          <Button variant="outline" size="lg" className="rounded-md shadow-sm hover:-translate-y-1 transition-all border-border/60 font-mono text-sm px-8 bg-background/50 backdrop-blur-sm" asChild>
-            <a href="https://github.com/mariocelzo" target="_blank" rel="noopener noreferrer">
-              <Github className="size-4 mr-2" />
-              cd ~/github/repositories
-            </a>
-          </Button>
-        </motion.div>
+          <BrandButton
+            variant="outline"
+            size="lg"
+            href="https://github.com/mariocelzo"
+          >
+            <Github size={16} /> cd ~/github/repositories
+          </BrandButton>
+        </div>
       </div>
     </section>
   );

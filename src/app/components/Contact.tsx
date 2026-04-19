@@ -1,105 +1,175 @@
-import { Mail, MapPin, Phone, TerminalSquare } from "lucide-react";
-import { Card } from "./ui/card";
-import { motion } from "motion/react";
+/**
+ * Contact.tsx — "curl -X POST /api/contact" section.
+ *
+ * Sezione contatto centrata (max-width 640px):
+ *  - Pill + titolo "Establish Connection"
+ *  - Paragrafo intro con prompt ">"
+ *  - 3 card info con icona box: email / phone / location (formato JSON `"key": "value"`)
+ *  - Chip "Interests" con emoji
+ *
+ * Niente form — solo info dirette (mailto/tel).
+ *
+ * Riferimento design: bundle ContactFooter.jsx::Contact
+ */
+import { TerminalSquare, Mail, Phone, MapPin } from "lucide-react";
+import type { ComponentType } from "react";
+import { Pill } from "./brand/Primitives";
+
+// Tupla [Icon, key JSON, value, href opzionale]
+type Info = [ComponentType<{ size?: number }>, string, string, string | null];
+
+const infos: Info[] = [
+  [Mail, "email", "mariocelzo003@gmail.com", "mailto:mariocelzo003@gmail.com"],
+  [Phone, "phone", "+39 328 340 3546", "tel:+393283403546"],
+  [MapPin, "location", "Salerno, Italy (Remote)", null],
+];
+
+const interests = ["🏎️ Formula 1", "✈️ Travel", "💻 System Design", "🎮 Gaming"];
 
 export function Contact() {
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-  };
-
   return (
-    <section id="contact" className="py-24 bg-background relative overflow-hidden">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
-      <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+    <section id="contact" className="mc-section">
+      {/* Grid background + glow per atmosfera terminale */}
+      <div
+        className="mc-grid-bg"
+        style={{
+          position: "absolute",
+          inset: 0,
+          opacity: 0.5,
+          pointerEvents: "none",
+        }}
+      />
+      <div className="mc-glow-primary" style={{ top: 0, left: "40%" }} />
 
-      <div className="container mx-auto px-6 md:px-12 relative z-10">
-        {/* Intestazione sezione */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-20 flex flex-col items-center"
-        >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-secondary/50 border border-border/50 font-mono text-sm text-primary mb-4 shadow-sm">
-            <TerminalSquare className="size-4" />
-            <span>curl -X POST /api/contact</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-foreground">Establish Connection</h2>
-        </motion.div>
+      <div className="mc-container" style={{ position: "relative" }}>
+        <div className="mc-section__head">
+          <Pill icon={TerminalSquare}>curl -X POST /api/contact</Pill>
+          <h2 className="mc-section-title">Establish Connection</h2>
+        </div>
 
-        {/* Contenuto centrato: testo + info di contatto + interessi */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          transition={{ staggerChildren: 0.1 }}
-          className="max-w-2xl mx-auto"
-        >
-          <motion.h3 variants={itemVariants} className="text-2xl font-mono font-bold mb-6 tracking-tight text-foreground">
+        <div style={{ maxWidth: 640, margin: "0 auto" }}>
+          {/* Heading "commento" in stile codice */}
+          <h3
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: 24,
+              fontWeight: 700,
+              marginBottom: 24,
+            }}
+          >
             {"// Let's collaborate"}
-          </motion.h3>
-          <motion.p variants={itemVariants} className="text-muted-foreground mb-10 leading-relaxed font-mono text-[14px]">
-            <span className="text-primary">{">"}</span> I'm currently seeking opportunities for junior DevOps or full-stack positions.
-            Open to discussing architecture, CI/CD pipelines, or just connecting with fellow developers!
-          </motion.p>
+          </h3>
 
-          {/* Card contatti: email, telefono, location */}
-          <div className="space-y-4 mb-12">
-            <motion.div variants={itemVariants}>
-              <Card className="p-4 flex items-center gap-4 hover:shadow-lg transition-all duration-300 border-border/60 bg-card/40 backdrop-blur-md rounded-xl font-mono text-sm group">
-                <div className="p-2.5 rounded-md bg-secondary/50 text-primary border border-border/60 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  <Mail className="size-4" />
-                </div>
-                <div>
-                  <p className="text-muted-foreground text-xs mb-0.5">"email":</p>
-                  <a href="mailto:mariocelzo003@gmail.com" className="text-foreground hover:text-primary transition-colors">
-                    "mariocelzo003@gmail.com"
-                  </a>
-                </div>
-              </Card>
-            </motion.div>
+          {/* Paragrafo intro con prompt ">" */}
+          <p
+            style={{
+              color: "var(--muted-foreground)",
+              fontFamily: "var(--font-mono)",
+              fontSize: 14,
+              lineHeight: 1.7,
+              marginBottom: 40,
+            }}
+          >
+            <span style={{ color: "var(--primary)" }}>&gt;</span> I'm currently
+            seeking opportunities for junior DevOps or full-stack positions.
+            Open to discussing architecture, CI/CD pipelines, or connecting with
+            fellow developers!
+          </p>
 
-            <motion.div variants={itemVariants}>
-              <Card className="p-4 flex items-center gap-4 hover:shadow-lg transition-all duration-300 border-border/60 bg-card/40 backdrop-blur-md rounded-xl font-mono text-sm group">
-                <div className="p-2.5 rounded-md bg-secondary/50 text-primary border border-border/60 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  <Phone className="size-4" />
+          {/* Card info contatto in formato JSON */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 16,
+              marginBottom: 48,
+            }}
+          >
+            {infos.map(([Ic, k, v, href], i) => (
+              <div
+                key={i}
+                className="mc-card"
+                style={{
+                  padding: 16,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 16,
+                }}
+              >
+                {/* Box icona con background secondary */}
+                <div
+                  style={{
+                    padding: 10,
+                    borderRadius: 10,
+                    background:
+                      "color-mix(in oklab, var(--secondary) 50%, transparent)",
+                    border:
+                      "1px solid color-mix(in oklab, var(--border) 60%, transparent)",
+                    color: "var(--primary)",
+                  }}
+                >
+                  <Ic size={18} />
                 </div>
-                <div>
-                  <p className="text-muted-foreground text-xs mb-0.5">"phone":</p>
-                  <a href="tel:+393283403546" className="text-foreground hover:text-primary transition-colors">
-                    "+39 328 340 3546"
-                  </a>
+                <div style={{ fontFamily: "var(--font-mono)", fontSize: 14 }}>
+                  <div
+                    style={{
+                      color: "var(--muted-foreground)",
+                      fontSize: 11,
+                      marginBottom: 2,
+                    }}
+                  >
+                    "{k}":
+                  </div>
+                  {href ? (
+                    <a
+                      href={href}
+                      style={{
+                        color: "var(--foreground)",
+                        textDecoration: "none",
+                      }}
+                    >
+                      "{v}"
+                    </a>
+                  ) : (
+                    <div>"{v}"</div>
+                  )}
                 </div>
-              </Card>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <Card className="p-4 flex items-center gap-4 hover:shadow-lg transition-all duration-300 border-border/60 bg-card/40 backdrop-blur-md rounded-xl font-mono text-sm group">
-                <div className="p-2.5 rounded-md bg-secondary/50 text-primary border border-border/60 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  <MapPin className="size-4" />
-                </div>
-                <div>
-                  <p className="text-muted-foreground text-xs mb-0.5">"location":</p>
-                  <p className="text-foreground">"Salerno, Italy (Remote)"</p>
-                </div>
-              </Card>
-            </motion.div>
+              </div>
+            ))}
           </div>
 
-          {/* Interessi personali */}
-          <motion.div variants={itemVariants}>
-            <h4 className="font-mono font-bold mb-4 text-primary text-sm">{"/* Interests */"}</h4>
-            <div className="flex flex-wrap gap-2">
-              {["🏎️ Formula 1", "✈️ Travel", "💻 System Design", "🎮 Gaming"].map((interest, i) => (
-                <div key={i} className="px-3 py-1.5 bg-secondary/30 border border-border/60 rounded-md shadow-sm">
-                  <span className="text-xs font-mono text-foreground/80">{interest}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </motion.div>
+          {/* Interests come commento C-style + chip emoji */}
+          <h4
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontWeight: 700,
+              color: "var(--primary)",
+              fontSize: 14,
+              marginBottom: 14,
+            }}
+          >
+            {"/* Interests */"}
+          </h4>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {interests.map((int) => (
+              <div
+                key={int}
+                style={{
+                  padding: "6px 12px",
+                  background:
+                    "color-mix(in oklab, var(--secondary) 30%, transparent)",
+                  border:
+                    "1px solid color-mix(in oklab, var(--border) 60%, transparent)",
+                  borderRadius: 10,
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 12,
+                }}
+              >
+                {int}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

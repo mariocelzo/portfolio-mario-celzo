@@ -1,156 +1,300 @@
-import { Github, Linkedin, Mail, Download, Terminal, Code2, GitBranch, TerminalSquare } from "lucide-react";
-import { Button } from "./ui/button";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { motion } from "motion/react";
-// Import locale dell'immagine profilo (già inclusa negli assets del progetto)
-import profilePic from "../../assets/f867b45042a06e7a23ba35ed122025885f6d57dd.png";
+/**
+ * Hero.tsx — landing section con terminal YAML window + foto fluttuante.
+ *
+ * Layout:
+ * - Colonna sinistra: pill "$ ./start-devops-journey.sh", H1 con gradient mono italic,
+ *   sottotitolo, CTA primary (Initialize_Contact) + outline (CV.pdf download),
+ *   social icon buttons (GitHub/LinkedIn).
+ * - Colonna destra: "mac window" con contenuto YAML (profile.yml) e foto profilo
+ *   fluttuante in un Apple-style rounded frame.
+ *
+ * Riferimento design: bundle Hero.jsx
+ * Backend preservato: CV scarica /cv-mario-celzo.pdf, link GitHub reale.
+ */
+import {
+  Terminal,
+  Code2,
+  Download,
+  Github,
+  Linkedin,
+  GitBranch,
+  TerminalSquare,
+} from "lucide-react";
+import {
+  BrandButton,
+  Pill,
+  WindowChrome,
+  smoothScrollTo,
+} from "./brand/Primitives";
+import type { ReactNode } from "react";
+
+// Helper per una riga YAML "key: value"
+function KV({ k, children }: { k: string; children?: ReactNode }) {
+  return (
+    <>
+      <span style={{ color: "var(--primary)", fontWeight: 700 }}>{k}:</span>{" "}
+      <span>{children}</span>
+    </>
+  );
+}
 
 export function Hero() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
-  };
-
   return (
-    <section id="top" className="min-h-[100dvh] flex items-center justify-center relative overflow-hidden bg-background pt-20">
-      {/* Developer Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+    <section
+      id="top"
+      style={{
+        minHeight: "100dvh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "relative",
+        overflow: "hidden",
+        paddingTop: 80,
+        paddingBottom: 80,
+      }}
+    >
+      {/* Grid background con mask radiale — signature motif */}
+      <div
+        className="mc-grid-bg mc-grid-mask"
+        style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
+      />
+      {/* Glow primary per "illuminare" la sezione dall'angolo */}
+      <div className="mc-glow-primary" style={{ top: -200, right: -200 }} />
 
-      {/* Subtle Glows */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -z-10 translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+      <div className="mc-container" style={{ position: "relative", zIndex: 1 }}>
+        <div
+          className="mc-hero-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)",
+            gap: 80,
+            alignItems: "center",
+          }}
+        >
+          {/* ===== Colonna sinistra — copy ===== */}
+          <div style={{ maxWidth: 680 }} className="mc-animate-fade-up">
+            <Pill icon={Terminal}>$ ./start-devops-journey.sh</Pill>
 
-      <div className="container mx-auto px-6 md:px-12 relative z-10">
-        {/* Gap ridotto su mobile per evitare eccessivo spazio verticale tra i due blocchi */}
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
-          
-          {/* Left Content */}
-          <motion.div 
-            className="flex-1 max-w-2xl text-center lg:text-left flex flex-col items-center lg:items-start"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
+            <h1
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: "clamp(40px, 5vw, 72px)",
+                fontWeight: 700,
+                letterSpacing: "-0.035em",
+                lineHeight: 1.0,
+                margin: "28px 0 28px 0",
+                position: "relative",
+                zIndex: 2,
+              }}
+            >
+              Architecting
+              <br />
+              {/* Parola chiave in mono italic con gradient text */}
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontStyle: "italic",
+                  fontWeight: 500,
+                  background:
+                    "linear-gradient(90deg, var(--primary) 0%, color-mix(in oklab, var(--primary) 55%, transparent) 100%)",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                }}
+              >
+                Infrastructure.
+              </span>
+            </h1>
+
+            <p
+              style={{
+                fontSize: 20,
+                color: "var(--muted-foreground)",
+                lineHeight: 1.55,
+                margin: "0 0 40px 0",
+                fontWeight: 500,
+                maxWidth: 520,
+                textWrap: "pretty",
+              }}
+            >
+              I build resilient cloud environments, microservices, and automated
+              pipelines. Turning coffee into scalable systems.
+            </p>
+
+            {/* CTA primari */}
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 12,
+                marginBottom: 32,
+              }}
+            >
+              <BrandButton
+                variant="primary"
+                size="lg"
+                onClick={() => smoothScrollTo("contact")}
+              >
+                <Code2 size={18} /> Initialize_Contact
+              </BrandButton>
+              {/* CV download: link invariato dal backend — /public/cv-mario-celzo.pdf */}
+              <BrandButton
+                variant="outline"
+                size="lg"
+                href="/cv-mario-celzo.pdf"
+                download="CV-Mario-Celzo.pdf"
+              >
+                <Download size={18} /> CV.pdf
+              </BrandButton>
+            </div>
+
+            {/* Social icons */}
+            <div style={{ display: "flex", gap: 12 }}>
+              <BrandButton
+                variant="ghost"
+                size="icon"
+                href="https://github.com/mariocelzo"
+                aria-label="GitHub"
+              >
+                <Github size={20} />
+              </BrandButton>
+              <BrandButton
+                variant="ghost"
+                size="icon"
+                href="https://linkedin.com/in/mario-celzo"
+                aria-label="LinkedIn"
+              >
+                <Linkedin size={20} />
+              </BrandButton>
+            </div>
+          </div>
+
+          {/* ===== Colonna destra — YAML terminal window + foto ===== */}
+          <div
+            style={{ position: "relative", paddingBottom: 40 }}
+            className="mc-animate-fade-up"
           >
-            <motion.div variants={itemVariants}>
-              {/* Testo del badge ridotto su schermi piccoli e troncato per evitare overflow orizzontale */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-secondary/50 border border-border/50 font-mono text-xs sm:text-sm text-primary mb-6 shadow-sm backdrop-blur-md max-w-full overflow-hidden">
-                <Terminal className="size-4 shrink-0" />
-                <span className="truncate">$ ./start-devops-journey.sh</span>
-              </div>
-            </motion.div>
-            
-            <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tighter mb-6 text-foreground leading-[1.1]">
-              Architecting <br className="hidden lg:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60 font-mono italic">Infrastructure.</span>
-            </motion.h1>
-            
-            <motion.p variants={itemVariants} className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg leading-relaxed font-medium">
-              I build resilient cloud environments, microservices, and automated pipelines. <br className="hidden lg:block" />
-              Turning coffee into scalable systems.
-            </motion.p>
-
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-4 justify-center lg:justify-start mb-10">
-              <Button size="lg" className="gap-2 rounded-md font-mono px-8 shadow-lg hover:-translate-y-1 transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 h-14 text-base" onClick={() => {
-                const element = document.getElementById('contact');
-                element?.scrollIntoView({ behavior: 'smooth' });
-              }}>
-                <Code2 className="size-5" />
-                Initialize_Contact
-              </Button>
-              <Button size="lg" variant="outline" className="gap-2 rounded-md font-mono px-8 shadow-sm hover:bg-secondary/80 transition-all duration-300 border-border/60 h-14 text-base bg-background/50 backdrop-blur-sm" asChild>
-                {/* Download diretto del CV dalla cartella public */}
-                <a href="/cv-mario-celzo.pdf" download="CV-Mario-Celzo.pdf">
-                  <Download className="size-5" />
-                  CV.pdf
-                </a>
-              </Button>
-            </motion.div>
-
-            <motion.div variants={itemVariants} className="flex gap-4 justify-center lg:justify-start">
-              <Button variant="ghost" size="icon" className="rounded-md hover:bg-secondary transition-colors h-12 w-12 border border-transparent hover:border-border/50" asChild>
-                <a href="https://github.com/mariocelzo" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                  <Github className="size-5" />
-                </a>
-              </Button>
-              <Button variant="ghost" size="icon" className="rounded-md hover:bg-secondary transition-colors h-12 w-12 border border-transparent hover:border-border/50" asChild>
-                <a href="https://linkedin.com/in/mario-celzo" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                  <Linkedin className="size-5" />
-                </a>
-              </Button>
-            </motion.div>
-          </motion.div>
-
-          {/* Right Content (Terminal Window & Profile Pic) */}
-          {/* padding-bottom per dare spazio al badge foto profilo che sporge -bottom-6 */}
-          <motion.div
-            className="flex-1 w-full max-w-lg relative mt-10 lg:mt-0 pb-12 lg:pb-8"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
-          >
-            {/* IDE / Terminal Window */}
-            <div className="rounded-xl border border-border/60 bg-card/60 backdrop-blur-xl overflow-hidden shadow-2xl relative z-10">
-              
-              {/* Window Chrome */}
-              <div className="h-10 border-b border-border/60 bg-muted/40 flex items-center px-4 gap-2">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-[#FF5F56]"></div>
-                  <div className="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
-                  <div className="w-3 h-3 rounded-full bg-[#27C93F]"></div>
+            <div className="mc-window" style={{ boxShadow: "var(--shadow-2xl)" }}>
+              <WindowChrome
+                title={
+                  <>
+                    <GitBranch size={12} /> main ~ profile.yml
+                  </>
+                }
+              />
+              <div
+                style={{
+                  padding: 32,
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 14,
+                  lineHeight: 1.8,
+                }}
+              >
+                <div style={{ color: "var(--muted-foreground)", marginBottom: 8 }}>
+                  ---
                 </div>
-                <div className="mx-auto flex items-center text-xs text-muted-foreground font-mono">
-                  <GitBranch className="size-3 mr-1.5" /> main ~ profile.yml
+                <div><KV k="apiVersion">v1</KV></div>
+                <div><KV k="kind">Developer</KV></div>
+                <div><KV k="metadata" /></div>
+                <div style={{ paddingLeft: 16 }}><KV k="name">"Mario Celzo"</KV></div>
+                <div style={{ paddingLeft: 16 }}><KV k="role">"Jr DevOps Engineer"</KV></div>
+                <div style={{ paddingLeft: 16 }}><KV k="company">"Lutech"</KV></div>
+                <div><KV k="spec" /></div>
+                <div style={{ paddingLeft: 16 }}><KV k="stack" /></div>
+                <div style={{ paddingLeft: 32 }}>
+                  <span style={{ color: "var(--muted-foreground)" }}>-</span> Kubernetes
                 </div>
-              </div>
-              
-              {/* Code Body */}
-              <div className="p-6 md:p-8 font-mono text-[13px] md:text-sm text-left overflow-hidden">
-                <p className="mb-2"><span className="text-muted-foreground">---</span></p>
-                <p className="mb-1"><span className="text-primary font-bold">apiVersion:</span> <span className="text-foreground">v1</span></p>
-                <p className="mb-1"><span className="text-primary font-bold">kind:</span> <span className="text-foreground">Developer</span></p>
-                <p className="mb-1"><span className="text-primary font-bold">metadata:</span></p>
-                <p className="mb-1 pl-4"><span className="text-primary font-bold">name:</span> <span className="text-foreground">"Mario Celzo"</span></p>
-                <p className="mb-1 pl-4"><span className="text-primary font-bold">role:</span> <span className="text-foreground">"Jr DevOps Engineer"</span></p>
-                <p className="mb-1 pl-4"><span className="text-primary font-bold">company:</span> <span className="text-foreground">"Lutech"</span></p>
-                <p className="mb-1"><span className="text-primary font-bold">spec:</span></p>
-                <p className="mb-1 pl-4"><span className="text-primary font-bold">stack:</span></p>
-                <p className="mb-1 pl-8"><span className="text-muted-foreground">-</span> <span className="text-foreground">Kubernetes</span></p>
-                <p className="mb-1 pl-8"><span className="text-muted-foreground">-</span> <span className="text-foreground">Docker</span></p>
-                <p className="mb-1 pl-8"><span className="text-muted-foreground">-</span> <span className="text-foreground">Azure</span></p>
-                <p className="mb-1 pl-8"><span className="text-muted-foreground">-</span> <span className="text-foreground">CI/CD</span></p>
-                <div className="mt-4 flex items-center text-foreground font-semibold">
-                  <TerminalSquare className="size-4 mr-2 text-primary" />
-                  <p>root@mario:~$ <span className="animate-pulse font-normal">_</span></p>
+                <div style={{ paddingLeft: 32 }}>
+                  <span style={{ color: "var(--muted-foreground)" }}>-</span> Docker
+                </div>
+                <div style={{ paddingLeft: 32 }}>
+                  <span style={{ color: "var(--muted-foreground)" }}>-</span> Azure
+                </div>
+                <div style={{ paddingLeft: 32 }}>
+                  <span style={{ color: "var(--muted-foreground)" }}>-</span> CI/CD
+                </div>
+                {/* Prompt finale con cursor lampeggiante */}
+                <div
+                  style={{
+                    marginTop: 16,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    fontWeight: 600,
+                  }}
+                >
+                  <TerminalSquare size={16} style={{ color: "var(--primary)" }} />
+                  root@mario:~$ <span className="mc-blink">_</span>
                 </div>
               </div>
             </div>
 
-            {/* Overlapping Profile Pic Badge */}
-            <motion.div 
-              className="absolute -bottom-6 -left-6 md:-left-12 z-20 p-2 bg-background/80 backdrop-blur-xl border border-border/60 rounded-2xl shadow-xl"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.8, type: "spring", stiffness: 120 }}
+            {/* Foto profilo fluttuante — frame glass rounded */}
+            <div
+              className="mc-float"
+              style={{
+                position: "absolute",
+                bottom: -32,
+                left: -32,
+                padding: 6,
+                background: "color-mix(in oklab, var(--background) 85%, transparent)",
+                backdropFilter: "blur(24px)",
+                WebkitBackdropFilter: "blur(24px)",
+                border: "1px solid color-mix(in oklab, var(--border) 50%, transparent)",
+                borderRadius: 28,
+                boxShadow:
+                  "0 30px 60px -20px rgba(10,20,47,.35), 0 8px 20px -6px rgba(10,20,47,.15)",
+              }}
             >
-              <ImageWithFallback 
-                src={profilePic} 
-                alt="Mario Celzo" 
-                className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-xl border border-border/50"
+              <div
+                style={{
+                  width: 136,
+                  height: 136,
+                  borderRadius: 22,
+                  overflow: "hidden",
+                  position: "relative",
+                }}
+              >
+                {/* Foto profilo dal /public — preservato dal backend */}
+                <img
+                  src="/favicon.png"
+                  alt="Mario Celzo"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                  }}
+                />
+                {/* Highlight interno per effetto "vetrino lucidato" */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    boxShadow:
+                      "inset 0 0 0 1px rgba(255,255,255,.2), inset 0 1px 0 rgba(255,255,255,.3)",
+                    borderRadius: 22,
+                    pointerEvents: "none",
+                  }}
+                />
+              </div>
+              {/* Status dot verde in alto a destra — "active" */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: 2,
+                  right: 2,
+                  width: 14,
+                  height: 14,
+                  borderRadius: 9999,
+                  background: "#27C93F",
+                  border: "3px solid var(--background)",
+                  boxShadow:
+                    "0 0 0 1px rgba(39,201,63,.4), 0 0 12px rgba(39,201,63,.6)",
+                }}
               />
-            </motion.div>
-
-          </motion.div>
-
+            </div>
+          </div>
         </div>
       </div>
     </section>

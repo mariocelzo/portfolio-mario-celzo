@@ -1,0 +1,414 @@
+/* =========================================================
+ * Mario Celzo — Brand Primitives CSS
+ *
+ * Apple-meets-terminal design utilities:
+ * - Grid background (signature motif)
+ * - Glass morphism cards
+ * - Terminal window chrome (macOS traffic lights)
+ * - Mono/sans typography (Inter + JetBrains Mono)
+ * - Button variants (primary/outline/secondary/ghost)
+ * - Scroll reveal animations
+ *
+ * Riferimento: /tmp/design-mc/mario-celzo-design-system/
+ * Tokens di colore ereditati da theme.css (già allineati).
+ * ========================================================= */
+
+/* Font stack del brand — Inter (sans) + JetBrains Mono (code/labels)
+ * Caricati via Google Fonts in /index.html per evitare FOUT */
+:root {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", "Menlo", "Monaco", "Consolas", monospace;
+
+  /* Motion / easing tokens (Apple-style bezier) */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 180ms;
+  --dur-base: 300ms;
+  --dur-slow: 500ms;
+  --dur-xslow: 800ms;
+
+  /* Grid background (light mode) */
+  --grid-line: rgb(128 128 128 / 0.07);
+  --grid-size: 24px;
+
+  /* Shadows apple-style */
+  --shadow-xs: 0 1px 2px 0 rgb(10 20 47 / 0.04);
+  --shadow-sm: 0 2px 6px -1px rgb(10 20 47 / 0.06);
+  --shadow-md: 0 10px 24px -6px rgb(10 20 47 / 0.10);
+  --shadow-lg: 0 20px 40px -8px rgb(10 20 47 / 0.12);
+  --shadow-xl: 0 28px 60px -12px rgb(10 20 47 / 0.18);
+  --shadow-2xl: 0 40px 80px -20px rgb(10 20 47 / 0.25);
+
+  /* Traffic light colors (mac window chrome) */
+  --traffic-red: #FF5F56;
+  --traffic-yellow: #FFBD2E;
+  --traffic-green: #27C93F;
+}
+
+.dark {
+  /* In dark mode le linee grid usano l'accent color a bassa opacità */
+  --grid-line: rgb(137 207 240 / 0.06);
+
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.30);
+  --shadow-sm: 0 2px 6px -1px rgb(0 0 0 / 0.30);
+  --shadow-md: 0 10px 24px -6px rgb(0 0 0 / 0.40);
+  --shadow-lg: 0 20px 40px -8px rgb(0 0 0 / 0.50);
+  --shadow-xl: 0 28px 60px -12px rgb(0 0 0 / 0.55);
+  --shadow-2xl: 0 40px 80px -20px rgb(0 0 0 / 0.60);
+}
+
+/* Default body/html → font sans globale */
+html, body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------------------------------------------------------
+ * Grid background — il motif firmatario del brand
+ * Due linee sottili che compongono una griglia tipo blueprint
+ * --------------------------------------------------------- */
+.mc-grid-bg {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+}
+
+/* Mask radiale per far sfumare la griglia ai bordi */
+.mc-grid-mask {
+  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, #000 70%, transparent 100%);
+          mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, #000 70%, transparent 100%);
+}
+
+/* Glow primary — cerchio sfocato che "illumina" la sezione */
+.mc-glow-primary {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: color-mix(in oklab, var(--primary) 6%, transparent);
+  border-radius: 9999px;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ---------------------------------------------------------
+ * Glass surface — sfondo card con blur
+ * --------------------------------------------------------- */
+.mc-glass {
+  background: color-mix(in oklab, var(--card) 60%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+}
+
+/* ---------------------------------------------------------
+ * Terminal pill — es. "$ ./start-devops.sh"
+ * --------------------------------------------------------- */
+.mc-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--secondary) 50%, transparent);
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  font: 500 13px var(--font-mono);
+  color: var(--primary);
+  box-shadow: var(--shadow-xs);
+}
+
+/* ---------------------------------------------------------
+ * Terminal window (finestra con macOS traffic lights)
+ * --------------------------------------------------------- */
+.mc-window {
+  border-radius: 16px;
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  background: color-mix(in oklab, var(--card) 70%, transparent);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  overflow: hidden;
+}
+.mc-window__chrome {
+  height: 40px;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  background: color-mix(in oklab, var(--muted) 40%, transparent);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 8px;
+  position: relative;
+}
+.mc-window__dots { display: flex; gap: 6px; }
+.mc-window__dot { width: 12px; height: 12px; border-radius: 9999px; }
+.mc-window__dot--r { background: var(--traffic-red); }
+.mc-window__dot--y { background: var(--traffic-yellow); }
+.mc-window__dot--g { background: var(--traffic-green); }
+.mc-window__title {
+  position: absolute;
+  left: 0; right: 0;
+  margin: 0 auto;
+  text-align: center;
+  font: 500 12px var(--font-mono);
+  color: var(--muted-foreground);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------
+ * Buttons — .mc-btn con varianti
+ * --------------------------------------------------------- */
+.mc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 10px;
+  font: 500 14px var(--font-mono);
+  cursor: pointer;
+  transition: background var(--dur-fast), transform var(--dur-base) var(--ease-out-expo), box-shadow var(--dur-base);
+  border: 1px solid transparent;
+  white-space: nowrap;
+  text-decoration: none;
+  user-select: none;
+}
+.mc-btn:focus-visible {
+  outline: 3px solid color-mix(in oklab, var(--ring) 50%, transparent);
+  outline-offset: 2px;
+}
+.mc-btn--lg { height: 56px; padding: 0 32px; font-size: 15px; }
+.mc-btn--sm { height: 32px; padding: 0 12px; font-size: 12px; font-weight: 600; }
+.mc-btn--icon { width: 48px; height: 48px; padding: 0; }
+
+.mc-btn--primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: var(--shadow-md);
+}
+.mc-btn--primary:hover {
+  background: color-mix(in oklab, var(--primary) 90%, transparent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.mc-btn--outline {
+  background: color-mix(in oklab, var(--background) 50%, transparent);
+  backdrop-filter: blur(6px);
+  border-color: color-mix(in oklab, var(--border) 60%, transparent);
+  color: var(--foreground);
+}
+.mc-btn--outline:hover {
+  background: color-mix(in oklab, var(--secondary) 80%, transparent);
+  transform: translateY(-2px);
+}
+
+.mc-btn--secondary {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+}
+.mc-btn--secondary:hover {
+  background: color-mix(in oklab, var(--secondary) 80%, transparent);
+}
+
+.mc-btn--ghost {
+  background: transparent;
+  color: var(--foreground);
+}
+.mc-btn--ghost:hover {
+  background: var(--secondary);
+  border-color: color-mix(in oklab, var(--border) 60%, transparent);
+}
+
+/* ---------------------------------------------------------
+ * Cards — .mc-card con hover lift
+ * --------------------------------------------------------- */
+.mc-card {
+  border-radius: 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  background: color-mix(in oklab, var(--card) 60%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: box-shadow var(--dur-base) var(--ease-out-expo), transform var(--dur-base) var(--ease-out-expo);
+  overflow: hidden;
+}
+.mc-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-2xl);
+}
+.mc-card__header {
+  height: 32px;
+  background: color-mix(in oklab, var(--muted) 50%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  font: 500 10px var(--font-mono);
+  color: var(--muted-foreground);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------
+ * Chip / version badge — piccoli tag in mono
+ * --------------------------------------------------------- */
+.mc-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: color-mix(in oklab, var(--muted) 50%, transparent);
+  color: color-mix(in oklab, var(--foreground) 80%, transparent);
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  border-radius: 4px;
+  font: 500 11px var(--font-mono);
+  white-space: nowrap;
+}
+.mc-badge-version {
+  display: inline-flex;
+  padding: 2px 8px;
+  border: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  background: var(--card);
+  border-radius: 6px;
+  font: 500 11px var(--font-mono);
+  color: var(--foreground);
+}
+
+/* ---------------------------------------------------------
+ * Comment / Prompt text — stile shell
+ * --------------------------------------------------------- */
+.mc-prompt::before {
+  content: "> ";
+  color: var(--primary);
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+.mc-comment {
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+}
+.mc-comment::before { content: "// "; }
+
+/* Navlink — usato nell'header */
+.mc-navlink {
+  font: 500 13px var(--font-mono);
+  color: color-mix(in oklab, var(--foreground) 70%, transparent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color var(--dur-fast);
+}
+.mc-navlink:hover { color: var(--primary); }
+
+/* ---------------------------------------------------------
+ * Layout helpers — container + section
+ * --------------------------------------------------------- */
+.mc-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+@media (max-width: 768px) {
+  .mc-container { padding: 0 24px; }
+}
+
+.mc-section {
+  padding: 128px 0;
+  position: relative;
+  overflow: hidden;
+}
+.mc-section__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+  margin-bottom: 96px;
+}
+.mc-section__head h2,
+.mc-section-title {
+  font-family: var(--font-sans);
+  font-size: clamp(40px, 5.6vw, 72px);
+  font-weight: 700;
+  letter-spacing: -0.028em;
+  line-height: 1.02;
+  margin: 0;
+  text-wrap: balance;
+}
+
+/* ---------------------------------------------------------
+ * Scroll reveal — fade-up on intersection
+ * --------------------------------------------------------- */
+.mc-reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+}
+.mc-reveal.in {
+  opacity: 1;
+  transform: none;
+}
+.mc-reveal-delay-1 { transition-delay: 0.08s; }
+.mc-reveal-delay-2 { transition-delay: 0.16s; }
+.mc-reveal-delay-3 { transition-delay: 0.24s; }
+
+/* ---------------------------------------------------------
+ * Animations — keyframes riutilizzabili
+ * --------------------------------------------------------- */
+@keyframes mc-fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+.mc-animate-fade-up { animation: mc-fadeUp 0.8s var(--ease-out-expo) both; }
+
+@keyframes mc-blink {
+  0%, 50%   { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+.mc-blink { animation: mc-blink 1s steps(1) infinite; }
+
+@keyframes mc-float {
+  0%, 100% { transform: translateY(-5px); }
+  50%      { transform: translateY(5px); }
+}
+.mc-float { animation: mc-float 4s ease-in-out infinite; }
+
+@keyframes mc-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50%      { transform: scale(1.08); opacity: 1; }
+}
+
+/* ---------------------------------------------------------
+ * Responsive helpers — breakpoint per le varie sezioni
+ * --------------------------------------------------------- */
+/* Hero: due colonne → una sola sotto 1100px */
+@media (max-width: 1100px) {
+  .mc-hero-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+}
+
+/* About: due colonne → una sola sotto 900px */
+@media (max-width: 900px) {
+  .mc-about-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+}
+
+/* Experience responsibilities grid: 2 col → 1 sotto 640px */
+@media (max-width: 640px) {
+  .mc-resp-grid { grid-template-columns: 1fr !important; }
+}
+
+/* Feature strip: padding ridotto e single col sotto 900px */
+@media (max-width: 900px) {
+  .mc-feature-card { grid-template-columns: 1fr !important; min-height: unset !important; }
+  .mc-feature-card > div { padding: 48px 32px !important; }
+}
+
+/* Header: nasconde la nav desktop sotto 720px */
+@media (max-width: 720px) {
+  .mc-nav-desktop { display: none !important; }
+}

@@ -1,43 +1,112 @@
+/**
+ * Footer.tsx — chiusura della pagina con signature "System.exit(0)".
+ *
+ * - Bottoni ghost icon per GitHub / LinkedIn / Email
+ * - Signature mono "System.exit(0)" + copyright + "Compiled with ..." subtitle
+ * - Grid background a bassa opacità per coerenza estetica
+ *
+ * Riferimento design: bundle ContactFooter.jsx::Footer
+ */
 import { Github, Linkedin, Mail, Terminal } from "lucide-react";
-import { Button } from "./ui/button";
+import { BrandButton } from "./brand/Primitives";
 
 export function Footer() {
   return (
-    <footer className="bg-background border-t border-border/60 py-12 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
+    <footer
+      style={{
+        borderTop:
+          "1px solid color-mix(in oklab, var(--border) 60%, transparent)",
+        padding: "48px 0",
+        position: "relative",
+      }}
+    >
+      {/* Grid bg a bassa opacità come texture */}
+      <div
+        className="mc-grid-bg"
+        style={{
+          position: "absolute",
+          inset: 0,
+          opacity: 0.4,
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        className="mc-container"
+        style={{
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 24,
+        }}
+      >
+        {/* Social icons */}
+        <div style={{ display: "flex", gap: 16 }}>
+          <BrandButton
+            variant="ghost"
+            size="icon"
+            href="https://github.com/mariocelzo"
+            aria-label="GitHub"
+          >
+            <Github size={18} />
+          </BrandButton>
+          <BrandButton
+            variant="ghost"
+            size="icon"
+            href="https://linkedin.com/in/mario-celzo"
+            aria-label="LinkedIn"
+          >
+            <Linkedin size={18} />
+          </BrandButton>
+          <BrandButton
+            variant="ghost"
+            size="icon"
+            href="mailto:mariocelzo003@gmail.com"
+            aria-label="Email"
+          >
+            <Mail size={18} />
+          </BrandButton>
+        </div>
 
-      <div className="container mx-auto px-6 md:px-12 relative z-10">
-        <div className="flex flex-col items-center gap-6">
-          <div className="flex gap-4">
-            <Button variant="ghost" size="icon" className="rounded-md hover:bg-secondary border border-transparent hover:border-border/60 transition-colors" asChild>
-              <a href="https://github.com/mariocelzo" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                <Github className="size-5" />
-              </a>
-            </Button>
-            <Button variant="ghost" size="icon" className="rounded-md hover:bg-secondary border border-transparent hover:border-border/60 transition-colors" asChild>
-              <a href="https://linkedin.com/in/mario-celzo" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                <Linkedin className="size-5" />
-              </a>
-            </Button>
-            <Button variant="ghost" size="icon" className="rounded-md hover:bg-secondary border border-transparent hover:border-border/60 transition-colors" asChild>
-              <a href="mailto:mariocelzo000@gmail.com" aria-label="Email">
-                <Mail className="size-5" />
-              </a>
-            </Button>
+        {/* Signature mono */}
+        <div
+          style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}
+        >
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              fontSize: 14,
+              color:
+                "color-mix(in oklab, var(--foreground) 80%, transparent)",
+              marginBottom: 6,
+            }}
+          >
+            <Terminal size={14} style={{ color: "var(--primary)" }} />{" "}
+            System.exit(0)
           </div>
-          
-          <div className="text-center font-mono">
-            <div className="flex items-center justify-center gap-2 text-sm text-foreground/80 mb-2">
-              <Terminal className="size-4 text-primary" />
-              <span>System.exit(0)</span>
-            </div>
-            <p className="text-xs text-muted-foreground">
-              © {new Date().getFullYear()} Mario Celzo. All rights reserved.
-            </p>
-            <p className="text-[10px] text-muted-foreground/60 mt-2 uppercase tracking-widest">
-              Compiled with React • Tailwind v4 • Framer Motion
-            </p>
-          </div>
+          <p
+            style={{
+              fontSize: 12,
+              color: "var(--muted-foreground)",
+              margin: 0,
+            }}
+          >
+            © 2026 Mario Celzo. All rights reserved.
+          </p>
+          <p
+            style={{
+              fontSize: 10,
+              color:
+                "color-mix(in oklab, var(--muted-foreground) 60%, transparent)",
+              marginTop: 8,
+              textTransform: "uppercase",
+              letterSpacing: "0.18em",
+            }}
+          >
+            Compiled with React · Tailwind v4 · Vite
+          </p>
         </div>
       </div>
     </footer>

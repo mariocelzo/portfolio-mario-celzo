@@ -1,131 +1,248 @@
-import { Card } from "./ui/card";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { motion } from "motion/react";
-import { Terminal, Database, Server, Workflow } from "lucide-react";
+/**
+ * About.tsx — "cat whoami.md" section.
+ *
+ * Layout:
+ * - Colonna sinistra: finestra "terminal" con foto profilo (aspect 4:5)
+ *   + due icone flottanti (Workflow, Database) come badge glass.
+ * - Colonna destra: paragrafi con prompt ">", card info (location/status/
+ *   education/langs) e "--flags=" chip dei soft skills.
+ *
+ * Riferimento design: bundle About.jsx
+ */
+import { Terminal, Workflow, Database } from "lucide-react";
+import { Pill, WindowChrome } from "./brand/Primitives";
 
 export function About() {
   return (
-    <section id="about" className="py-24 bg-background relative overflow-hidden">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-      
-      <div className="container mx-auto px-6 md:px-12 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-20 flex flex-col items-center"
+    <section id="about" className="mc-section">
+      {/* Grid background a bassa opacità come texture */}
+      <div
+        className="mc-grid-bg"
+        style={{
+          position: "absolute",
+          inset: 0,
+          opacity: 0.5,
+          pointerEvents: "none",
+        }}
+      />
+      <div className="mc-container" style={{ position: "relative" }}>
+        {/* Pill + titolo */}
+        <div className="mc-section__head">
+          <Pill icon={Terminal}>cat whoami.md</Pill>
+          <h2 className="mc-section-title">About Me</h2>
+        </div>
+
+        <div
+          className="mc-about-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 64,
+            maxWidth: 1100,
+            margin: "0 auto",
+            alignItems: "center",
+          }}
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-secondary/50 border border-border/50 font-mono text-sm text-primary mb-4 shadow-sm">
-            <Terminal className="size-4" />
-            <span>cat whoami.md</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">About Me</h2>
-        </motion.div>
-        
-        {/* Gap ridotto su mobile per compensare la mancanza dei badge floating nascosti */}
-        <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center max-w-6xl mx-auto">
-          {/* mb-8 aggiunto su mobile per dare spazio al badge -bottom-6 che sporge dalla card immagine */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative mb-8 sm:mb-0"
-          >
-            {/* Terminal Window Wrapper for Image */}
-            <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-2xl border border-border/60 bg-card/60 backdrop-blur-xl flex flex-col">
-              <div className="h-10 border-b border-border/60 bg-muted/40 flex items-center px-4 gap-2 shrink-0">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-[#FF5F56]"></div>
-                  <div className="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
-                  <div className="w-3 h-3 rounded-full bg-[#27C93F]"></div>
-                </div>
-                <div className="mx-auto flex items-center text-xs text-muted-foreground font-mono">
-                  workspace.jpg
-                </div>
-              </div>
-              <div className="w-full h-full relative">
-                <div className="absolute inset-0 bg-primary/10 mix-blend-overlay z-10"></div>
-                <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1607743386760-88ac62b89b8a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2RpbmclMjBsYXB0b3AlMjBuaWdodHxlbnwxfHx8fDE3NzMxNjEwNTR8MA&ixlib=rb-4.1.0&q=80&w=1080"
-                  alt="Coding workspace"
-                  className="w-full h-full object-cover grayscale-[20%]"
+          {/* ===== Terminal window con foto ===== */}
+          <div style={{ position: "relative" }}>
+            <div
+              className="mc-window"
+              style={{
+                aspectRatio: "4/5",
+                boxShadow:
+                  "0 40px 80px -20px rgba(10,20,47,.35), 0 10px 20px -6px rgba(10,20,47,.15)",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <WindowChrome title="mario.jpeg" />
+              <div
+                style={{
+                  flex: 1,
+                  position: "relative",
+                  overflow: "hidden",
+                  background: "#0A142F",
+                }}
+              >
+                {/* Foto profilo — dal /public */}
+                <img
+                  src="/favicon.png"
+                  alt="Mario Celzo"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                  }}
                 />
+                {/* Gradiente in basso per migliorare leggibilità metadata EXIF */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background:
+                      "linear-gradient(180deg, transparent 50%, rgba(10,20,47,.35) 100%)",
+                    pointerEvents: "none",
+                  }}
+                />
+                {/* Metadata EXIF finte — in stile fotocamera */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: 12,
+                    left: 12,
+                    right: 12,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    gap: 8,
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 10,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: "rgba(255,255,255,.8)",
+                  }}
+                >
+                  <span>ISO 100 · f/1.8</span>
+                  <span>Salerno, IT</span>
+                </div>
               </div>
             </div>
-            
-            {/* Badge floating: nascosti su mobile per evitare overflow/scroll orizzontale, visibili da sm in su */}
-            <motion.div
-              animate={{ y: [-5, 5, -5] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="hidden sm:block absolute -bottom-6 -right-6 bg-background/90 backdrop-blur-md p-4 rounded-xl border border-border/60 shadow-lg text-primary"
+
+            {/* Icona flottante — badge Workflow */}
+            <div
+              className="mc-float"
+              style={{
+                position: "absolute",
+                bottom: -24,
+                right: -24,
+                padding: 16,
+                background: "color-mix(in oklab, var(--background) 90%, transparent)",
+                backdropFilter: "blur(12px)",
+                border: "1px solid color-mix(in oklab, var(--border) 60%, transparent)",
+                borderRadius: 14,
+                boxShadow: "var(--shadow-lg)",
+                color: "var(--primary)",
+              }}
             >
-              <Workflow className="size-6" />
-            </motion.div>
-            <motion.div
-              animate={{ y: [5, -5, 5] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="hidden sm:block absolute -top-6 -left-6 bg-background/90 backdrop-blur-md p-4 rounded-xl border border-border/60 shadow-lg text-primary"
+              <Workflow size={26} />
+            </div>
+            {/* Icona flottante — badge Database (animationDelay sfalsato) */}
+            <div
+              className="mc-float"
+              style={{
+                position: "absolute",
+                top: -24,
+                left: -24,
+                padding: 16,
+                background: "color-mix(in oklab, var(--background) 90%, transparent)",
+                backdropFilter: "blur(12px)",
+                border: "1px solid color-mix(in oklab, var(--border) 60%, transparent)",
+                borderRadius: 14,
+                boxShadow: "var(--shadow-lg)",
+                color: "var(--primary)",
+                animationDelay: "1s",
+              }}
             >
-              <Database className="size-6" />
-            </motion.div>
-          </motion.div>
+              <Database size={26} />
+            </div>
+          </div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="space-y-8"
-          >
-            <div className="space-y-6 font-mono">
-              <p className="text-[15px] text-foreground/80 leading-relaxed">
-                <span className="text-primary font-bold">{">"}</span> I'm a passionate <span className="text-primary font-bold">Junior DevOps Engineer</span> currently pursuing my Master's degree in 
-                Software Engineering & IT Management at the University of Salerno. 
-                I specialize in building resilient infrastructures and automated pipelines.
+          {/* ===== Copy + card info + flag chips ===== */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+            {/* Paragrafi con prompt ">" */}
+            <div
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 15,
+                lineHeight: 1.7,
+                color: "color-mix(in oklab, var(--foreground) 80%, transparent)",
+              }}
+            >
+              <p style={{ margin: "0 0 16px 0" }}>
+                <span style={{ color: "var(--primary)", fontWeight: 700 }}>&gt;</span>{" "}
+                I'm a passionate{" "}
+                <strong style={{ color: "var(--primary)" }}>Junior DevOps Engineer</strong>{" "}
+                pursuing my Master's in Software Engineering &amp; IT Management at
+                Università degli Studi di Salerno. I specialize in building
+                resilient infrastructures and automated pipelines.
               </p>
-              
-              <p className="text-[15px] text-foreground/80 leading-relaxed">
-                <span className="text-primary font-bold">{">"}</span> My journey in tech is driven by curiosity and a desire to optimize systems. 
-                I thrive in creating cloud-native environments, containerizing applications with Docker & Kubernetes, 
-                and ensuring seamless deployments using Agile methodologies.
+              <p style={{ margin: 0 }}>
+                <span style={{ color: "var(--primary)", fontWeight: 700 }}>&gt;</span>{" "}
+                My journey is driven by curiosity and a desire to optimize systems
+                — cloud-native environments, containerization with Docker &amp;
+                Kubernetes, seamless deployments with Agile.
               </p>
             </div>
 
-            <Card className="p-6 bg-card/40 backdrop-blur-md border-border/60 shadow-sm rounded-xl font-mono text-sm">
-              <div className="grid grid-cols-2 gap-6">
-                <div>
-                  <p className="text-muted-foreground mb-1">{"// location"}</p>
-                  <p className="font-semibold text-foreground">Italy (Remote)</p>
-                </div>
-                <div>
-                  <p className="text-muted-foreground mb-1">{"// status"}</p>
-                  <p className="font-semibold text-foreground">Active_Deploy</p>
-                </div>
-                <div>
-                  <p className="text-muted-foreground mb-1">{"// education"}</p>
-                  <p className="font-semibold text-foreground">MSc. Software Eng.</p>
-                </div>
-                <div>
-                  <p className="text-muted-foreground mb-1">{"// langs"}</p>
-                  <p className="font-semibold text-foreground">[IT, EN]</p>
-                </div>
-              </div>
-            </Card>
-
-            <div className="flex flex-wrap gap-3 pt-2">
-              <div className="px-4 py-2 bg-secondary/50 rounded-md border border-border/60 backdrop-blur-sm">
-                <p className="text-xs font-mono font-medium text-foreground">--flags="Problem Solving"</p>
-              </div>
-              <div className="px-4 py-2 bg-secondary/50 rounded-md border border-border/60 backdrop-blur-sm">
-                <p className="text-xs font-mono font-medium text-foreground">--flags="Team Collaboration"</p>
-              </div>
-              <div className="px-4 py-2 bg-secondary/50 rounded-md border border-border/60 backdrop-blur-sm">
-                <p className="text-xs font-mono font-medium text-foreground">--flags="Agile Methodology"</p>
+            {/* Card info 2x2 — location/status/education/langs */}
+            <div
+              style={{
+                padding: 24,
+                borderRadius: 12,
+                border: "1px solid color-mix(in oklab, var(--border) 60%, transparent)",
+                background: "color-mix(in oklab, var(--card) 40%, transparent)",
+                backdropFilter: "blur(12px)",
+                fontFamily: "var(--font-mono)",
+                fontSize: 14,
+              }}
+            >
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: 24,
+                }}
+              >
+                {[
+                  ["location", "Italy (Remote)"],
+                  ["status", "Active_Deploy"],
+                  ["education", "MSc. Software Eng."],
+                  ["langs", "[IT, EN]"],
+                ].map(([k, v]) => (
+                  <div key={k}>
+                    <div
+                      style={{
+                        color: "var(--muted-foreground)",
+                        marginBottom: 4,
+                      }}
+                    >
+                      {`// ${k}`}
+                    </div>
+                    <div
+                      style={{
+                        fontWeight: 600,
+                        color: "var(--foreground)",
+                      }}
+                    >
+                      {v}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          </motion.div>
+
+            {/* Flag chips — soft skills in stile CLI flags */}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+              {["Problem Solving", "Team Collaboration", "Agile Methodology"].map(
+                (f) => (
+                  <div
+                    key={f}
+                    style={{
+                      padding: "8px 16px",
+                      background: "color-mix(in oklab, var(--secondary) 50%, transparent)",
+                      border: "1px solid color-mix(in oklab, var(--border) 60%, transparent)",
+                      borderRadius: 10,
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 12,
+                      fontWeight: 500,
+                    }}
+                  >
+                    {`--flags="${f}"`}
+                  </div>
+                ),
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </section>

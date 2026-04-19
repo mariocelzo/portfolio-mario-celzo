@@ -11,7 +11,7 @@
  *
  * Riferimento design: bundle ContactFooter.jsx::Contact
  */
-import { TerminalSquare, Mail, Phone, MapPin } from "lucide-react";
+import { TerminalSquare, Mail, MapPin } from "lucide-react";
 import type { ComponentType } from "react";
 import { Pill } from "./brand/Primitives";
 
@@ -20,7 +20,6 @@ type Info = [ComponentType<{ size?: number }>, string, string, string | null];
 
 const infos: Info[] = [
   [Mail, "email", "mariocelzo003@gmail.com", "mailto:mariocelzo003@gmail.com"],
-  [Phone, "phone", "+39 328 340 3546", "tel:+393283403546"],
   [MapPin, "location", "Salerno, Italy (Remote)", null],
 ];
 

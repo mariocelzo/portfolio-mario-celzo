@@ -1,5 +1,7 @@
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
+// FeatureSlides: cinematic Apple-style feature cards inserted between Hero and About
+import { FeatureSlides } from "./components/FeatureSlides";
 import { About } from "./components/About";
 import { Experience } from "./components/Experience";
 import { Skills } from "./components/Skills";
@@ -17,6 +19,8 @@ export default function App() {
         <Header />
         <main>
           <Hero />
+          {/* FeatureSlides: Marquee tagline + 4 cinematic feature cards */}
+          <FeatureSlides />
           <About />
           <Experience />
           <Skills />

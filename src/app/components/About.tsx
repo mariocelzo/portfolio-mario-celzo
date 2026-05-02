@@ -1,14 +1,37 @@
+/**
+ * About.tsx
+ *
+ * "Who I am" section with a terminal-framed portrait photo and personal info card.
+ *
+ * Changes from original:
+ * - Replaced Unsplash workspace image with the local profile photo
+ * - Terminal window title updated to "mario.jpeg"
+ * - Removed primary/10 overlay; replaced with a bottom gradient for legibility
+ * - Added EXIF-style metadata strip at bottom of photo (ISO · aperture · location)
+ * - Left column animation: slide from left (x:-72) instead of scale
+ * - Right column animation: slide from right (x:72) instead of y:30
+ * - Aspect ratio changed from 4/3 to 4/5 to better frame the portrait orientation
+ *
+ * Both animations use ease-out-expo cubic-bezier [0.16, 1, 0.3, 1].
+ */
+
 import { Card } from "./ui/card";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { motion } from "motion/react";
-import { Terminal, Database, Server, Workflow } from "lucide-react";
+import { Terminal, Database, Workflow } from "lucide-react";
+// Local profile photo — same asset used in Hero
+import profilePic from "../../assets/f867b45042a06e7a23ba35ed122025885f6d57dd.png";
+
+// Ease-out-expo shared bezier for consistent cinematic feel
+const EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 export function About() {
   return (
     <section id="about" className="py-24 bg-background relative overflow-hidden">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-      
+
       <div className="container mx-auto px-6 md:px-12 relative z-10">
+        {/* Section header — animated fade-in */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -22,40 +45,77 @@ export function About() {
           </div>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">About Me</h2>
         </motion.div>
-        
-        {/* Gap ridotto su mobile per compensare la mancanza dei badge floating nascosti */}
+
+        {/* Two-column grid: portrait left, text right */}
         <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center max-w-6xl mx-auto">
-          {/* mb-8 aggiunto su mobile per dare spazio al badge -bottom-6 che sporge dalla card immagine */}
+
+          {/* Left column — profile photo in terminal window frame, slides from left */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            initial={{ opacity: 0, x: -72 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "0px 0px -20% 0px" }}
+            transition={{ duration: 1, ease: EXPO }}
             className="relative mb-8 sm:mb-0"
           >
-            {/* Terminal Window Wrapper for Image */}
-            <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-2xl border border-border/60 bg-card/60 backdrop-blur-xl flex flex-col">
+            {/* Terminal chrome wrapper around portrait photo */}
+            <div className="aspect-[4/5] rounded-xl overflow-hidden shadow-2xl border border-border/60 bg-card/60 backdrop-blur-xl flex flex-col">
+              {/* macOS-style title bar */}
               <div className="h-10 border-b border-border/60 bg-muted/40 flex items-center px-4 gap-2 shrink-0">
                 <div className="flex gap-1.5">
                   <div className="w-3 h-3 rounded-full bg-[#FF5F56]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#27C93F]"></div>
                 </div>
+                {/* Updated filename to match local profile asset */}
                 <div className="mx-auto flex items-center text-xs text-muted-foreground font-mono">
-                  workspace.jpg
+                  mario.jpeg
                 </div>
               </div>
+
+              {/* Image container — fills remaining height, positioned for overlay */}
               <div className="w-full h-full relative">
-                <div className="absolute inset-0 bg-primary/10 mix-blend-overlay z-10"></div>
+                {/* Profile photo — local asset, portrait orientation */}
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1607743386760-88ac62b89b8a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2RpbmclMjBsYXB0b3AlMjBuaWdodHxlbnwxfHx8fDE3NzMxNjEwNTR8MA&ixlib=rb-4.1.0&q=80&w=1080"
-                  alt="Coding workspace"
-                  className="w-full h-full object-cover grayscale-[20%]"
+                  src={profilePic}
+                  alt="Mario Celzo"
+                  className="w-full h-full object-cover"
                 />
+
+                {/* Bottom gradient — ensures EXIF strip text is legible over any photo */}
+                <div
+                  className="absolute inset-x-0 bottom-0 z-10"
+                  style={{
+                    height: 80,
+                    background:
+                      'linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%)',
+                  }}
+                />
+
+                {/* EXIF-style metadata strip — adds photographic authenticity */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: 12,
+                    left: 12,
+                    right: 12,
+                    zIndex: 20,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    gap: 8,
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: 10,
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(255,255,255,.8)',
+                  }}
+                >
+                  <span>ISO 100 · f/1.8</span>
+                  <span>Salerno, IT</span>
+                </div>
               </div>
             </div>
-            
-            {/* Badge floating: nascosti su mobile per evitare overflow/scroll orizzontale, visibili da sm in su */}
+
+            {/* Floating icon badges — decorative, hidden on mobile to avoid overflow */}
             <motion.div
               animate={{ y: [-5, 5, -5] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -72,27 +132,31 @@ export function About() {
             </motion.div>
           </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+          {/* Right column — text content, slides from right */}
+          <motion.div
+            initial={{ opacity: 0, x: 72 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "0px 0px -20% 0px" }}
+            transition={{ duration: 1, ease: EXPO, delay: 0.1 }}
             className="space-y-8"
           >
             <div className="space-y-6 font-mono">
               <p className="text-[15px] text-foreground/80 leading-relaxed">
-                <span className="text-primary font-bold">{">"}</span> I'm a passionate <span className="text-primary font-bold">Junior DevOps Engineer</span> currently pursuing my Master's degree in 
-                Software Engineering & IT Management at the University of Salerno. 
-                I specialize in building resilient infrastructures and automated pipelines.
+                <span className="text-primary font-bold">{">"}</span> I'm a passionate{" "}
+                <span className="text-primary font-bold">Junior DevOps Engineer</span> currently
+                pursuing my Master's degree in Software Engineering & IT Management at the University
+                of Salerno. I specialize in building resilient infrastructures and automated pipelines.
               </p>
-              
+
               <p className="text-[15px] text-foreground/80 leading-relaxed">
-                <span className="text-primary font-bold">{">"}</span> My journey in tech is driven by curiosity and a desire to optimize systems. 
-                I thrive in creating cloud-native environments, containerizing applications with Docker & Kubernetes, 
-                and ensuring seamless deployments using Agile methodologies.
+                <span className="text-primary font-bold">{">"}</span> My journey in tech is driven by
+                curiosity and a desire to optimize systems. I thrive in creating cloud-native
+                environments, containerizing applications with Docker & Kubernetes, and ensuring
+                seamless deployments using Agile methodologies.
               </p>
             </div>
 
+            {/* Stats grid card */}
             <Card className="p-6 bg-card/40 backdrop-blur-md border-border/60 shadow-sm rounded-xl font-mono text-sm">
               <div className="grid grid-cols-2 gap-6">
                 <div>
@@ -114,6 +178,7 @@ export function About() {
               </div>
             </Card>
 
+            {/* Traits as CLI flags */}
             <div className="flex flex-wrap gap-3 pt-2">
               <div className="px-4 py-2 bg-secondary/50 rounded-md border border-border/60 backdrop-blur-sm">
                 <p className="text-xs font-mono font-medium text-foreground">--flags="Problem Solving"</p>

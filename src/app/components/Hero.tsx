@@ -34,12 +34,13 @@ export function Hero() {
         {/* Gap ridotto su mobile per evitare eccessivo spazio verticale tra i due blocchi */}
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
           
-          {/* Left Content */}
-          <motion.div 
+          {/* Left Content — slides in from left on load */}
+          <motion.div
             className="flex-1 max-w-2xl text-center lg:text-left flex flex-col items-center lg:items-start"
             variants={containerVariants}
-            initial="hidden"
+            initial={{ opacity: 0, x: -72 }}
             animate="visible"
+            viewport={{ once: true, margin: "0px 0px -20% 0px" }}
           >
             <motion.div variants={itemVariants}>
               {/* Testo del badge ridotto su schermi piccoli e troncato per evitare overflow orizzontale */}
@@ -90,13 +91,14 @@ export function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right Content (Terminal Window & Profile Pic) */}
+          {/* Right Content (Terminal Window & Profile Pic) — slides in from right */}
           {/* padding-bottom per dare spazio al badge foto profilo che sporge -bottom-6 */}
           <motion.div
             className="flex-1 w-full max-w-lg relative mt-10 lg:mt-0 pb-12 lg:pb-8"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+            initial={{ opacity: 0, x: 72 }}
+            animate={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "0px 0px -20% 0px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
           >
             {/* IDE / Terminal Window */}
             <div className="rounded-xl border border-border/60 bg-card/60 backdrop-blur-xl overflow-hidden shadow-2xl relative z-10">
@@ -120,13 +122,15 @@ export function Hero() {
                 <p className="mb-1"><span className="text-primary font-bold">kind:</span> <span className="text-foreground">Developer</span></p>
                 <p className="mb-1"><span className="text-primary font-bold">metadata:</span></p>
                 <p className="mb-1 pl-4"><span className="text-primary font-bold">name:</span> <span className="text-foreground">"Mario Celzo"</span></p>
-                <p className="mb-1 pl-4"><span className="text-primary font-bold">role:</span> <span className="text-foreground">"Jr DevOps Engineer"</span></p>
+                <p className="mb-1 pl-4"><span className="text-primary font-bold">role:</span> <span className="text-foreground">"Jr DevOps & Frontend Engineer"</span></p>
                 <p className="mb-1 pl-4"><span className="text-primary font-bold">company:</span> <span className="text-foreground">"Lutech"</span></p>
                 <p className="mb-1"><span className="text-primary font-bold">spec:</span></p>
                 <p className="mb-1 pl-4"><span className="text-primary font-bold">stack:</span></p>
                 <p className="mb-1 pl-8"><span className="text-muted-foreground">-</span> <span className="text-foreground">Kubernetes</span></p>
                 <p className="mb-1 pl-8"><span className="text-muted-foreground">-</span> <span className="text-foreground">Docker</span></p>
                 <p className="mb-1 pl-8"><span className="text-muted-foreground">-</span> <span className="text-foreground">Azure</span></p>
+                <p className="mb-1 pl-8"><span className="text-muted-foreground">-</span> <span className="text-foreground">React / TypeScript</span></p>
+                <p className="mb-1 pl-8"><span className="text-muted-foreground">-</span> <span className="text-foreground">Angular</span></p>
                 <p className="mb-1 pl-8"><span className="text-muted-foreground">-</span> <span className="text-foreground">CI/CD</span></p>
                 <div className="mt-4 flex items-center text-foreground font-semibold">
                   <TerminalSquare className="size-4 mr-2 text-primary" />
@@ -142,11 +146,13 @@ export function Hero() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.8, type: "spring", stiffness: 120 }}
             >
-              <ImageWithFallback 
-                src={profilePic} 
-                alt="Mario Celzo" 
+              <ImageWithFallback
+                src={profilePic}
+                alt="Mario Celzo"
                 className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-xl border border-border/50"
               />
+              {/* Green status dot — "online" indicator overlaid on top-right of photo */}
+              <div className="absolute top-0 right-0 w-3 h-3 rounded-full bg-[#27C93F] border-2 border-background shadow-[0_0_0_1px_rgba(39,201,63,.4),0_0_10px_rgba(39,201,63,.5)]" />
             </motion.div>
 
           </motion.div>

@@ -1,3 +1,10 @@
 @import './fonts.css';
 @import './tailwind.css';
 @import './theme.css';
+
+/* K8s node pulsing animation — used by K8sVisual in FeatureSlides.tsx
+   Each node cell scales up slightly and brightens at 50% to convey live orchestration */
+@keyframes nodeP {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.1); opacity: 1; }
+}

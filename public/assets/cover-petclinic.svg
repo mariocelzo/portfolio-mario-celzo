@@ -1,0 +1,56 @@
+<svg viewBox="0 0 1280 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="grid1" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="rgba(244,238,228,0.06)" stroke-width="1"></path>
+    </pattern>
+    <radialGradient id="glow" cx="0.5" cy="0.32" r="0.4">
+      <stop offset="0%" stop-color="#E84B1A" stop-opacity="0.28"></stop>
+      <stop offset="100%" stop-color="#E84B1A" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+  <rect fill="#0E0C0A" width="1280" height="800"></rect>
+  <rect fill="url(#grid1)" width="1280" height="800"></rect>
+  <rect fill="url(#glow)" width="1280" height="800"></rect>
+
+  
+  <g>
+    
+    <line x1="220" y1="240" x2="620" y2="200" stroke="rgba(244,238,228,0.32)" stroke-width="1.5"></line>
+    <line x1="620" y1="200" x2="1060" y2="260" stroke="#E84B1A" stroke-width="1.6" stroke-dasharray="5 5"></line>
+    <line x1="220" y1="240" x2="340" y2="520" stroke="rgba(244,238,228,0.32)" stroke-width="1.5"></line>
+    <line x1="620" y1="200" x2="340" y2="520" stroke="rgba(244,238,228,0.32)" stroke-width="1.5"></line>
+    <line x1="620" y1="200" x2="780" y2="560" stroke="#E84B1A" stroke-width="1.6" stroke-dasharray="5 5"></line>
+    <line x1="1060" y1="260" x2="1060" y2="540" stroke="rgba(244,238,228,0.32)" stroke-width="1.5"></line>
+    <line x1="780" y1="560" x2="1060" y2="540" stroke="rgba(244,238,228,0.32)" stroke-width="1.5"></line>
+    <line x1="340" y1="520" x2="780" y2="560" stroke="rgba(244,238,228,0.32)" stroke-width="1.5"></line>
+
+    
+    <g stroke="#F4EEE4" stroke-width="1.5" fill="#0E0C0A">
+      <circle cx="220" cy="240" r="32"></circle>
+      <circle cx="1060" cy="260" r="32"></circle>
+      <circle cx="340" cy="520" r="32"></circle>
+      <circle cx="780" cy="560" r="32"></circle>
+      <circle cx="1060" cy="540" r="32"></circle>
+    </g>
+    
+    <g>
+      <circle cx="620" cy="200" r="76" fill="none" stroke="#E84B1A" stroke-width="1" opacity="0.18"></circle>
+      <circle cx="620" cy="200" r="54" fill="none" stroke="#E84B1A" stroke-width="1" opacity="0.4"></circle>
+      <circle cx="620" cy="200" r="32" fill="#E84B1A"></circle>
+    </g>
+  </g>
+
+  
+  <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="13" fill="#807A72" letter-spacing="3">
+    <text x="48" y="68">PETCLINIC.K8S</text>
+    <text x="48" y="92" fill="#E84B1A">CHAOS_MONKEY: ON</text>
+  </g>
+  <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#E84B1A" letter-spacing="3">
+    <text x="620" y="148" text-anchor="middle">FAULT</text>
+  </g>
+
+  
+  <line x1="48" y1="700" x2="160" y2="700" stroke="#E84B1A" stroke-width="1"></line>
+  <text x="48" y="744" font-family="Instrument Serif, serif" font-style="italic" font-size="44" fill="#F4EEE4">PetClinic — Dependability</text>
+  <text x="48" y="772" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="3" fill="#807A72">FMEA · MTTF/MTTR · DOCKER · GH ACTIONS · SONARCLOUD</text>
+</svg>

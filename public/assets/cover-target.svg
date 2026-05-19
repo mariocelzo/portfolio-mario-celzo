@@ -1,0 +1,54 @@
+<svg viewBox="0 0 1280 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="paperT" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F4EFE3"></stop>
+      <stop offset="100%" stop-color="#E8DCC2"></stop>
+    </linearGradient>
+  </defs>
+  <rect fill="url(#paperT)" width="1280" height="800"></rect>
+
+  
+  <g transform="translate(820, 420)">
+    
+    <g transform="rotate(-12) translate(-200, -160)">
+      <rect width="400" height="320" rx="6" fill="#FBF8F0" stroke="rgba(20,18,16,0.22)" stroke-width="1"></rect>
+      <rect x="20" y="20" width="360" height="200" fill="#E3DBC7"></rect>
+      <rect x="20" y="240" width="220" height="14" fill="#141210"></rect>
+      <rect x="20" y="262" width="120" height="10" fill="#7C7569"></rect>
+      <circle cx="354" cy="262" r="14" fill="#B43A1A"></circle>
+    </g>
+    
+    <g transform="rotate(-4) translate(-200, -160)">
+      <rect width="400" height="320" rx="6" fill="#FBF8F0" stroke="rgba(20,18,16,0.22)" stroke-width="1"></rect>
+      <rect x="20" y="20" width="360" height="200" fill="#D6B774"></rect>
+      <rect x="20" y="240" width="180" height="14" fill="#141210"></rect>
+      <rect x="20" y="262" width="140" height="10" fill="#7C7569"></rect>
+      <circle cx="354" cy="262" r="14" fill="#B43A1A"></circle>
+    </g>
+    
+    <g transform="rotate(6) translate(-200, -160)">
+      <rect width="400" height="320" rx="6" fill="#FBF8F0" stroke="rgba(20,18,16,0.32)" stroke-width="1.4"></rect>
+      <rect x="20" y="20" width="360" height="200" fill="#3D3833"></rect>
+      <rect x="20" y="240" width="240" height="14" fill="#141210"></rect>
+      <rect x="20" y="262" width="110" height="10" fill="#7C7569"></rect>
+      <circle cx="354" cy="262" r="16" fill="#B43A1A"></circle>
+      <text x="354" y="268" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#FBF8F0">€</text>
+    </g>
+  </g>
+
+  
+  <g transform="translate(80, 460)">
+    <rect width="280" height="80" rx="14" fill="#141210"></rect>
+    <path d="M 28 80 L 16 102 L 60 80 Z" fill="#141210"></path>
+    <text x="20" y="36" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="2" fill="#807A72">MESSAGGI · 03</text>
+    <text x="20" y="62" font-family="Instrument Serif, serif" font-style="italic" font-size="22" fill="#F4EEE4">&#34;Ancora disponibile?&#34;</text>
+  </g>
+
+  
+  <text x="48" y="68" font-family="JetBrains Mono, monospace" font-size="13" letter-spacing="3" fill="#7C7569">TARGET.MARKET</text>
+  <text x="48" y="92" font-family="JetBrains Mono, monospace" font-size="13" letter-spacing="3" fill="#B43A1A">E-COMMERCE · TEAM 3 · AGILE</text>
+
+  <line x1="48" y1="700" x2="160" y2="700" stroke="#B43A1A" stroke-width="1"></line>
+  <text x="48" y="744" font-family="Instrument Serif, serif" font-style="italic" font-size="44" fill="#141210">TARGET</text>
+  <text x="48" y="772" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="3" fill="#7C7569">ANNUNCI · CHAT REAL-TIME · RECENSIONI</text>
+</svg>

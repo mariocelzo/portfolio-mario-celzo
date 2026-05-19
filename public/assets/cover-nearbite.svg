@@ -1,0 +1,47 @@
+<svg viewBox="0 0 1280 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="mapDots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="16" cy="16" r="1.6" fill="rgba(20,18,16,0.20)"></circle>
+    </pattern>
+  </defs>
+  <rect fill="#EDE6D6" width="1280" height="800"></rect>
+  <rect fill="url(#mapDots)" width="1280" height="800"></rect>
+
+  
+  <g stroke="rgba(20,18,16,0.10)" stroke-width="1.5" fill="none">
+    <path d="M 0 250 L 1280 220"></path>
+    <path d="M 0 470 L 1280 510"></path>
+    <path d="M 380 0 L 420 800"></path>
+    <path d="M 920 0 L 880 800"></path>
+  </g>
+
+  
+  <path d="M 180 620 C 360 480, 520 520, 640 360 S 920 220, 1100 200" stroke="#B43A1A" stroke-width="3.5" fill="none" stroke-dasharray="6 10" stroke-linecap="round"></path>
+
+  
+  <circle cx="180" cy="620" r="10" fill="#141210"></circle>
+  <circle cx="180" cy="620" r="18" fill="none" stroke="#141210" stroke-width="1.5"></circle>
+
+  
+  <g transform="translate(1100, 200)">
+    <path d="M 0 -8 c -32 0 -58 24 -58 56 c 0 38 58 100 58 100 s 58 -62 58 -100 c 0 -32 -26 -56 -58 -56 z" fill="#B43A1A"></path>
+    <circle cx="0" cy="50" r="22" fill="#FBF8F0"></circle>
+    <circle cx="0" cy="50" r="10" fill="#B43A1A"></circle>
+    
+    <ellipse cx="0" cy="170" rx="36" ry="6" fill="rgba(20,18,16,0.18)"></ellipse>
+  </g>
+
+  
+  <g fill="#141210">
+    <circle cx="520" cy="500" r="7"></circle>
+    <circle cx="780" cy="320" r="7"></circle>
+  </g>
+
+  
+  <text x="48" y="68" font-family="JetBrains Mono, monospace" font-size="13" letter-spacing="3" fill="#7C7569">NEARBITE.APP</text>
+  <text x="48" y="92" font-family="JetBrains Mono, monospace" font-size="13" letter-spacing="3" fill="#B43A1A">REACT NATIVE · EXPO · AI</text>
+
+  <line x1="48" y1="700" x2="160" y2="700" stroke="#B43A1A" stroke-width="1"></line>
+  <text x="48" y="744" font-family="Instrument Serif, serif" font-style="italic" font-size="44" fill="#141210">NearBite</text>
+  <text x="48" y="772" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="3" fill="#7C7569">RISTORANTI · GEO REAL-TIME · GOOGLE PLACES · SUPABASE</text>
+</svg>

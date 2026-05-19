@@ -1,19 +1,24 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="dark" data-accent="lime">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Mario Celzo — Junior DevOps Engineer @ Lutech SpA. Pipeline CI/CD, microservizi su AKS, DevSecOps. Sarno (SA), Italia." />
+    <!-- Favicon: versione piccola per la tab, grande per Apple touch icon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <!-- Google Fonts: Instrument Serif (per titoli eleganti) + JetBrains Mono (font monospazio principale) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <title>mario.celzo — devops.engineer/01</title>
+  </head>
 
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <!-- Favicon: versione piccola per la tab, grande per Apple touch icon -->
-      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-      <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png" />
-      <link rel="apple-touch-icon" href="/favicon.png" />
-      <title>Mario Celzo | Portfolio</title>
-    </head>
-
-    <body>
-      <div id="root"></div>
-      <script type="module" src="/src/main.tsx"></script>
-    </body>
-  </html>
-  
+  <body>
+    <div id="root"></div>
+    <!-- Scanline overlay: effetto CRT/terminale, z-index alto, pointer-events:none -->
+    <div class="tx-scan" aria-hidden="true"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

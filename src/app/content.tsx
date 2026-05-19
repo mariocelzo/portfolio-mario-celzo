@@ -129,7 +129,7 @@ const it: Content = {
     ],
   },
   now: {
-    no: "01", title: ["Now,", "in produzione."], cue: "uptime: gen 2026 → present",
+    no: "01", title: ["Ora,", "in produzione."], cue: "uptime: gen 2026 → present",
     lead: "$ kubectl describe me",
     body: [
       <>

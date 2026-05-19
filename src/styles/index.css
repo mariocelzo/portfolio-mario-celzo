@@ -234,7 +234,7 @@ button { font: inherit; cursor: pointer; }
 /* Riga ruolo con sintassi stile codice key=val */
 .tx-hero__role {
   font-size: 14px; line-height: 1.6;
-  color: var(--ink-soft);
+  color: var(--ink);
   max-width: 56ch; margin: 0 0 22px;
 }
 .tx-hero__role .key   { color: var(--ink-mute); }
@@ -244,7 +244,7 @@ button { font: inherit; cursor: pointer; }
 /* Pitch principale con bordo sinistro accent */
 .tx-hero__pitch {
   max-width: 62ch; font-size: 16px; line-height: 1.6;
-  color: var(--ink-soft); margin: 0 0 36px;
+  color: var(--ink); margin: 0 0 36px;
   padding-left: 18px;
   border-left: 1px solid var(--accent);
 }
@@ -370,7 +370,7 @@ button { font: inherit; cursor: pointer; }
 }
 .tx-now__main p {
   font-size: 15px; line-height: 1.65;
-  color: var(--ink-soft); margin: 0 0 14px; max-width: 64ch;
+  color: var(--ink); margin: 0 0 14px; max-width: 64ch;
 }
 .tx-now__main p strong { color: var(--accent); font-weight: 600; }
 
@@ -552,7 +552,7 @@ button { font: inherit; cursor: pointer; }
 }
 .tx-work__body .head .repo .arr { width: 10px; height: 10px; transition: transform 220ms ease; }
 .tx-work__body .head .repo:hover .arr { transform: translate(2px, -2px); }
-.tx-work__body p { font-size: 13px; line-height: 1.55; color: var(--ink-soft); margin: 0; }
+.tx-work__body p { font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0; }
 .tx-work__tags {
   display: flex; flex-wrap: wrap; gap: 5px;
   margin-top: 6px; padding-top: 12px;
@@ -626,7 +626,7 @@ button { font: inherit; cursor: pointer; }
 .tx-exp__body p {
   margin: 0 0 14px;
   font-size: 14px; line-height: 1.6;
-  color: var(--ink-soft); max-width: 62ch;
+  color: var(--ink); max-width: 62ch;
 }
 .tx-exp__body ul {
   list-style: none; padding: 0; margin: 14px 0 0;
@@ -801,7 +801,7 @@ button { font: inherit; cursor: pointer; }
 .tx-behind__title .italic { font-style: italic; color: var(--accent); }
 .tx-behind__bio p {
   font-size: 14px; line-height: 1.65;
-  color: var(--ink-soft); margin: 0 0 12px; max-width: 60ch;
+  color: var(--ink); margin: 0 0 12px; max-width: 60ch;
 }
 .tx-behind__grid {
   margin-top: 8px;
@@ -827,7 +827,7 @@ button { font: inherit; cursor: pointer; }
   font-style: italic; font-size: 22px;
   line-height: 1.15; margin: 0 0 4px; color: var(--ink);
 }
-.tx-behind__item p { font-size: 13px; line-height: 1.55; color: var(--ink-soft); margin: 0; }
+.tx-behind__item p { font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0; }
 
 @media (max-width: 900px) {
   .tx-behind { padding: 60px 22px; }
@@ -872,7 +872,7 @@ button { font: inherit; cursor: pointer; }
 .tx-contact__title .italic { font-style: italic; color: var(--accent); }
 .tx-contact__lede {
   max-width: 52ch; margin: 0 auto 32px;
-  font-size: 14px; line-height: 1.65; color: var(--ink-soft);
+  font-size: 14px; line-height: 1.65; color: var(--ink);
 }
 /* Email grande in corsivo serif con underline accent */
 .tx-contact__email {

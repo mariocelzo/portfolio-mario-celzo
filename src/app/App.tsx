@@ -6,6 +6,8 @@ import { Analytics } from "@vercel/analytics/react";
 import { C } from "./content";
 import { TxHeader }     from "./components/TxHeader";
 import { TxHero }       from "./components/TxHero";
+import { TxMarquee }    from "./components/TxMarquee";
+import { TxProgress }   from "./components/TxProgress";
 import { TxNow }        from "./components/TxNow";
 import { TxWork }       from "./components/TxWork";
 import { TxExperience } from "./components/TxExperience";
@@ -98,12 +100,19 @@ export default function App() {
 
   return (
     <>
+      {/* Barra di progresso scroll in cima alla pagina */}
+      <TxProgress />
+
       {/* Header fisso in cima — terminal bar con lingua e CTA */}
       <TxHeader content={content} lang={lang} setLang={setLang} />
 
-      <main>
+      {/* key={lang}: rimonta il contenuto al cambio lingua attivando il fade CSS */}
+      <main key={lang}>
         {/* Hero: nome grande, prompt terminale, pitch, CTA, meta */}
         <TxHero content={content} lang={lang} />
+
+        {/* Marquee ticker con le keyword tecniche */}
+        <TxMarquee />
 
         {/* Now: attività corrente su Lutech/ERIT-DXL con panel laterale */}
         <TxNow now={content.now} />

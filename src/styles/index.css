@@ -59,6 +59,15 @@ img { display: block; max-width: 100%; }
 button { font: inherit; cursor: pointer; }
 ::selection { background: var(--accent); color: var(--accent-fg); }
 
+/* Scrollbar custom — sottile e scura, coerente con l'estetica terminale */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--bg-line);
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--ink-mute); }
+
 /* ──── Primitive tipografiche ──── */
 .serif { font-family: "Instrument Serif", "Times New Roman", serif; font-weight: 400; }
 .italic { font-style: italic; }
@@ -140,6 +149,30 @@ button { font: inherit; cursor: pointer; }
 /* Slash decorativa prima di ogni voce nav */
 .tx-header__nav a::before { content: "/"; color: var(--ink-mute); margin-right: 6px; }
 .tx-header__nav a:hover { color: var(--accent); }
+/* Underline animata che cresce da sinistra al passaggio del mouse */
+.tx-header__nav a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -4px;
+  height: 1px; width: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 320ms cubic-bezier(0.16,1,0.3,1);
+}
+.tx-header__nav a:hover::after { transform: scaleX(1); }
+
+/* Barra di progresso scroll — linea accent sottile sotto l'header */
+.tx-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px; width: 100%;
+  background: var(--accent);
+  transform-origin: left;
+  transform: scaleX(0);
+  z-index: 60;
+  pointer-events: none;
+}
 .tx-header__right { display: flex; align-items: center; gap: 10px; }
 
 /* Toggle lingua IT / EN */
@@ -169,9 +202,13 @@ button { font: inherit; cursor: pointer; }
 .tx-cta:hover { transform: translateY(-1px); }
 .tx-cta::before { content: "$"; opacity: 0.65; }
 
+/* Il ruolo nell'header sparisce presto: a larghezze intermedie andrebbe
+   a capo su più righe rompendo l'allineamento della terminal bar */
+@media (max-width: 1100px) {
+  .tx-header__mark .role { display: none; }
+}
 @media (max-width: 920px) {
   .tx-header__nav { display: none; }
-  .tx-header__mark .role { display: none; }
 }
 
 /* ──── Hero ──── */
@@ -180,6 +217,15 @@ button { font: inherit; cursor: pointer; }
   max-width: 1240px;
   margin: 0 auto;
   position: relative;
+}
+/* Glow ambientale dietro al nome — profondità senza distrarre */
+.tx-hero::before {
+  content: "";
+  position: absolute;
+  top: -10%; left: -15%;
+  width: 70%; height: 80%;
+  background: radial-gradient(ellipse at center, rgba(232,228,218,0.045) 0%, transparent 65%);
+  pointer-events: none;
 }
 /* Riga di prompt terminale sopra al nome */
 .tx-hero__prompt {
@@ -221,6 +267,20 @@ button { font: inherit; cursor: pointer; }
   margin: 0 0 28px;
 }
 .tx-hero__name .italic { font-style: italic; }
+/* Slide-up mascherato: ogni parola scivola su dal proprio contenitore overflow:hidden */
+.tx-hero__name .word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.tx-hero__name .word > span {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 1000ms cubic-bezier(0.16,1,0.3,1);
+}
+/* La seconda parola parte con leggero ritardo per effetto cascata */
+.tx-hero__name .word:nth-of-type(2) > span { transition-delay: 120ms; }
+.tx-hero__name.is-in .word > span { transform: translateY(0); }
 .tx-hero__name .caret {
   display: inline-block;
   width: 0.06em; height: 0.85em;
@@ -318,6 +378,47 @@ button { font: inherit; cursor: pointer; }
   .tx-hero__meta-item:nth-child(3),
   .tx-hero__meta-item:nth-child(4) { border-top: 1px dashed var(--rule); padding-top: 14px; }
   .tx-hero__meta-item:nth-child(odd) { padding-left: 0; }
+}
+
+/* ──── Marquee ticker (striscia scorrevole stile terminale) ──── */
+.tx-marquee {
+  overflow: hidden;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 13px 0;
+  background: var(--bg-soft);
+  position: relative;
+}
+.tx-marquee__track {
+  display: flex;
+  gap: 0;
+  width: max-content;
+  animation: tx-marquee 36s linear infinite;
+  will-change: transform;
+}
+/* In pausa al passaggio del mouse per leggere */
+.tx-marquee:hover .tx-marquee__track { animation-play-state: paused; }
+.tx-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  padding-right: 28px;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  white-space: nowrap;
+}
+/* Separatore ✦ tra le voci, in accent attenuato */
+.tx-marquee__item::after {
+  content: "✦";
+  color: var(--accent);
+  opacity: 0.4;
+  font-size: 9px;
+}
+@keyframes tx-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 /* ──── Sezioni generiche ──── */
@@ -455,9 +556,16 @@ button { font: inherit; cursor: pointer; }
   color: var(--ink-soft);
   font-family: "JetBrains Mono", monospace;
   font-size: 11px;
-  transition: border-color 220ms ease, color 220ms ease;
+  transition: border-color 220ms ease, color 220ms ease,
+              transform 220ms cubic-bezier(0.16,1,0.3,1), background 220ms ease;
 }
-.tx-chip:hover { border-color: var(--accent); color: var(--accent); }
+/* Micro-lift al passaggio del mouse */
+.tx-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+  background: var(--bg-card);
+}
 .tx-panel__divider { border-top: 1px dashed var(--rule); margin: 18px 0; }
 .tx-panel__body dl {
   margin: 0; display: grid;
@@ -492,6 +600,7 @@ button { font: inherit; cursor: pointer; }
 .tx-work__card:hover {
   transform: translateY(-4px);
   border-color: var(--accent);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.45);
 }
 /* span-2 = card larga 2 colonne nella griglia a 6 */
 .tx-work__card.span-2 { grid-column: span 2; }
@@ -503,7 +612,10 @@ button { font: inherit; cursor: pointer; }
 .tx-work__media img {
   width: 100%; height: 100%;
   object-fit: cover; display: block;
+  transition: transform 700ms cubic-bezier(0.16,1,0.3,1);
 }
+/* Zoom lento sull'immagine quando la card è in hover */
+.tx-work__card:hover .tx-work__media img { transform: scale(1.05); }
 /* Badge overlay sull'immagine del progetto */
 .tx-work__media .num,
 .tx-work__media .yr,
@@ -576,9 +688,25 @@ button { font: inherit; cursor: pointer; }
   gap: 32px; padding: 28px 0;
   border-top: 1px solid var(--rule);
   align-items: start;
-  transition: background 240ms ease;
+  position: relative;
+  transition: background 240ms ease, padding-left 420ms cubic-bezier(0.16,1,0.3,1);
 }
-.tx-exp__row:hover { background: var(--bg-card); }
+/* Hover: la riga si sposta a destra e appare una linea accent a sinistra */
+.tx-exp__row::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 420ms cubic-bezier(0.16,1,0.3,1);
+}
+.tx-exp__row:hover {
+  background: var(--bg-card);
+  padding-left: 18px;
+}
+.tx-exp__row:hover::before { transform: scaleY(1); }
 .tx-exp__row:last-child { border-bottom: 1px solid var(--rule); }
 .tx-exp__year {
   font-family: "JetBrains Mono", monospace;
@@ -768,6 +896,12 @@ button { font: inherit; cursor: pointer; }
   object-fit: cover;
   object-position: center 22%;
   filter: contrast(1.05) saturate(0.92);
+  transition: transform 900ms cubic-bezier(0.16,1,0.3,1), filter 500ms ease;
+}
+/* Zoom delicato + colori pieni al passaggio del mouse */
+.tx-behind__media:hover img {
+  transform: scale(1.03);
+  filter: contrast(1.05) saturate(1);
 }
 /* Badge overlay angoli sulla foto */
 .tx-behind__media .corner {
@@ -957,13 +1091,41 @@ button { font: inherit; cursor: pointer; }
 }
 
 /* ──── Reveal animations (scroll-triggered via IntersectionObserver) ──── */
+/* Blur che si dissolve insieme a opacity/translate per un effetto più cinematico */
 .reveal {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 700ms cubic-bezier(0.16,1,0.3,1),
-              transform 700ms cubic-bezier(0.16,1,0.3,1);
+  transform: translateY(26px);
+  filter: blur(6px);
+  transition: opacity 850ms cubic-bezier(0.16,1,0.3,1),
+              transform 850ms cubic-bezier(0.16,1,0.3,1),
+              filter 850ms cubic-bezier(0.16,1,0.3,1);
 }
 .reveal.is-in {
   opacity: 1;
   transform: none;
+  filter: none;
+}
+
+/* Fade del contenuto al cambio lingua (main viene rimontato con key={lang}) */
+@keyframes tx-main-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+main { animation: tx-main-fade 400ms ease; }
+
+/* Accessibilità: rispetta la preferenza di ridurre le animazioni */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+  .tx-hero__name .word > span {
+    transform: none;
+    transition: none;
+  }
+  .tx-marquee__track { animation: none; }
+  main { animation: none; }
+  html { scroll-behavior: auto; }
 }

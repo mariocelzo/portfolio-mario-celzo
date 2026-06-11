@@ -46,13 +46,19 @@ export function TxHero({ content, lang }: Props) {
         <span className="pill">v6 · /tech</span>
       </div>
 
-      {/* Nome grande con corsivo + caret terminale */}
+      {/* Nome grande con corsivo + caret terminale.
+          Ogni parola è in un .word (overflow:hidden) e scivola su quando
+          l'h1 riceve .is-in dal reveal observer — effetto slide-up mascherato */}
       <h1
         className="tx-hero__name reveal"
         style={{ transitionDelay: "60ms" }}
       >
-        <span className="italic">{h.tagline[0]}</span>{" "}
-        <span>{h.tagline[1]}</span>
+        <span className="word">
+          <span className="italic">{h.tagline[0]}</span>
+        </span>{" "}
+        <span className="word">
+          <span>{h.tagline[1]}</span>
+        </span>
         <span className="caret" aria-hidden="true"></span>
       </h1>
 

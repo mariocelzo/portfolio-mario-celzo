@@ -108,7 +108,8 @@ export default function App() {
 
       {/* key={lang}: rimonta il contenuto al cambio lingua attivando il fade CSS */}
       <main key={lang}>
-        {/* Hero: nome grande, prompt terminale, pitch, CTA, meta */}
+        {/* Hero: nome grande, prompt terminale, pitch, CTA, meta,
+            con il torus knot ASCII 3D (Three.js) come sfondo */}
         <TxHero content={content} lang={lang} />
 
         {/* Marquee ticker con le keyword tecniche */}

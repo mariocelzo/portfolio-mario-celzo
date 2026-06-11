@@ -218,6 +218,31 @@ button { font: inherit; cursor: pointer; }
   margin: 0 auto;
   position: relative;
 }
+/* ── Layer effetti Three.js nella hero ── */
+/* Tutti i layer fx stanno dietro al contenuto (z-index 0 vs 1) */
+.tx-fx {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+/* ASCII 3D: colonna destra della hero, dietro al nome */
+.tx-fx--ascii {
+  top: 0; right: -4%;
+  width: 52%; height: 88%;
+  opacity: 0.5;
+  /* Sfuma i bordi per integrarlo con lo sfondo */
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 78%);
+}
+.tx-fx--ascii table { font-size: 11px !important; line-height: 1 !important; }
+/* Il contenuto della hero sta sopra i layer fx */
+.tx-hero > *:not(.tx-fx) { position: relative; z-index: 1; }
+/* Su mobile gli effetti 3D sono nascosti: performance e spazio */
+@media (max-width: 760px) {
+  .tx-fx { display: none; }
+}
+
 /* Glow ambientale dietro al nome — profondità senza distrarre */
 .tx-hero::before {
   content: "";

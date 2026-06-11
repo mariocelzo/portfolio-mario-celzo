@@ -1,7 +1,11 @@
 // TxHero — Sezione hero con prompt terminale, nome gigante, pitch e meta grid
 // Il caret lampeggia via CSS animation (tx-blink)
 
+import { lazy, Suspense } from "react";
 import type { Content } from "../content";
+
+// Effetto Three.js lazy: il chunk three viene scaricato solo dopo il primo render
+const TxAscii3D = lazy(() => import("./TxAscii3D").then(m => ({ default: m.TxAscii3D })));
 
 // Freccia diagonale (↗) per link esterni
 const ArrowUR = () => (
@@ -32,6 +36,11 @@ export function TxHero({ content, lang }: Props) {
 
   return (
     <section id="top" className="tx-hero">
+
+      {/* Torus knot ASCII 3D dietro al contenuto (z-index 0, lato destro) */}
+      <Suspense fallback={null}>
+        <TxAscii3D />
+      </Suspense>
 
       {/* Riga prompt terminale: comando + pill status + pill location */}
       <div className="tx-hero__prompt reveal">

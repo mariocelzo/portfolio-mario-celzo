@@ -12,7 +12,10 @@ interface Props {
 export function TxFooter({ footer }: Props) {
   return (
     <footer className="tx-footer">
-      <div>{footer.l}</div>
+      {/* Il copyright è anche un link "torna su" */}
+      <div>
+        <a href="#top">{footer.l} ↑</a>
+      </div>
       <div className="tx-footer__c">{footer.c}</div>
       <div className="tx-footer__r">{footer.r}</div>
     </footer>

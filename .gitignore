@@ -1,0 +1,12 @@
+# Dipendenze
+node_modules/
+
+# Build output (Vercel lo rigenera con `vite build`)
+dist/
+
+# Config locale Claude Code (preview server, worktrees)
+.claude/
+
+# File di sistema
+.DS_Store
+*.log

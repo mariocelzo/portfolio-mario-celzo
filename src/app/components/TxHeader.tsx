@@ -1,6 +1,7 @@
 // TxHeader — Header sticky in stile terminal bar
-// Contiene: mark (nome + ruolo), nav centrale, toggle lingua, CTA
+// Contiene: mark (nome + ruolo), nav centrale con sezione attiva, toggle lingua, CTA
 
+import { useEffect, useState } from "react";
 import type { Content } from "../content";
 
 type Lang = "it" | "en";
@@ -26,6 +27,26 @@ export function TxHeader({ content, lang, setLang }: Props) {
     lang === "it" ? "Opportunità DevOps — Mario Celzo" : "DevOps Opportunity — Mario Celzo"
   );
 
+  // Sezione attualmente visibile — evidenziata nella nav con underline accent.
+  // Il rootMargin restringe la "finestra" di rilevamento alla fascia centrale
+  // del viewport, così una sola sezione è attiva alla volta.
+  const [active, setActive] = useState<string>("");
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(e.target.id);
+        });
+      },
+      { rootMargin: "-35% 0px -55% 0px" }
+    );
+    content.nav.forEach((n) => {
+      const el = document.getElementById(n.id);
+      if (el) io.observe(el);
+    });
+    return () => io.disconnect();
+  }, [content]);
+
   return (
     <header className="tx-header">
       <div className="tx-header__inner">
@@ -37,13 +58,15 @@ export function TxHeader({ content, lang, setLang }: Props) {
           <span className="role">junior devops · sarno (sa), it</span>
         </div>
 
-        {/* Navigazione centrale con slash decorative */}
+        {/* Navigazione centrale con slash decorative + sezione attiva evidenziata */}
         <nav className="tx-header__nav" aria-label="Sezioni portfolio">
           {content.nav.map((n) => (
             <a
               key={n.id}
               href={`#${n.id}`}
               onClick={(e) => scrollTo(e, n.id)}
+              className={active === n.id ? "is-active" : ""}
+              aria-current={active === n.id ? "true" : undefined}
             >
               {n.label}
             </a>

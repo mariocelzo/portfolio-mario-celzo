@@ -161,6 +161,9 @@ button { font: inherit; cursor: pointer; }
   transition: transform 320ms cubic-bezier(0.16,1,0.3,1);
 }
 .tx-header__nav a:hover::after { transform: scaleX(1); }
+/* Sezione attiva: colore accent + underline fissa */
+.tx-header__nav a.is-active { color: var(--accent); }
+.tx-header__nav a.is-active::after { transform: scaleX(1); }
 
 /* Barra di progresso scroll — linea accent sottile sotto l'header */
 .tx-progress {
@@ -274,6 +277,12 @@ button { font: inherit; cursor: pointer; }
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ink-soft);
+  transition: border-color 240ms ease, color 240ms ease;
+}
+/* Le pill si "accendono" al passaggio del mouse */
+.tx-hero__prompt .pill:hover {
+  border-color: var(--accent);
+  color: var(--ink);
 }
 .tx-hero__prompt .pill .dot {
   width: 7px; height: 7px; border-radius: 50%;
@@ -357,6 +366,8 @@ button { font: inherit; cursor: pointer; }
   transform: translateY(-2px);
   border-color: var(--accent);
   color: var(--accent);
+  /* Riempimento soft per un feedback più tangibile */
+  background: var(--accent-soft);
 }
 .tx-btn--primary {
   background: var(--accent);
@@ -413,6 +424,9 @@ button { font: inherit; cursor: pointer; }
   padding: 13px 0;
   background: var(--bg-soft);
   position: relative;
+  /* I bordi laterali sfumano: le voci appaiono/scompaiono morbidamente */
+  mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
 }
 .tx-marquee__track {
   display: flex;
@@ -637,10 +651,15 @@ button { font: inherit; cursor: pointer; }
 .tx-work__media img {
   width: 100%; height: 100%;
   object-fit: cover; display: block;
-  transition: transform 700ms cubic-bezier(0.16,1,0.3,1);
+  /* Leggermente desaturata a riposo, colori pieni in hover */
+  filter: saturate(0.85);
+  transition: transform 700ms cubic-bezier(0.16,1,0.3,1), filter 400ms ease;
 }
-/* Zoom lento sull'immagine quando la card è in hover */
-.tx-work__card:hover .tx-work__media img { transform: scale(1.05); }
+/* Zoom lento + colori vivi quando la card è in hover */
+.tx-work__card:hover .tx-work__media img {
+  transform: scale(1.05);
+  filter: saturate(1.08);
+}
 /* Badge overlay sull'immagine del progetto */
 .tx-work__media .num,
 .tx-work__media .yr,
@@ -842,7 +861,25 @@ button { font: inherit; cursor: pointer; }
   gap: 22px; padding: 18px 0;
   border-top: 1px solid var(--rule);
   align-items: start;
+  position: relative;
+  transition: background 240ms ease, padding-left 420ms cubic-bezier(0.16,1,0.3,1);
 }
+/* Stesso hover delle righe Experience: slide + linea accent a sinistra */
+.tx-edu__row::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 420ms cubic-bezier(0.16,1,0.3,1);
+}
+.tx-edu__row:hover {
+  background: var(--bg-card);
+  padding-left: 14px;
+}
+.tx-edu__row:hover::before { transform: scaleY(1); }
 .tx-edu__row:last-child { border-bottom: 1px solid var(--rule); }
 .tx-edu__row .year {
   font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
@@ -972,7 +1009,12 @@ button { font: inherit; cursor: pointer; }
 .tx-behind__item {
   padding: 18px 22px 18px 0;
   border-bottom: 1px solid var(--rule);
+  transition: background 240ms ease;
 }
+/* Titolo passion in accent quando la card è in hover */
+.tx-behind__item h4 { transition: color 220ms ease; }
+.tx-behind__item:hover h4 { color: var(--accent); }
+.tx-behind__item:hover { background: var(--bg-card); }
 .tx-behind__item:nth-child(odd)  { border-right: 1px solid var(--rule); }
 .tx-behind__item:nth-child(even) { padding-left: 22px; padding-right: 0; }
 .tx-behind__item:nth-last-child(-n+2) { border-bottom: 0; }
@@ -1058,6 +1100,9 @@ button { font: inherit; cursor: pointer; }
   transition: background 220ms ease;
 }
 .tx-contact__field:hover { background: var(--bg-soft); }
+/* Il valore si accende in accent al passaggio del mouse */
+.tx-contact__field .v { transition: color 220ms ease; }
+.tx-contact__field:hover .v { color: var(--accent); }
 .tx-contact__field:last-child { border-right: 0; }
 .tx-contact__field .k {
   font-size: 10px; letter-spacing: 0.20em; text-transform: uppercase;

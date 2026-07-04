@@ -1,0 +1,3 @@
+# Portfolio Mario Celzo — tutto indicizzabile
+User-agent: *
+Allow: /

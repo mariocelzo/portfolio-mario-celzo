@@ -90,8 +90,8 @@ export interface Content {
 const it: Content = {
   nav: [
     { id: "now",     label: "now" },
-    { id: "work",    label: "work" },
     { id: "exp",     label: "exp" },
+    { id: "work",    label: "work" },
     { id: "stack",   label: "stack" },
     { id: "edu",     label: "edu" },
     { id: "contact", label: "contact" },
@@ -166,7 +166,7 @@ const it: Content = {
     ],
   },
   work: {
-    no: "02", title: ["Lavori", "selezionati."], cue: "5 progetti · 2024 → 2025",
+    no: "03", title: ["Lavori", "selezionati."], cue: "5 progetti · 2024 → 2025",
     items: [
       { name: "PetClinic Dependability", year: "2025", level: "MAGISTRALE",
         desc: "Analisi dependability di Spring PetClinic. Fault injection con Chaos Monkey, FMEA, MTTF/MTTR. Pipeline completa: GitHub Actions, Docker, SonarCloud.",
@@ -201,7 +201,7 @@ const it: Content = {
     repoLbl: "repo →", demoLbl: "live →",
   },
   exp: {
-    no: "03", title: ["Esperienza &", "percorso."], cue: "deploy log · 2018 → 2026",
+    no: "02", title: ["Esperienza &", "percorso."], cue: "deploy log · 2018 → 2026",
     items: [
       { year: "2026", range: "18 Lug — Present", badge: "ACTIVE",
         title: "Junior DevOps Engineer · External Consultant", org: "Reply · via Nepta",
@@ -318,8 +318,8 @@ const it: Content = {
 const en: Content = {
   nav: [
     { id: "now",     label: "now" },
-    { id: "work",    label: "work" },
     { id: "exp",     label: "exp" },
+    { id: "work",    label: "work" },
     { id: "stack",   label: "stack" },
     { id: "edu",     label: "edu" },
     { id: "contact", label: "contact" },
@@ -394,7 +394,7 @@ const en: Content = {
     ],
   },
   work: {
-    no: "02", title: ["Selected", "work."], cue: "5 projects · 2024 → 2025",
+    no: "03", title: ["Selected", "work."], cue: "5 projects · 2024 → 2025",
     items: [
       { name: "PetClinic Dependability", year: "2025", level: "M.SC.",
         desc: "Dependability analysis of Spring PetClinic. Chaos Monkey fault injection, FMEA, MTTF/MTTR. Full pipeline: GitHub Actions, Docker, SonarCloud.",
@@ -429,7 +429,7 @@ const en: Content = {
     repoLbl: "repo →", demoLbl: "live →",
   },
   exp: {
-    no: "03", title: ["Experience &", "path."], cue: "deploy log · 2018 → 2026",
+    no: "02", title: ["Experience &", "path."], cue: "deploy log · 2018 → 2026",
     items: [
       { year: "2026", range: "Jul 18 — Present", badge: "ACTIVE",
         title: "Junior DevOps Engineer · External Consultant", org: "Reply · via Nepta",

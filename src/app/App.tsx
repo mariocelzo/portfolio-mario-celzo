@@ -89,8 +89,28 @@ function useReveal(deps: unknown[] = []) {
 // ──────────────────────────────────────────────────────────────
 // App
 // ──────────────────────────────────────────────────────────────
+// Easter egg: banner ASCII in console per chi apre i DevTools —
+// se sei arrivato fin qui, probabilmente sei il tipo di persona giusta
+function useConsoleEgg() {
+  useEffect(() => {
+    console.log(
+      "%c\n" +
+      "  ┌─────────────────────────────────────────┐\n" +
+      "  │  $ whoami                               │\n" +
+      "  │  > mario.celzo — junior devops engineer │\n" +
+      "  │                                         │\n" +
+      "  │  $ cat /etc/motd                        │\n" +
+      "  │  > Se stai leggendo qui, parliamo. :)   │\n" +
+      "  │  > mariocelzo003@gmail.com              │\n" +
+      "  └─────────────────────────────────────────┘\n",
+      "color:#7FFF6B; font-family:monospace;"
+    );
+  }, []);
+}
+
 export default function App() {
   const [lang, setLang] = useLanguage();
+  useConsoleEgg();
 
   // Accento fisso "lime" per il portfolio reale (il tweaks panel non esiste qui)
   // Il colore viene impostato via data-accent sul tag <html> in index.html
@@ -118,11 +138,11 @@ export default function App() {
         {/* Now: attività corrente su Lutech/ERIT-DXL con panel laterale */}
         <TxNow now={content.now} />
 
+        {/* Experience: deploy log cronologico (prima dei progetti) */}
+        <TxExperience exp={content.exp} />
+
         {/* Work: griglia progetti con cover SVG */}
         <TxWork work={content.work} />
-
-        {/* Experience: deploy log cronologico */}
-        <TxExperience exp={content.exp} />
 
         {/* Stack: 4 colonne di chip tecnologie */}
         <TxStack stack={content.stack} />

@@ -268,6 +268,15 @@ button { font: inherit; cursor: pointer; }
   color: var(--ink-soft);
 }
 .tx-hero__prompt code::before { content: "$ "; color: var(--accent); opacity: 0.65; }
+/* Cursore a blocco del typewriter — lampeggia mentre il comando si digita */
+.type-cursor {
+  display: inline-block;
+  width: 0.55em; height: 1em;
+  background: var(--accent);
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  animation: tx-blink 1s steps(1) infinite;
+}
 .tx-hero__prompt .pill {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 4px 10px;

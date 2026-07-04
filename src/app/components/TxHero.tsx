@@ -1,7 +1,7 @@
 // TxHero — Sezione hero con prompt terminale, nome gigante, pitch e meta grid
 // Il caret lampeggia via CSS animation (tx-blink)
 
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import type { Content } from "../content";
 
 // Effetto Three.js lazy: il chunk three viene scaricato solo dopo il primo render
@@ -20,6 +20,38 @@ const ArrowDown = () => (
     <path d="M6 2v8M3 7l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="square" strokeLinejoin="round"/>
   </svg>
 );
+
+// TypedCmd — il comando del prompt si "digita" da solo carattere per carattere,
+// come in un vero terminale. Con prefers-reduced-motion appare subito intero.
+function TypedCmd({ text }: { text: string }) {
+  const [n, setN] = useState(0);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setN(text.length);
+      return;
+    }
+    setN(0);
+    // ~55ms a carattere, con un piccolo ritardo iniziale da "invio comando"
+    let id: ReturnType<typeof setInterval> | undefined;
+    const start = setTimeout(() => {
+      id = setInterval(() => {
+        setN((v) => {
+          if (v >= text.length) { clearInterval(id); return v; }
+          return v + 1;
+        });
+      }, 55);
+    }, 350);
+    return () => { clearTimeout(start); if (id) clearInterval(id); };
+  }, [text]);
+
+  return (
+    <code>
+      {text.slice(0, n)}
+      <span className="type-cursor" aria-hidden="true"></span>
+    </code>
+  );
+}
 
 type Lang = "it" | "en";
 
@@ -42,10 +74,10 @@ export function TxHero({ content, lang }: Props) {
         <TxAscii3D />
       </Suspense>
 
-      {/* Riga prompt terminale: comando + pill status + pill location */}
+      {/* Riga prompt terminale: comando auto-digitato + pill status + pill location */}
       <div className="tx-hero__prompt reveal">
         <span>
-          <code>{h.promptCmd}</code>
+          <TypedCmd text={h.promptCmd} />
         </span>
         <span className="pill">
           <span className="dot" aria-hidden="true"></span>

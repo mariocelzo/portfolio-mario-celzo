@@ -106,16 +106,16 @@ const it: Content = {
       <>
         <span className="key">role</span>{" "}={" "}
         <span className="val">Junior DevOps Engineer</span> @{" "}
-        <span className="val">Lutech SpA</span> ·{" "}
-        <span className="key">team</span>{" "}={" "}
-        <span className="val">CrossDev</span> ·{" "}
-        <span className="key">project</span>{" "}={" "}
-        <span className="accent">ERIT-DXL</span> (Edenred Italia)
+        <span className="val">Reply</span> ·{" "}
+        <span className="key">via</span>{" "}={" "}
+        <span className="val">Nepta</span> ·{" "}
+        <span className="key">mode</span>{" "}={" "}
+        <span className="accent">external_consultant</span>
       </>
     ),
     pitch: (
       <>
-        Costruisco <strong>pipeline CI/CD</strong> su Azure DevOps,{" "}
+        Costruisco <strong>pipeline CI/CD</strong>,{" "}
         <strong>microservizi su Kubernetes</strong> e le piccole cose che
         impediscono alla produzione di rompersi il venerdì sera.
       </>
@@ -123,45 +123,46 @@ const it: Content = {
     ctas: { email: "scrivimi", github: "github", linkedin: "linkedin", cv: "cv.pdf" },
     meta: [
       { k: "role",      v: "DevOps · Junior" },
-      { k: "company",   v: "Lutech · CrossDev" },
+      { k: "company",   v: "Reply · via Nepta" },
       { k: "location",  v: "Sarno (SA), IT" },
       { k: "languages", v: "IT · EN (B2)" },
     ],
   },
   now: {
-    no: "01", title: ["Ora,", "in produzione."], cue: "uptime: gen 2026 → present",
+    no: "01", title: ["Ora,", "in produzione."], cue: "uptime: lug 2026 → present",
     lead: "$ kubectl describe me",
     body: [
       <>
-        Da <strong>gennaio 2026</strong>, Junior DevOps Engineer in{" "}
-        <strong>Lutech SpA</strong> — team <strong>CrossDev</strong>. Sul progetto{" "}
-        <strong>ERIT-DXL</strong> per Edenred Italia: pipeline YAML su Azure DevOps
-        che orchestrano build, test, deploy di <strong>5 microservizi</strong> su AKS.
+        Dal <strong>18 luglio 2026</strong> sono in <strong>Reply</strong> come{" "}
+        <strong>Junior DevOps Engineer</strong>, consulente esterno via{" "}
+        <strong>Nepta</strong>. Il progetto è coperto da NDA — ma il mestiere
+        resta lo stesso: <strong>pipeline</strong>, <strong>container</strong>,
+        automazione, e produzione che deve restare in piedi.
       </>,
       <>
-        Mi occupo della parte <strong>DevSecOps</strong> con scan automatici via
-        Qualys WAS e Dependency Track. Sviluppo backend Java + qualche componente
-        Angular sui microservizi, e ho seguito la migrazione Azure Cache for Redis →
-        Azure Managed Redis. Pattern: Kafka / Event Hub, CQRS, retry con dead-letter
-        queue, notifiche SendGrid.
+        Prima, sei mesi in <strong>Lutech</strong> sul progetto ERIT-DXL per
+        Edenred Italia: pipeline Azure DevOps, <strong>5 microservizi su AKS</strong>,
+        DevSecOps, deploy <strong>Helm</strong> e approccio <strong>GitOps</strong>,
+        componenti Angular con Storybook e un upgrade Angular 14 → 21.
+        Il resto è nel deploy log qui sotto.
       </>,
     ],
     bullets: [
-      { ix: "[01]", text: <><strong>5 microservizi</strong> su AKS — build, test, deploy via YAML.</> },
-      { ix: "[02]", text: <><strong>DevSecOps</strong>: Qualys WAS + Dependency Track integrati nelle pipeline.</> },
-      { ix: "[03]", text: <><strong>Migrazione</strong> Azure Cache for Redis → Azure Managed Redis, zero downtime.</> },
-      { ix: "[04]", text: <><strong>Eventi & retry</strong>: Kafka / Event Hub, CQRS, dead-letter, SendGrid.</> },
+      { ix: "[01]", text: <><strong>CI/CD & automazione</strong> — il cuore del ruolo, ovunque sia il codice.</> },
+      { ix: "[02]", text: <><strong>Kubernetes</strong>: deploy, Helm charts, pratiche GitOps.</> },
+      { ix: "[03]", text: <><strong>Consulenza</strong>: contesti nuovi, team nuovi, stessa affidabilità.</> },
+      { ix: "[04]", text: <><strong>Dettagli progetto</strong>: riservati. La produzione, però, gira.</> },
     ],
-    panelFile: "stack.yaml", panelMeta: "TEAM=CROSSDEV · CLIENT=EDENRED",
-    panelTitle: "current_stack",
-    stack: ["Azure DevOps","AKS","Docker","YAML","Java","Angular","Storybook","Kafka","Event Hub","Qualys WAS","Dependency Track","SendGrid","Azure Managed Redis"],
+    panelFile: "engagement.yaml", panelMeta: "EMPLOYER=NEPTA · CLIENT=REPLY",
+    panelTitle: "toolbox",
+    stack: ["CI/CD","Kubernetes","Docker","Helm","GitOps / ArgoCD","Azure DevOps","YAML","Java","Angular","Storybook","Kafka / Event Hub"],
     panelDataTitle: "metadata",
     data: [
-      { k: "team",    v: "CrossDev" },
-      { k: "client",  v: "Edenred Italia" },
-      { k: "project", v: "ERIT-DXL" },
-      { k: "cloud",   v: "Microsoft Azure" },
-      { k: "method",  v: "Agile · Scrum" },
+      { k: "role",     v: "Junior DevOps" },
+      { k: "company",  v: "Reply" },
+      { k: "employer", v: "Nepta" },
+      { k: "mode",     v: "External consultant" },
+      { k: "project",  v: "[REDACTED]" },
     ],
   },
   work: {
@@ -202,12 +203,23 @@ const it: Content = {
   exp: {
     no: "03", title: ["Esperienza &", "percorso."], cue: "deploy log · 2018 → 2026",
     items: [
-      { year: "2026", range: "Gen — Present", badge: "ACTIVE",
+      { year: "2026", range: "18 Lug — Present", badge: "ACTIVE",
+        title: "Junior DevOps Engineer · External Consultant", org: "Reply · via Nepta",
+        body: "Consulente esterno Nepta in Reply. Il progetto è coperto da NDA — il mestiere resta: CI/CD, Kubernetes, automazione, e la produzione che non deve fermarsi.",
+        bullets: [
+          "CI/CD e automazione dei processi di build e deploy",
+          "Kubernetes: deploy, Helm, pratiche GitOps",
+          "Onboarding rapido su toolchain e contesti enterprise",
+          "Dettagli del progetto: [REDACTED] — NDA",
+        ],
+      },
+      { year: "2026", range: "Gen — 18 Lug", badge: "SHIPPED",
         title: "Junior DevOps Engineer", org: "Lutech SpA · CrossDev Team",
-        body: "Sul progetto ERIT-DXL per Edenred Italia. Pipeline, microservizi, DevSecOps, backend Java e qualche frontend Angular.",
+        body: "Sul progetto ERIT-DXL per Edenred Italia. Pipeline, microservizi, DevSecOps, backend Java e frontend Angular. Sei mesi densi, chiusi con un deploy pulito.",
         bullets: [
           "Pipeline CI/CD in YAML su Azure DevOps — build, test, deploy",
           "5 microservizi su Azure Kubernetes Service (AKS)",
+          "Gestione cluster AKS: deploy Helm-based e approccio GitOps",
           "DevSecOps: Qualys WAS + Dependency Track",
           "Migrazione Azure Cache for Redis → Azure Managed Redis",
           "Backend Java e frontend Angular sui microservizi",
@@ -241,7 +253,7 @@ const it: Content = {
     no: "04", title: ["Stack &", "competenze."], cue: "$ ls -la /skills",
     columns: [
       { kicker: "devops_cloud", lead: "Far girare le cose, ripeterle, automatizzarle.",
-        chips: ["Azure DevOps","CI/CD (YAML)","Kubernetes / AKS","Docker","Qualys WAS","Dependency Track","Git","GitHub Actions","SonarCloud","SendGrid","Azure Managed Redis"] },
+        chips: ["Azure DevOps","CI/CD (YAML)","Kubernetes / AKS","Helm","GitOps / ArgoCD","kubectl","Docker","Qualys WAS","Dependency Track","Git","GitHub Actions","SonarCloud","SendGrid","Azure Managed Redis"] },
       { kicker: "frontend_ui", lead: "Interfacce che chiedono poco e restituiscono molto.",
         chips: ["TypeScript","Angular","Storybook","React","React Native","Next.js","JavaScript","HTML5","CSS3","Tailwind","Material UI","Bootstrap","Figma","jQuery","Flutter"] },
       { kicker: "backend_data", lead: "Sotto al cofano, dove succedono le cose serie.",
@@ -259,6 +271,7 @@ const it: Content = {
     ],
     certsTitle: "certifications",
     certs: [
+      { name: "Kubernetes Essentials", yr: "IN CORSO" },
       { name: "AI Fundamentals",     yr: "2024" },
       { name: "Git & GitHub Basics", yr: "2023" },
       { name: "React Development",   yr: "2023" },
@@ -321,16 +334,16 @@ const en: Content = {
       <>
         <span className="key">role</span>{" "}={" "}
         <span className="val">Junior DevOps Engineer</span> @{" "}
-        <span className="val">Lutech SpA</span> ·{" "}
-        <span className="key">team</span>{" "}={" "}
-        <span className="val">CrossDev</span> ·{" "}
-        <span className="key">project</span>{" "}={" "}
-        <span className="accent">ERIT-DXL</span> (Edenred Italia)
+        <span className="val">Reply</span> ·{" "}
+        <span className="key">via</span>{" "}={" "}
+        <span className="val">Nepta</span> ·{" "}
+        <span className="key">mode</span>{" "}={" "}
+        <span className="accent">external_consultant</span>
       </>
     ),
     pitch: (
       <>
-        I build <strong>CI/CD pipelines</strong> on Azure DevOps,{" "}
+        I build <strong>CI/CD pipelines</strong>,{" "}
         <strong>microservices on Kubernetes</strong>, and the small things that
         keep production from breaking on a Friday night.
       </>
@@ -338,46 +351,46 @@ const en: Content = {
     ctas: { email: "get in touch", github: "github", linkedin: "linkedin", cv: "cv.pdf" },
     meta: [
       { k: "role",      v: "DevOps · Junior" },
-      { k: "company",   v: "Lutech · CrossDev" },
+      { k: "company",   v: "Reply · via Nepta" },
       { k: "location",  v: "Sarno (SA), IT" },
       { k: "languages", v: "IT · EN (B2)" },
     ],
   },
   now: {
-    no: "01", title: ["Now,", "in production."], cue: "uptime: jan 2026 → present",
+    no: "01", title: ["Now,", "in production."], cue: "uptime: jul 2026 → present",
     lead: "$ kubectl describe me",
     body: [
       <>
-        Since <strong>January 2026</strong>, Junior DevOps Engineer at{" "}
-        <strong>Lutech SpA</strong> — <strong>CrossDev</strong> team. On the{" "}
-        <strong>ERIT-DXL</strong> project for Edenred Italia: YAML pipelines on
-        Azure DevOps orchestrating build, test and deploy of{" "}
-        <strong>5 microservices</strong> on AKS.
+        Since <strong>July 18, 2026</strong> I'm at <strong>Reply</strong> as a{" "}
+        <strong>Junior DevOps Engineer</strong>, external consultant via{" "}
+        <strong>Nepta</strong>. The project is under NDA — but the craft stays
+        the same: <strong>pipelines</strong>, <strong>containers</strong>,
+        automation, and production that must stay up.
       </>,
       <>
-        I handle <strong>DevSecOps</strong> with automated scans via Qualys WAS
-        and Dependency Track. I develop Java backend + some Angular components on
-        the microservices, and followed the migration Azure Cache for Redis →
-        Azure Managed Redis. Patterns: Kafka / Event Hub, CQRS, dead-letter
-        retries, SendGrid notifications.
+        Before that, six months at <strong>Lutech</strong> on the ERIT-DXL
+        project for Edenred Italia: Azure DevOps pipelines,{" "}
+        <strong>5 microservices on AKS</strong>, DevSecOps, <strong>Helm</strong>-based
+        deploys with a <strong>GitOps</strong> approach, Angular components with
+        Storybook and an Angular 14 → 21 upgrade. The rest is in the deploy log below.
       </>,
     ],
     bullets: [
-      { ix: "[01]", text: <><strong>5 microservices</strong> on AKS — build, test, deploy via YAML.</> },
-      { ix: "[02]", text: <><strong>DevSecOps</strong>: Qualys WAS + Dependency Track integrated in pipelines.</> },
-      { ix: "[03]", text: <><strong>Migration</strong> Azure Cache for Redis → Azure Managed Redis, zero downtime.</> },
-      { ix: "[04]", text: <><strong>Events & retries</strong>: Kafka / Event Hub, CQRS, dead-letter, SendGrid.</> },
+      { ix: "[01]", text: <><strong>CI/CD & automation</strong> — the core of the role, wherever the code lives.</> },
+      { ix: "[02]", text: <><strong>Kubernetes</strong>: deploys, Helm charts, GitOps practices.</> },
+      { ix: "[03]", text: <><strong>Consulting</strong>: new contexts, new teams, same reliability.</> },
+      { ix: "[04]", text: <><strong>Project details</strong>: classified. Production runs, though.</> },
     ],
-    panelFile: "stack.yaml", panelMeta: "TEAM=CROSSDEV · CLIENT=EDENRED",
-    panelTitle: "current_stack",
-    stack: ["Azure DevOps","AKS","Docker","YAML","Java","Angular","Storybook","Kafka","Event Hub","Qualys WAS","Dependency Track","SendGrid","Azure Managed Redis"],
+    panelFile: "engagement.yaml", panelMeta: "EMPLOYER=NEPTA · CLIENT=REPLY",
+    panelTitle: "toolbox",
+    stack: ["CI/CD","Kubernetes","Docker","Helm","GitOps / ArgoCD","Azure DevOps","YAML","Java","Angular","Storybook","Kafka / Event Hub"],
     panelDataTitle: "metadata",
     data: [
-      { k: "team",    v: "CrossDev" },
-      { k: "client",  v: "Edenred Italia" },
-      { k: "project", v: "ERIT-DXL" },
-      { k: "cloud",   v: "Microsoft Azure" },
-      { k: "method",  v: "Agile · Scrum" },
+      { k: "role",     v: "Junior DevOps" },
+      { k: "company",  v: "Reply" },
+      { k: "employer", v: "Nepta" },
+      { k: "mode",     v: "External consultant" },
+      { k: "project",  v: "[REDACTED]" },
     ],
   },
   work: {
@@ -418,12 +431,23 @@ const en: Content = {
   exp: {
     no: "03", title: ["Experience &", "path."], cue: "deploy log · 2018 → 2026",
     items: [
-      { year: "2026", range: "Jan — Present", badge: "ACTIVE",
+      { year: "2026", range: "Jul 18 — Present", badge: "ACTIVE",
+        title: "Junior DevOps Engineer · External Consultant", org: "Reply · via Nepta",
+        body: "External consultant from Nepta at Reply. The project is under NDA — the craft remains: CI/CD, Kubernetes, automation, and production that must not stop.",
+        bullets: [
+          "CI/CD and build & deploy process automation",
+          "Kubernetes: deploys, Helm, GitOps practices",
+          "Fast onboarding on enterprise toolchains and contexts",
+          "Project details: [REDACTED] — NDA",
+        ],
+      },
+      { year: "2026", range: "Jan — Jul 18", badge: "SHIPPED",
         title: "Junior DevOps Engineer", org: "Lutech SpA · CrossDev Team",
-        body: "On the ERIT-DXL project for Edenred Italia. Pipelines, microservices, DevSecOps, Java backend and the occasional Angular component.",
+        body: "On the ERIT-DXL project for Edenred Italia. Pipelines, microservices, DevSecOps, Java backend and Angular frontend. Six dense months, closed with a clean deploy.",
         bullets: [
           "YAML CI/CD pipelines on Azure DevOps — build, test, deploy",
           "5 microservices on Azure Kubernetes Service (AKS)",
+          "AKS cluster management: Helm-based deploys and GitOps approach",
           "DevSecOps: Qualys WAS + Dependency Track",
           "Migration Azure Cache for Redis → Azure Managed Redis",
           "Java backend & Angular frontend on microservices",
@@ -457,7 +481,7 @@ const en: Content = {
     no: "04", title: ["Stack &", "skills."], cue: "$ ls -la /skills",
     columns: [
       { kicker: "devops_cloud", lead: "Making things run, repeat, automate.",
-        chips: ["Azure DevOps","CI/CD (YAML)","Kubernetes / AKS","Docker","Qualys WAS","Dependency Track","Git","GitHub Actions","SonarCloud","SendGrid","Azure Managed Redis"] },
+        chips: ["Azure DevOps","CI/CD (YAML)","Kubernetes / AKS","Helm","GitOps / ArgoCD","kubectl","Docker","Qualys WAS","Dependency Track","Git","GitHub Actions","SonarCloud","SendGrid","Azure Managed Redis"] },
       { kicker: "frontend_ui", lead: "Interfaces that ask little and give a lot.",
         chips: ["TypeScript","Angular","Storybook","React","React Native","Next.js","JavaScript","HTML5","CSS3","Tailwind","Material UI","Bootstrap","Figma","jQuery","Flutter"] },
       { kicker: "backend_data", lead: "Under the hood, where serious things happen.",
@@ -475,6 +499,7 @@ const en: Content = {
     ],
     certsTitle: "certifications",
     certs: [
+      { name: "Kubernetes Essentials", yr: "IN PROGRESS" },
       { name: "AI Fundamentals",     yr: "2024" },
       { name: "Git & GitHub Basics", yr: "2023" },
       { name: "React Development",   yr: "2023" },

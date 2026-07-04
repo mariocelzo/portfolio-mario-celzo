@@ -794,6 +794,16 @@ button { font: inherit; cursor: pointer; }
   content: "●";
   animation: tx-pulse 1.6s ease-in-out infinite;
 }
+/* Variante "done" (es. SHIPPED): crema statica, checkmark al posto del dot */
+.tx-exp__title .badge--done {
+  background: var(--accent-soft);
+  color: var(--ink-soft);
+  border-color: var(--rule);
+}
+.tx-exp__title .badge--done::before {
+  content: "✓";
+  animation: none;
+}
 .tx-exp__body { margin-top: 14px; }
 .tx-exp__body p {
   margin: 0 0 14px;

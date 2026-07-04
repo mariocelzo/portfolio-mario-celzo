@@ -33,9 +33,12 @@ export function TxExperience({ exp }: Props) {
               <div className="tx-exp__title">
                 <h4>{it.title}</h4>
                 <span className="org">{it.org}</span>
-                {/* Badge "ACTIVE" visibile solo per il lavoro corrente */}
+                {/* Badge stato: ACTIVE (verde pulsante) per il lavoro corrente,
+                    altri valori (es. SHIPPED) in variante crema statica */}
                 {it.badge && (
-                  <span className="badge">{it.badge}</span>
+                  <span className={`badge${it.badge === "ACTIVE" ? "" : " badge--done"}`}>
+                    {it.badge}
+                  </span>
                 )}
               </div>
 

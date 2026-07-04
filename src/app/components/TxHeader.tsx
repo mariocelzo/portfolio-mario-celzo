@@ -55,7 +55,7 @@ export function TxHeader({ content, lang, setLang }: Props) {
         <div className="tx-header__mark">
           <span className="dot" aria-hidden="true"></span>
           <span className="you italic">mario.celzo</span>
-          <span className="role">junior devops · sarno (sa), it</span>
+          <span className="role">devops engineer · sarno (sa), it</span>
         </div>
 
         {/* Navigazione centrale con slash decorative + sezione attiva evidenziata */}

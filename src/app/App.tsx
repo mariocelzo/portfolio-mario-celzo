@@ -97,7 +97,7 @@ function useConsoleEgg() {
       "%c\n" +
       "  ┌─────────────────────────────────────────┐\n" +
       "  │  $ whoami                               │\n" +
-      "  │  > mario.celzo — junior devops engineer │\n" +
+      "  │  > mario.celzo — devops engineer        │\n" +
       "  │                                         │\n" +
       "  │  $ cat /etc/motd                        │\n" +
       "  │  > Se stai leggendo qui, parliamo. :)   │\n" +

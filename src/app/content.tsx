@@ -105,7 +105,7 @@ const it: Content = {
     role: (
       <>
         <span className="key">role</span>{" "}={" "}
-        <span className="val">Junior DevOps Engineer</span> @{" "}
+        <span className="val">DevOps Engineer</span> @{" "}
         <span className="val">Reply</span> ·{" "}
         <span className="key">via</span>{" "}={" "}
         <span className="val">Nepta</span> ·{" "}
@@ -122,7 +122,7 @@ const it: Content = {
     ),
     ctas: { email: "scrivimi", github: "github", linkedin: "linkedin", cv: "cv.pdf" },
     meta: [
-      { k: "role",      v: "DevOps · Junior" },
+      { k: "role",      v: "DevOps Engineer" },
       { k: "company",   v: "Reply · via Nepta" },
       { k: "location",  v: "Sarno (SA), IT" },
       { k: "languages", v: "IT · EN (B2)" },
@@ -134,10 +134,12 @@ const it: Content = {
     body: [
       <>
         Dal <strong>18 luglio 2026</strong> sono in <strong>Reply</strong> come{" "}
-        <strong>Junior DevOps Engineer</strong>, consulente esterno via{" "}
-        <strong>Nepta</strong>. Il progetto è coperto da NDA — ma il mestiere
-        resta lo stesso: <strong>pipeline</strong>, <strong>container</strong>,
-        automazione, e produzione che deve restare in piedi.
+        <strong>DevOps Engineer</strong>, consulente esterno via{" "}
+        <strong>Nepta</strong>. Consulenza su progetti enterprise:{" "}
+        <strong>Infrastructure as Code</strong> con Terraform e Ansible, pipeline
+        CI/CD e workflow <strong>GitOps</strong> su Kubernetes, scripting e{" "}
+        <strong>observability</strong> degli ambienti cloud. Il progetto è coperto
+        da NDA — la produzione, però, deve restare in piedi ovunque.
       </>,
       <>
         Prima, sei mesi in <strong>Lutech</strong> sul progetto ERIT-DXL per
@@ -155,10 +157,10 @@ const it: Content = {
     ],
     panelFile: "engagement.yaml", panelMeta: "EMPLOYER=NEPTA · CLIENT=REPLY",
     panelTitle: "toolbox",
-    stack: ["CI/CD","Kubernetes","Docker","Helm","GitOps / ArgoCD","Azure DevOps","YAML","Java","Angular","Storybook","Kafka / Event Hub"],
+    stack: ["Terraform","Ansible","CI/CD","Kubernetes","Docker","Helm","GitOps / ArgoCD","Bash / Python","Azure DevOps","YAML","Docs-as-Code","Angular","Storybook"],
     panelDataTitle: "metadata",
     data: [
-      { k: "role",     v: "Junior DevOps" },
+      { k: "role",     v: "DevOps Engineer" },
       { k: "company",  v: "Reply" },
       { k: "employer", v: "Nepta" },
       { k: "mode",     v: "External consultant" },
@@ -204,12 +206,12 @@ const it: Content = {
     no: "02", title: ["Esperienza &", "percorso."], cue: "deploy log · 2018 → 2026",
     items: [
       { year: "2026", range: "18 Lug — Present", badge: "ACTIVE",
-        title: "Junior DevOps Engineer · External Consultant", org: "Reply · via Nepta",
+        title: "DevOps Engineer · External Consultant", org: "Reply · via Nepta",
         body: "Consulente esterno Nepta in Reply. Il progetto è coperto da NDA — il mestiere resta: CI/CD, Kubernetes, automazione, e la produzione che non deve fermarsi.",
         bullets: [
-          "CI/CD e automazione dei processi di build e deploy",
-          "Kubernetes: deploy, Helm, pratiche GitOps",
-          "Onboarding rapido su toolchain e contesti enterprise",
+          "IaC: provisioning con Terraform, configuration management con Ansible",
+          "Pipeline CI/CD e workflow GitOps per applicazioni containerizzate su Kubernetes",
+          "Automazione operativa: scripting Bash/Python, monitoring & observability cloud",
           "Dettagli del progetto: [REDACTED] — NDA",
         ],
       },
@@ -225,6 +227,7 @@ const it: Content = {
           "Backend Java e frontend Angular sui microservizi",
           "Sviluppo componenti Angular con Storybook",
           "Upgrade Angular 14 → 21 sulle applicazioni frontend",
+          "Documentazione docs-as-code: Markdown in Git, review via PR, publish in pipeline",
           "Kafka / Event Hub, CQRS, dead-letter retries, SendGrid",
         ],
       },
@@ -253,7 +256,7 @@ const it: Content = {
     no: "04", title: ["Stack &", "competenze."], cue: "$ ls -la /skills",
     columns: [
       { kicker: "devops_cloud", lead: "Far girare le cose, ripeterle, automatizzarle.",
-        chips: ["Azure DevOps","CI/CD (YAML)","Kubernetes / AKS","Helm","GitOps / ArgoCD","kubectl","Docker","Qualys WAS","Dependency Track","Git","GitHub Actions","SonarCloud","SendGrid","Azure Managed Redis"] },
+        chips: ["Terraform","Ansible","Azure DevOps","CI/CD (YAML)","Kubernetes / AKS","Helm","GitOps / ArgoCD","kubectl","Docker","Docs-as-Code","Qualys WAS","Dependency Track","Git","GitHub Actions","SonarCloud","SendGrid","Azure Managed Redis"] },
       { kicker: "frontend_ui", lead: "Interfacce che chiedono poco e restituiscono molto.",
         chips: ["TypeScript","Angular","Storybook","React","React Native","Next.js","JavaScript","HTML5","CSS3","Tailwind","Material UI","Bootstrap","Figma","jQuery","Flutter"] },
       { kicker: "backend_data", lead: "Sotto al cofano, dove succedono le cose serie.",
@@ -333,7 +336,7 @@ const en: Content = {
     role: (
       <>
         <span className="key">role</span>{" "}={" "}
-        <span className="val">Junior DevOps Engineer</span> @{" "}
+        <span className="val">DevOps Engineer</span> @{" "}
         <span className="val">Reply</span> ·{" "}
         <span className="key">via</span>{" "}={" "}
         <span className="val">Nepta</span> ·{" "}
@@ -350,7 +353,7 @@ const en: Content = {
     ),
     ctas: { email: "get in touch", github: "github", linkedin: "linkedin", cv: "cv.pdf" },
     meta: [
-      { k: "role",      v: "DevOps · Junior" },
+      { k: "role",      v: "DevOps Engineer" },
       { k: "company",   v: "Reply · via Nepta" },
       { k: "location",  v: "Sarno (SA), IT" },
       { k: "languages", v: "IT · EN (B2)" },
@@ -362,10 +365,12 @@ const en: Content = {
     body: [
       <>
         Since <strong>July 18, 2026</strong> I'm at <strong>Reply</strong> as a{" "}
-        <strong>Junior DevOps Engineer</strong>, external consultant via{" "}
-        <strong>Nepta</strong>. The project is under NDA — but the craft stays
-        the same: <strong>pipelines</strong>, <strong>containers</strong>,
-        automation, and production that must stay up.
+        <strong>DevOps Engineer</strong>, external consultant via{" "}
+        <strong>Nepta</strong>. DevOps consulting on enterprise projects:{" "}
+        <strong>Infrastructure as Code</strong> with Terraform and Ansible, CI/CD
+        pipelines and <strong>GitOps</strong> workflows on Kubernetes, scripting
+        and cloud <strong>observability</strong>. The project is under NDA —
+        production, though, must stay up everywhere.
       </>,
       <>
         Before that, six months at <strong>Lutech</strong> on the ERIT-DXL
@@ -383,10 +388,10 @@ const en: Content = {
     ],
     panelFile: "engagement.yaml", panelMeta: "EMPLOYER=NEPTA · CLIENT=REPLY",
     panelTitle: "toolbox",
-    stack: ["CI/CD","Kubernetes","Docker","Helm","GitOps / ArgoCD","Azure DevOps","YAML","Java","Angular","Storybook","Kafka / Event Hub"],
+    stack: ["Terraform","Ansible","CI/CD","Kubernetes","Docker","Helm","GitOps / ArgoCD","Bash / Python","Azure DevOps","YAML","Docs-as-Code","Angular","Storybook"],
     panelDataTitle: "metadata",
     data: [
-      { k: "role",     v: "Junior DevOps" },
+      { k: "role",     v: "DevOps Engineer" },
       { k: "company",  v: "Reply" },
       { k: "employer", v: "Nepta" },
       { k: "mode",     v: "External consultant" },
@@ -432,12 +437,12 @@ const en: Content = {
     no: "02", title: ["Experience &", "path."], cue: "deploy log · 2018 → 2026",
     items: [
       { year: "2026", range: "Jul 18 — Present", badge: "ACTIVE",
-        title: "Junior DevOps Engineer · External Consultant", org: "Reply · via Nepta",
+        title: "DevOps Engineer · External Consultant", org: "Reply · via Nepta",
         body: "External consultant from Nepta at Reply. The project is under NDA — the craft remains: CI/CD, Kubernetes, automation, and production that must not stop.",
         bullets: [
-          "CI/CD and build & deploy process automation",
-          "Kubernetes: deploys, Helm, GitOps practices",
-          "Fast onboarding on enterprise toolchains and contexts",
+          "IaC: provisioning with Terraform, configuration management with Ansible",
+          "CI/CD pipelines and GitOps workflows for containerized apps on Kubernetes",
+          "Operational automation: Bash/Python scripting, cloud monitoring & observability",
           "Project details: [REDACTED] — NDA",
         ],
       },
@@ -453,6 +458,7 @@ const en: Content = {
           "Java backend & Angular frontend on microservices",
           "Angular component development with Storybook",
           "Angular 14 → 21 upgrade across frontend applications",
+          "Docs-as-code documentation: Markdown in Git, PR reviews, pipeline publishing",
           "Kafka / Event Hub, CQRS, dead-letter retries, SendGrid",
         ],
       },
@@ -481,7 +487,7 @@ const en: Content = {
     no: "04", title: ["Stack &", "skills."], cue: "$ ls -la /skills",
     columns: [
       { kicker: "devops_cloud", lead: "Making things run, repeat, automate.",
-        chips: ["Azure DevOps","CI/CD (YAML)","Kubernetes / AKS","Helm","GitOps / ArgoCD","kubectl","Docker","Qualys WAS","Dependency Track","Git","GitHub Actions","SonarCloud","SendGrid","Azure Managed Redis"] },
+        chips: ["Terraform","Ansible","Azure DevOps","CI/CD (YAML)","Kubernetes / AKS","Helm","GitOps / ArgoCD","kubectl","Docker","Docs-as-Code","Qualys WAS","Dependency Track","Git","GitHub Actions","SonarCloud","SendGrid","Azure Managed Redis"] },
       { kicker: "frontend_ui", lead: "Interfaces that ask little and give a lot.",
         chips: ["TypeScript","Angular","Storybook","React","React Native","Next.js","JavaScript","HTML5","CSS3","Tailwind","Material UI","Bootstrap","Figma","jQuery","Flutter"] },
       { kicker: "backend_data", lead: "Under the hood, where serious things happen.",

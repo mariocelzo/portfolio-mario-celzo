@@ -1,7 +1,7 @@
 // TxHero — Sezione hero con prompt terminale, nome gigante, pitch e meta grid
 // Il caret lampeggia via CSS animation (tx-blink)
 
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import type { Content } from "../content";
 
 // Effetto Three.js lazy: il chunk three viene scaricato solo dopo il primo render
@@ -53,6 +53,43 @@ function TypedCmd({ text }: { text: string }) {
   );
 }
 
+// Effetto decode: al passaggio del mouse le lettere del nome si rimescolano
+// in caratteri casuali stile terminale e si "decodificano" da sinistra a destra
+const SCRAMBLE_CHARS = "#$%&/=?_:;*+<>";
+
+function useScramble(text: string): [string, () => void] {
+  const [display, setDisplay] = useState(text);
+  const running = useRef(false);
+
+  // Riallinea il display quando il testo cambia (es. cambio lingua)
+  useEffect(() => setDisplay(text), [text]);
+
+  const scramble = () => {
+    if (running.current) return; // già in corso — niente doppioni
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    running.current = true;
+    let frame = 0;
+    const id = setInterval(() => {
+      frame++;
+      const revealed = Math.floor(frame / 2); // ogni lettera si fissa dopo 2 frame
+      let out = "";
+      for (let i = 0; i < text.length; i++) {
+        out += i < revealed
+          ? text[i]
+          : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+      }
+      setDisplay(out);
+      if (revealed >= text.length) {
+        clearInterval(id);
+        setDisplay(text);
+        running.current = false;
+      }
+    }, 45);
+  };
+
+  return [display, scramble];
+}
+
 type Lang = "it" | "en";
 
 interface Props {
@@ -65,6 +102,11 @@ export function TxHero({ content, lang }: Props) {
   const emailSubject = encodeURIComponent(
     lang === "it" ? "Opportunità DevOps — Mario Celzo" : "DevOps Opportunity — Mario Celzo"
   );
+
+  // Decode effect sulle due parole del nome, attivato insieme in hover
+  const [word1, scramble1] = useScramble(h.tagline[0]);
+  const [word2, scramble2] = useScramble(h.tagline[1]);
+  const scrambleName = () => { scramble1(); scramble2(); };
 
   return (
     <section id="top" className="tx-hero">
@@ -93,12 +135,14 @@ export function TxHero({ content, lang }: Props) {
       <h1
         className="tx-hero__name reveal"
         style={{ transitionDelay: "60ms" }}
+        onMouseEnter={scrambleName}
+        aria-label={`${h.tagline[0]} ${h.tagline[1]}`}
       >
         <span className="word">
-          <span className="italic">{h.tagline[0]}</span>
+          <span className="italic">{word1}</span>
         </span>{" "}
         <span className="word">
-          <span>{h.tagline[1]}</span>
+          <span>{word2}</span>
         </span>
         <span className="caret" aria-hidden="true"></span>
       </h1>

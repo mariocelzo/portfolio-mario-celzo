@@ -13,6 +13,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <title>mario.celzo — devops.engineer/01</title>
+    <!-- Anti-FOUC: applica l'accento salvato in localStorage prima del primo paint,
+         così chi ha scelto un colore non vede il flash del tema di default -->
+    <script>
+      try {
+        var a = localStorage.getItem("mc-tx-accent");
+        if (a) document.documentElement.setAttribute("data-accent", a);
+      } catch (e) {}
+    </script>
   </head>
 
   <body>

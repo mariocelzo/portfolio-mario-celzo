@@ -92,6 +92,56 @@ function useReveal(deps: unknown[] = []) {
 // ──────────────────────────────────────────────────────────────
 // App
 // ──────────────────────────────────────────────────────────────
+// ──────────────────────────────────────────────────────────────
+// Pagine virtuali per Vercel Analytics (piano Hobby)
+// Il piano gratuito conta le pageview per percorso: aggiornando l'URL
+// via replaceState quando una sezione entra in vista, ogni sezione
+// diventa una "pagina" nel dashboard (/exp, /work, ...) senza Pro.
+// Bonus: gli URL /exp, /work ecc. sono condivisibili (rewrite in vercel.json).
+// ──────────────────────────────────────────────────────────────
+const SECTION_IDS = ["now", "exp", "work", "stack", "edu", "contact"];
+
+function useVirtualPaths(deps: unknown[] = []) {
+  // Al primo caricamento: se l'URL è un deep link a una sezione, scrollaci
+  useEffect(() => {
+    const path = window.location.pathname.replace(/^\//, "");
+    if (!SECTION_IDS.includes(path)) return;
+    // Piccolo ritardo per aspettare layout e font
+    const id = setTimeout(() => {
+      const el = document.getElementById(path);
+      if (el) {
+        const y = el.getBoundingClientRect().top + window.scrollY - 64;
+        window.scrollTo({ top: y, behavior: "auto" });
+      }
+    }, 150);
+    return () => clearTimeout(id);
+  }, []);
+
+  // Osserva le sezioni: quando una domina il viewport, aggiorna il percorso.
+  // replaceState non inquina la history (il tasto back resta sano) e
+  // viene intercettato dallo script di Vercel Analytics come pageview.
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const path = e.target.id === "top" ? "/" : `/${e.target.id}`;
+          if (window.location.pathname !== path) {
+            history.replaceState(null, "", path);
+          }
+        });
+      },
+      { rootMargin: "-35% 0px -55% 0px" }
+    );
+    ["top", ...SECTION_IDS].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+    return () => io.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
+}
+
 // Easter egg: banner ASCII in console per chi apre i DevTools —
 // se sei arrivato fin qui, probabilmente sei il tipo di persona giusta
 function useConsoleEgg() {
@@ -114,6 +164,9 @@ function useConsoleEgg() {
 export default function App() {
   const [lang, setLang] = useLanguage();
   useConsoleEgg();
+  // Pagine virtuali per Analytics: ri-osserva le sezioni al cambio lingua
+  // (main viene rimontato con key={lang})
+  useVirtualPaths([lang]);
 
   // Accento fisso "lime" per il portfolio reale (il tweaks panel non esiste qui)
   // Il colore viene impostato via data-accent sul tag <html> in index.html

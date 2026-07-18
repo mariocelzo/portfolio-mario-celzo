@@ -3,11 +3,14 @@
 
 import { useState, useEffect } from "react";
 import { Analytics } from "@vercel/analytics/react";
+// Speed Insights: raccoglie i Core Web Vitals reali dei visitatori su Vercel
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { C } from "./content";
 import { TxHeader }     from "./components/TxHeader";
 import { TxHero }       from "./components/TxHero";
 import { TxMarquee }    from "./components/TxMarquee";
 import { TxProgress }   from "./components/TxProgress";
+import { TxSpotlight }  from "./components/TxSpotlight";
 import { TxNow }        from "./components/TxNow";
 import { TxWork }       from "./components/TxWork";
 import { TxExperience } from "./components/TxExperience";
@@ -123,6 +126,9 @@ export default function App() {
       {/* Barra di progresso scroll in cima alla pagina */}
       <TxProgress />
 
+      {/* Spotlight: glow sottile che segue il cursore (solo desktop) */}
+      <TxSpotlight />
+
       {/* Header fisso in cima — terminal bar con lingua e CTA */}
       <TxHeader content={content} lang={lang} setLang={setLang} />
 
@@ -160,8 +166,9 @@ export default function App() {
       {/* Footer: 3 colonne mono */}
       <TxFooter footer={content.footer} />
 
-      {/* Vercel Analytics: invisibile, attivo solo in produzione */}
+      {/* Vercel Analytics + Speed Insights: invisibili, attivi solo in produzione */}
       <Analytics />
+      <SpeedInsights />
     </>
   );
 }

@@ -3,6 +3,7 @@
 // I colori sono definiti in index.css sotto :root[data-accent="..."].
 
 import { useEffect, useState } from "react";
+import { trackEvent } from "../lib/track";
 
 const ACCENTS = ["mono", "lime", "cyan", "violet", "amber"] as const;
 type Accent = (typeof ACCENTS)[number];
@@ -33,7 +34,7 @@ export function TxAccent() {
           type="button"
           className={`tx-accent__dot${a === accent ? " is-active" : ""}`}
           data-accent-value={a}
-          onClick={() => setAccent(a)}
+          onClick={() => { setAccent(a); trackEvent("accent_change", { accent: a }); }}
           aria-label={`Accento ${a}`}
           aria-pressed={a === accent}
           title={a}

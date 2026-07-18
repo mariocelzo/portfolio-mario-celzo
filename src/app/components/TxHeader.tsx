@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import type { Content } from "../content";
+import { trackEvent } from "../lib/track";
 
 type Lang = "it" | "en";
 
@@ -77,7 +78,7 @@ export function TxHeader({ content, lang, setLang }: Props) {
         <div className="tx-header__right">
           <div className="tx-lang" role="group" aria-label="Lingua">
             <button
-              onClick={() => setLang("it")}
+              onClick={() => { setLang("it"); trackEvent("lang_switch", { to: "it" }); }}
               className={lang === "it" ? "is-active" : ""}
               aria-pressed={lang === "it"}
             >
@@ -85,7 +86,7 @@ export function TxHeader({ content, lang, setLang }: Props) {
             </button>
             <span aria-hidden="true">/</span>
             <button
-              onClick={() => setLang("en")}
+              onClick={() => { setLang("en"); trackEvent("lang_switch", { to: "en" }); }}
               className={lang === "en" ? "is-active" : ""}
               aria-pressed={lang === "en"}
             >
@@ -96,6 +97,7 @@ export function TxHeader({ content, lang, setLang }: Props) {
           <a
             className="tx-cta"
             href={`mailto:${content.contact.email}?subject=${emailSubject}`}
+            onClick={() => trackEvent("email_click", { from: "header" })}
           >
             {content.cta}
           </a>

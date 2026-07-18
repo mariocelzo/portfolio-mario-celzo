@@ -3,6 +3,7 @@
 
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import type { Content } from "../content";
+import { trackEvent } from "../lib/track";
 
 // Effetto Three.js lazy: il chunk three viene scaricato solo dopo il primo render
 const TxAscii3D = lazy(() => import("./TxAscii3D").then(m => ({ default: m.TxAscii3D })));
@@ -171,6 +172,7 @@ export function TxHero({ content, lang }: Props) {
         <a
           className="tx-btn tx-btn--primary"
           href={`mailto:${content.contact.email}?subject=${emailSubject}`}
+          onClick={() => trackEvent("email_click", { from: "hero" })}
         >
           <span className="sigil">$</span> {h.ctas.email}
         </a>
@@ -179,6 +181,7 @@ export function TxHero({ content, lang }: Props) {
           href="https://github.com/mariocelzo"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackEvent("github_click", { from: "hero" })}
         >
           <span className="sigil">→</span> {h.ctas.github} <ArrowUR />
         </a>
@@ -187,6 +190,7 @@ export function TxHero({ content, lang }: Props) {
           href="https://linkedin.com/in/mario-celzo"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackEvent("linkedin_click", { from: "hero" })}
         >
           <span className="sigil">→</span> {h.ctas.linkedin} <ArrowUR />
         </a>
@@ -194,6 +198,7 @@ export function TxHero({ content, lang }: Props) {
           className="tx-btn"
           href="/assets/CV-Mario-Celzo.pdf"
           download
+          onClick={() => trackEvent("cv_download", { from: "hero" })}
         >
           <span className="sigil">↓</span> {h.ctas.cv} <ArrowDown />
         </a>

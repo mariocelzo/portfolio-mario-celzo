@@ -1197,6 +1197,72 @@ button { font: inherit; cursor: pointer; }
   .tx-footer__r--flex { justify-content: flex-start; }
 }
 
+/* ──── Spotlight cursore (glow radiale che segue il mouse) ──── */
+.tx-spotlight {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  background: radial-gradient(
+    560px circle at var(--spot-x, 50%) var(--spot-y, 30%),
+    rgba(232, 228, 218, 0.05),
+    transparent 70%
+  );
+}
+/* Nascosto su touch: nessun cursore da seguire */
+@media (hover: none) {
+  .tx-spotlight { display: none; }
+}
+
+/* ──── Corner brackets (mirino terminale in hover) ──── */
+/* Applicati al panel Now e al box Contact: due L accent che entrano
+   dagli angoli opposti quando l'elemento è in hover.
+   Nota: .tx-now__panel è già position:sticky (containing block valido),
+   quindi solo il box Contact ha bisogno di position:relative */
+.tx-contact__inner {
+  position: relative;
+}
+.tx-now__panel::before,
+.tx-now__panel::after,
+.tx-contact__inner::before,
+.tx-contact__inner::after {
+  content: "";
+  position: absolute;
+  width: 26px; height: 26px;
+  border: 0 solid var(--accent);
+  opacity: 0;
+  transition: opacity 260ms ease, transform 420ms cubic-bezier(0.16,1,0.3,1);
+  pointer-events: none;
+  z-index: 6;
+}
+/* Angolo in alto a sinistra */
+.tx-now__panel::before,
+.tx-contact__inner::before {
+  top: -1px; left: -1px;
+  border-top-width: 2px; border-left-width: 2px;
+  transform: translate(10px, 10px);
+}
+/* Angolo in basso a destra */
+.tx-now__panel::after,
+.tx-contact__inner::after {
+  bottom: -1px; right: -1px;
+  border-bottom-width: 2px; border-right-width: 2px;
+  transform: translate(-10px, -10px);
+}
+.tx-now__panel:hover::before,
+.tx-now__panel:hover::after,
+.tx-contact__inner:hover::before,
+.tx-contact__inner:hover::after {
+  opacity: 1;
+  transform: none;
+}
+
+/* ──── Focus ring accent per navigazione da tastiera ──── */
+:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 3px;
+}
+
 /* ──── Scanline overlay CRT (effetto terminale vintage) ──── */
 .tx-scan {
   position: fixed; inset: 0;

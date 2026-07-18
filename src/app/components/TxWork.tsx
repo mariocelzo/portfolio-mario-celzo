@@ -3,6 +3,7 @@
 
 import type { Content } from "../content";
 import { SectionHead } from "./TxNow";
+import { trackEvent } from "../lib/track";
 
 type WorkData = Content["work"];
 
@@ -59,6 +60,7 @@ export function TxWork({ work }: Props) {
                       href={p.figma}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackEvent("project_click", { project: p.name, kind: "figma" })}
                     >
                       figma
                     </a>
@@ -69,6 +71,7 @@ export function TxWork({ work }: Props) {
                       href={p.demo}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackEvent("project_click", { project: p.name, kind: "demo" })}
                     >
                       {work.demoLbl}
                     </a>
@@ -78,6 +81,7 @@ export function TxWork({ work }: Props) {
                     href={p.href}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => trackEvent("project_click", { project: p.name, kind: "repo" })}
                   >
                     {work.repoLbl} <ArrowUR />
                   </a>

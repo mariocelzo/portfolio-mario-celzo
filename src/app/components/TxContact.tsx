@@ -2,6 +2,7 @@
 // Layout: box centrato con overline + titolo grande + lede + email + griglia campi
 
 import type { Content } from "../content";
+import { trackEvent } from "../lib/track";
 
 type ContactData = Content["contact"];
 type Lang = "it" | "en";
@@ -38,6 +39,7 @@ export function TxContact({ contact, lang }: Props) {
             className="tx-contact__email reveal"
             style={{ transitionDelay: "100ms" }}
             href={`mailto:${contact.email}?subject=${emailSubject}`}
+            onClick={() => trackEvent("email_click", { from: "contact" })}
           >
             {contact.email} →
           </a>
@@ -52,6 +54,7 @@ export function TxContact({ contact, lang }: Props) {
               href={f.href}
               target={f.href.startsWith("http") ? "_blank" : undefined}
               rel={f.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              onClick={() => trackEvent("contact_field_click", { field: f.k })}
             >
               {/* Key in stile // prefisso */}
               <span className="k">{f.k}</span>

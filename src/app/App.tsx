@@ -127,7 +127,9 @@ function useVirtualPaths(deps: unknown[] = []) {
           if (!e.isIntersecting) return;
           const path = e.target.id === "top" ? "/" : `/${e.target.id}`;
           if (window.location.pathname !== path) {
-            history.replaceState(null, "", path);
+            // Preserva la query string: i parametri UTM (?utm_source=...)
+            // devono sopravvivere allo scroll per l'attribuzione in Analytics
+            history.replaceState(null, "", path + window.location.search);
           }
         });
       },

@@ -80,11 +80,25 @@ export function TxAscii3D() {
       });
       io.observe(container);
 
+      // Resize: riallinea camera e dimensioni dell'effetto alla nuova
+      // dimensione del contenitore (altrimenti l'oggetto resta stirato)
+      const onResize = () => {
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        if (w === 0 || h === 0) return; // container nascosto (mobile)
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+        effect.setSize(w, h);
+      };
+      window.addEventListener("resize", onResize);
+
       cleanup = () => {
         running = false;
         cancelAnimationFrame(raf);
         io.disconnect();
         window.removeEventListener("mousemove", onMouse);
+        window.removeEventListener("resize", onResize);
         renderer.dispose();
         mesh.geometry.dispose();
         (mesh.material as { dispose(): void }).dispose();

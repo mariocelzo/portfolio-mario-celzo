@@ -106,12 +106,14 @@ function useVirtualPaths(deps: unknown[] = []) {
   useEffect(() => {
     const path = window.location.pathname.replace(/^\//, "");
     if (!SECTION_IDS.includes(path)) return;
-    // Piccolo ritardo per aspettare layout e font
+    // Piccolo ritardo per aspettare layout e font.
+    // behavior "instant" (non "auto"): con html{scroll-behavior:smooth}
+    // "auto" diventerebbe uno scroll animato dall'alto — qui si atterra diretti
     const id = setTimeout(() => {
       const el = document.getElementById(path);
       if (el) {
         const y = el.getBoundingClientRect().top + window.scrollY - 64;
-        window.scrollTo({ top: y, behavior: "auto" });
+        window.scrollTo({ top: y, behavior: "instant" as ScrollBehavior });
       }
     }, 150);
     return () => clearTimeout(id);
@@ -121,16 +123,31 @@ function useVirtualPaths(deps: unknown[] = []) {
   // replaceState non inquina la history (il tasto back resta sano) e
   // viene intercettato dallo script di Vercel Analytics come pageview.
   useEffect(() => {
+    // Anti-pageview-fantasma: durante gli scroll animati (click nav, smooth
+    // scroll) le sezioni intermedie entrano brevemente nella banda. L'observer
+    // aggiorna solo il percorso "pendente"; il commit via replaceState avviene
+    // 250ms dopo l'ULTIMO evento di scroll — cioè solo a scroll fermo.
+    let pending: string | null = null;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+
+    const commit = () => {
+      if (pending && window.location.pathname !== pending) {
+        // Preserva la query string: i parametri UTM (?utm_source=...)
+        // devono sopravvivere allo scroll per l'attribuzione in Analytics
+        history.replaceState(null, "", pending + window.location.search);
+      }
+    };
+    const schedule = () => {
+      clearTimeout(timer);
+      timer = setTimeout(commit, 250);
+    };
+
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           if (!e.isIntersecting) return;
-          const path = e.target.id === "top" ? "/" : `/${e.target.id}`;
-          if (window.location.pathname !== path) {
-            // Preserva la query string: i parametri UTM (?utm_source=...)
-            // devono sopravvivere allo scroll per l'attribuzione in Analytics
-            history.replaceState(null, "", path + window.location.search);
-          }
+          pending = e.target.id === "top" ? "/" : `/${e.target.id}`;
+          schedule();
         });
       },
       { rootMargin: "-35% 0px -55% 0px" }
@@ -139,7 +156,16 @@ function useVirtualPaths(deps: unknown[] = []) {
       const el = document.getElementById(id);
       if (el) io.observe(el);
     });
-    return () => io.disconnect();
+
+    // Ogni evento di scroll rimanda il commit: finché si scrolla, niente pageview
+    const onScroll = () => { if (pending) schedule(); };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", onScroll);
+      io.disconnect();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 }

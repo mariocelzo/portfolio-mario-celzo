@@ -58,7 +58,11 @@
     <script>
       try {
         var a = localStorage.getItem("mc-tx-accent");
-        if (a) document.documentElement.setAttribute("data-accent", a);
+        // Whitelist: un valore sconosciuto lascerebbe --accent indefinito
+        // (nessuna regola CSS matcha) rompendo bottoni e accenti
+        if (["mono", "lime", "cyan", "violet", "amber"].indexOf(a) !== -1) {
+          document.documentElement.setAttribute("data-accent", a);
+        }
       } catch (e) {}
     </script>
   </head>

@@ -61,16 +61,21 @@ const SCRAMBLE_CHARS = "#$%&/=?_:;*+<>";
 function useScramble(text: string): [string, () => void] {
   const [display, setDisplay] = useState(text);
   const running = useRef(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval>>();
 
   // Riallinea il display quando il testo cambia (es. cambio lingua)
   useEffect(() => setDisplay(text), [text]);
+
+  // Cleanup allo smontaggio: senza questo l'interval continuerebbe a
+  // girare (e a chiamare setState) dopo un cambio lingua a metà animazione
+  useEffect(() => () => clearInterval(intervalRef.current), []);
 
   const scramble = () => {
     if (running.current) return; // già in corso — niente doppioni
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     running.current = true;
     let frame = 0;
-    const id = setInterval(() => {
+    intervalRef.current = setInterval(() => {
       frame++;
       const revealed = Math.floor(frame / 2); // ogni lettera si fissa dopo 2 frame
       let out = "";
@@ -81,7 +86,7 @@ function useScramble(text: string): [string, () => void] {
       }
       setDisplay(out);
       if (revealed >= text.length) {
-        clearInterval(id);
+        clearInterval(intervalRef.current);
         setDisplay(text);
         running.current = false;
       }

@@ -1,0 +1,106 @@
+/* ──── Hero ──── */
+.tx-hero {
+  padding: 72px 32px 64px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Avatar circolare con blob sfumato dietro (sostituisce l'illustrazione
+   generica del Figma con la foto reale) */
+.tx-hero__avatar {
+  position: relative;
+  width: 220px; height: 220px;
+  margin-bottom: 32px;
+}
+.tx-hero__avatar-blob {
+  position: absolute;
+  inset: -16px;
+  border-radius: 50%;
+  background: var(--grad-hero);
+  filter: blur(2px);
+  opacity: 0.9;
+  z-index: 0;
+}
+.tx-hero__avatar img {
+  position: relative;
+  z-index: 1;
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--bg);
+}
+
+.tx-hero__title {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: clamp(36px, 6vw, 56px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 20px;
+  color: var(--ink);
+}
+/* .accent in base.css is scoped to ".tx-section__title .accent" (section
+   headings only), so it never matches here — without this rule the second
+   word of the hero title stays plain white instead of the intended
+   orange→purple gradient. Re-declare the same gradient-text treatment,
+   scoped to the hero title. */
+.tx-hero__title .accent {
+  background-image: var(--grad-hero);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tx-hero__pitch {
+  max-width: 56ch;
+  font-size: 17px; line-height: 1.6; font-weight: 300;
+  color: var(--ink-soft);
+  margin: 0 0 32px;
+}
+
+.tx-hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 56px; }
+
+.tx-hero__stack { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.tx-hero__stack-label {
+  font-size: 13px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--ink-mute);
+}
+.tx-hero__stack-logos { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; justify-content: center; }
+.tx-hero__stack-logos img { width: 36px; height: 36px; opacity: 0.9; transition: opacity 200ms ease, transform 200ms ease; }
+.tx-hero__stack-logos img:hover { opacity: 1; transform: translateY(-2px); }
+
+@media (max-width: 720px) {
+  .tx-hero { padding: 48px 22px 48px; }
+  .tx-hero__avatar { width: 160px; height: 160px; }
+}
+
+/* ──── Marquee ticker ──── */
+.tx-marquee {
+  overflow: hidden;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 13px 0;
+  background: var(--bg-soft);
+  position: relative;
+  mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+}
+.tx-marquee__track { display: flex; gap: 0; width: max-content; animation: tx-marquee 36s linear infinite; will-change: transform; }
+.tx-marquee:hover .tx-marquee__track { animation-play-state: paused; }
+.tx-marquee__item {
+  display: inline-flex; align-items: center; gap: 28px;
+  padding-right: 28px;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-mute);
+  white-space: nowrap;
+}
+.tx-marquee__item::after { content: "✦"; opacity: 0.5; font-size: 9px; }
+@keyframes tx-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .tx-marquee__track { animation: none; }
+}

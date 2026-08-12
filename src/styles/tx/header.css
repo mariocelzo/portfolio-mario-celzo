@@ -1,0 +1,68 @@
+/* ──── Header sticky ──── */
+.tx-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(22, 21, 19, 0.72); /* var(--bg) con opacità, come nel Figma (#222 @ 70%) */
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid var(--rule);
+}
+.tx-header__inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  padding: 16px 32px;
+  max-width: 1240px;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.tx-header__mark { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); }
+.tx-header__mark .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--positive);
+  box-shadow: 0 0 8px var(--positive-soft);
+  flex-shrink: 0;
+  animation: tx-pulse 2.2s ease-in-out infinite;
+}
+@keyframes tx-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.tx-header__mark .you {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 17px;
+}
+.tx-header__mark .role {
+  color: var(--ink-mute);
+  font-size: 12px;
+  font-weight: 500;
+}
+.tx-header__nav {
+  display: flex; gap: 40px;
+  justify-self: center;
+  font-size: 14px; font-weight: 600;
+  color: var(--ink);
+}
+.tx-header__nav a { position: relative; transition: opacity 200ms ease; text-transform: capitalize; }
+.tx-header__nav a:hover { opacity: 0.7; }
+.tx-header__nav a.is-active { color: transparent; background-image: var(--grad-hero); -webkit-background-clip: text; background-clip: text; }
+.tx-header__right { display: flex; align-items: center; gap: 16px; }
+.tx-lang { display: inline-flex; gap: 6px; font-size: 12px; font-weight: 600; }
+.tx-lang button { background: transparent; border: 0; color: var(--ink-mute); font: inherit; padding: 4px 6px; }
+.tx-lang button.is-active { color: var(--ink); }
+.tx-lang span { color: var(--ink-mute); align-self: center; }
+.tx-cta {
+  display: inline-flex; align-items: center;
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--font-sans);
+  font-size: 13px; font-weight: 600;
+  transition: transform 240ms cubic-bezier(0.16,1,0.3,1);
+}
+.tx-cta:hover { transform: translateY(-1px); }
+
+@media (max-width: 1100px) { .tx-header__mark .role { display: none; } }
+@media (max-width: 920px) { .tx-header__nav { display: none; } }

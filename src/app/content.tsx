@@ -20,6 +20,9 @@ export interface ExpItem {
   year: string; range: string; badge: string | null;
   title: string; org: string; body: string;
   bullets: string[];
+  /** Percorso del logo aziendale reale (assente per il salone di famiglia,
+      che non ha un logo ufficiale — il componente mostra un'icona generica) */
+  logo?: string;
 }
 export interface StackColumn {
   kicker: string; lead: string; chips: string[];
@@ -207,6 +210,7 @@ const it: Content = {
     items: [
       { year: "2026", range: "18 Lug — Present", badge: "ACTIVE",
         title: "DevOps Engineer · External Consultant", org: "Reply · via Nepta",
+        logo: "/assets/logos/companies/reply.svg",
         body: "Consulente esterno Nepta in Reply. Il progetto è coperto da NDA — il mestiere resta: CI/CD, Kubernetes, automazione, e la produzione che non deve fermarsi.",
         bullets: [
           "IaC: provisioning con Terraform, configuration management con Ansible",
@@ -217,6 +221,7 @@ const it: Content = {
       },
       { year: "2026", range: "Gen — 18 Lug", badge: "SHIPPED",
         title: "Junior DevOps Engineer", org: "Lutech SpA · CrossDev Team",
+        logo: "/assets/logos/companies/lutech.jpg",
         body: "Sul progetto ERIT-DXL per Edenred Italia. Pipeline, microservizi, DevSecOps, backend Java e frontend Angular. Sei mesi densi, chiusi con un deploy pulito.",
         bullets: [
           "Pipeline CI/CD in YAML su Azure DevOps — build, test, deploy",
@@ -233,6 +238,7 @@ const it: Content = {
       },
       { year: "2025", range: "Dicembre", badge: null,
         title: "Laurea Triennale in Informatica", org: "Università degli Studi di Salerno",
+        logo: "/assets/logos/companies/unisa.png",
         body: "Tesi: Progettazione e sviluppo di un tool per l'estrazione automatizzata e l'analisi di scenari in simulazioni CARLA e BeamNG per sistemi ADAS/ADS.",
         bullets: [
           "Tesi: scenario extraction tool per simulazioni CARLA / BeamNG (ADAS/ADS)",
@@ -438,6 +444,7 @@ const en: Content = {
     items: [
       { year: "2026", range: "Jul 18 — Present", badge: "ACTIVE",
         title: "DevOps Engineer · External Consultant", org: "Reply · via Nepta",
+        logo: "/assets/logos/companies/reply.svg",
         body: "External consultant from Nepta at Reply. The project is under NDA — the craft remains: CI/CD, Kubernetes, automation, and production that must not stop.",
         bullets: [
           "IaC: provisioning with Terraform, configuration management with Ansible",
@@ -448,6 +455,7 @@ const en: Content = {
       },
       { year: "2026", range: "Jan — Jul 18", badge: "SHIPPED",
         title: "Junior DevOps Engineer", org: "Lutech SpA · CrossDev Team",
+        logo: "/assets/logos/companies/lutech.jpg",
         body: "On the ERIT-DXL project for Edenred Italia. Pipelines, microservices, DevSecOps, Java backend and Angular frontend. Six dense months, closed with a clean deploy.",
         bullets: [
           "YAML CI/CD pipelines on Azure DevOps — build, test, deploy",
@@ -464,6 +472,7 @@ const en: Content = {
       },
       { year: "2025", range: "December", badge: null,
         title: "BSc in Computer Science", org: "Università degli Studi di Salerno",
+        logo: "/assets/logos/companies/unisa.png",
         body: "Thesis on the design and development of a tool for automated scenario extraction and analysis in CARLA and BeamNG simulations for ADAS/ADS systems.",
         bullets: [
           "Thesis: scenario extraction tool for CARLA / BeamNG simulations (ADAS/ADS)",

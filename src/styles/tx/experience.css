@@ -1,0 +1,59 @@
+/* ──── Experience — lista piatta con badge logo aziendale ──── */
+.tx-exp__list { display: flex; flex-direction: column; }
+.tx-exp__row {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 24px; align-items: start;
+  padding: 28px 0;
+  border-top: 1px solid var(--rule);
+}
+.tx-exp__row:last-child { border-bottom: 1px solid var(--rule); }
+
+/* Badge bianco arrotondato: ospita loghi di qualunque colore/sfondo con
+   contrasto costante sul tema scuro (Reply/Nepta/Lutech/Unisa hanno tutti
+   il logo su sfondo chiaro o trasparente) */
+.tx-exp__logo {
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  background: #FFFFFF;
+  display: grid; place-items: center;
+  padding: 10px;
+  flex-shrink: 0;
+  color: var(--bg);
+}
+.tx-exp__logo img { width: 100%; height: 100%; object-fit: contain; }
+
+.tx-exp__title { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.tx-exp__title h4 {
+  font-family: var(--font-sans); font-weight: 700;
+  font-size: clamp(18px, 2vw, 22px); line-height: 1.2;
+  margin: 0; color: var(--ink);
+}
+.tx-exp__org {
+  display: block; margin-top: 4px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.tx-exp__body { margin: 10px 0 0; font-size: 14px; line-height: 1.6; color: var(--ink-soft); max-width: 62ch; }
+
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px; border-radius: 999px;
+  background: var(--positive-soft); color: var(--positive);
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.badge::before { content: "●"; animation: tx-pulse 1.6s ease-in-out infinite; }
+.badge--done { background: rgba(255,255,255,0.08); color: var(--ink-soft); }
+.badge--done::before { content: "✓"; animation: none; }
+
+.tx-exp__range {
+  text-align: right; white-space: nowrap;
+  font-size: 13px; font-weight: 600; color: var(--ink);
+}
+.tx-exp__range .year { display: block; font-size: 12px; font-weight: 500; color: var(--ink-mute); margin-top: 2px; }
+
+@media (max-width: 720px) {
+  .tx-exp__row { grid-template-columns: 44px 1fr; gap: 16px; }
+  .tx-exp__logo { width: 44px; height: 44px; border-radius: 10px; }
+  .tx-exp__range { grid-column: 1 / -1; text-align: left; margin-top: 8px; }
+}

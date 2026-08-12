@@ -45,6 +45,16 @@ export function TxExperience({ exp }: Props) {
               </div>
               <span className="tx-exp__org">{it.org}</span>
               <p className="tx-exp__body">{it.body}</p>
+              {/* Elenco puntato dei risultati/dettagli tecnici (dati già
+                  presenti in content.tsx ma non ancora renderizzati nel
+                  nuovo layout piatto) */}
+              {it.bullets.length > 0 && (
+                <ul className="tx-exp__bullets">
+                  {it.bullets.map((b, j) => (
+                    <li key={j}>{b}</li>
+                  ))}
+                </ul>
+              )}
             </div>
 
             <div className="tx-exp__range">

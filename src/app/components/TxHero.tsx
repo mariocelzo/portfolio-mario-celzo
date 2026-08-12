@@ -4,7 +4,11 @@
 
 import type { Content } from "../content";
 import { trackEvent } from "../lib/track";
-import profilePhoto from "../../assets/f867b45042a06e7a23ba35ed122025885f6d57dd.png";
+// Versione compressa (600px lato lungo, JPEG q75) dell'originale 2.4MB/3088x2316:
+// l'avatar è renderizzato solo a 220px/160px in pagina, quindi il file raw
+// causava un chunk enorme in build ed era probabile LCP. Originale lasciato
+// intatto in assets come sorgente canonica.
+import profilePhoto from "../../assets/mario-avatar.jpg";
 
 // Le 5 tecnologie principali di Mario, al posto della riga generica
 // JS/Node/HTML/CSS/React del Figma originale

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it" data-theme="dark" data-accent="mono">
+<html lang="it" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,7 +16,7 @@
     <meta property="og:image" content="https://portfolio-mario-celzo.vercel.app/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Mario Celzo — DevOps Engineer, portfolio in stile terminale" />
+    <meta property="og:image:alt" content="Mario Celzo — DevOps Engineer, portfolio personale" />
     <meta property="og:locale" content="it_IT" />
     <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:site_name" content="mario.celzo" />
@@ -48,29 +48,15 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
-    <!-- Google Fonts: Instrument Serif (per titoli eleganti) + JetBrains Mono (font monospazio principale) -->
+    <!-- Google Fonts: Poppins — unico font del design system (Figma "Developer Portfolio Website Design") -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet" />
     <title>mario.celzo — devops.engineer/01</title>
-    <!-- Anti-FOUC: applica l'accento salvato in localStorage prima del primo paint,
-         così chi ha scelto un colore non vede il flash del tema di default -->
-    <script>
-      try {
-        var a = localStorage.getItem("mc-tx-accent");
-        // Whitelist: un valore sconosciuto lascerebbe --accent indefinito
-        // (nessuna regola CSS matcha) rompendo bottoni e accenti
-        if (["mono", "lime", "cyan", "violet", "amber"].indexOf(a) !== -1) {
-          document.documentElement.setAttribute("data-accent", a);
-        }
-      } catch (e) {}
-    </script>
   </head>
 
   <body>
     <div id="root"></div>
-    <!-- Scanline overlay: effetto CRT/terminale, z-index alto, pointer-events:none -->
-    <div class="tx-scan" aria-hidden="true"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

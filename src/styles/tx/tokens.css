@@ -1,0 +1,43 @@
+/* ============================================================
+   DESIGN TOKENS — colori, gradienti, font.
+   Sostituisce il vecchio sistema ad accento singolo (--accent
+   selezionabile via data-accent) con i gradienti fissi del
+   Figma "Developer Portfolio Website Design", estesi con la
+   stessa logica alle sezioni che il Figma non copre.
+   ============================================================ */
+
+:root {
+  /* Superfici */
+  --bg:        #161513; /* sfondo pagina — valore esatto del frame Figma */
+  --bg-card:   #2A2A2A; /* card progetti — valore esatto del Figma */
+  --bg-soft:   #1C1B19; /* pannelli/hover, leggermente più chiaro di --bg */
+  --bg-footer: #191919; /* footer/contact box — valore esatto del Figma */
+
+  /* Testo */
+  --ink:       #FFFFFF; /* testo primario */
+  --ink-soft:  #C5C5C5; /* testo secondario — valore esatto del Figma */
+  --ink-mute:  #8491A0; /* testo terziario/date — valore esatto del Figma */
+  --rule:      rgba(255,255,255,0.12);
+  --rule-soft: rgba(255,255,255,0.06);
+
+  /* Stato (mantenuto: indicatore disponibilità nell'header, non nel Figma
+     ma è un dettaglio funzionale minore, non uno scontro stilistico) */
+  --positive: #7FFF6B;
+  --positive-soft: rgba(127,255,107,0.12);
+
+  /* Font — Poppins unico, come nel Figma */
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+
+  /* Gradienti sezione — coppia arancio (Projects) e blu (Experience) sono
+     i valori esatti del Figma; le altre 4 sezioni (Now/Stack/Edu/Behind,
+     non presenti nel Figma) usano nuove coppie nella stessa famiglia
+     calda/fredda per restare coerenti col resto della pagina */
+  --grad-hero:     linear-gradient(158deg, #FF8660 15%, #9A33FF 90%);
+  --grad-work:     linear-gradient(180deg, #FF8660 0%,  #D5491D 100%);
+  --grad-exp:      linear-gradient(180deg, #5BADFF 0%,  #1373D1 100%);
+  --grad-now:      linear-gradient(180deg, #FF8660 0%,  #FF4D8D 100%);
+  --grad-stack:    linear-gradient(180deg, #5EEAD4 0%,  #0EA5E9 100%);
+  --grad-edu:      linear-gradient(180deg, #B388FF 0%,  #7C3AED 100%);
+  --grad-behind:   linear-gradient(180deg, #FFD166 0%,  #F59E0B 100%);
+  --grad-contact:  linear-gradient(158deg, #FF8660 15%, #9A33FF 90%); /* = --grad-hero, richiude il cerchio */
+}

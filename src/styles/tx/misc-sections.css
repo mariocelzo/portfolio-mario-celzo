@@ -53,6 +53,9 @@
 .tx-edu__side .cert { display: grid; grid-template-columns: 22px 1fr auto; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--rule); font-size: 13px; color: var(--ink-soft); }
 .tx-edu__side .cert::before { content: "✓"; color: var(--positive); font-size: 12px; }
 .tx-edu__side .cert .yr { color: var(--ink-mute); font-size: 11px; }
+/* Nome cliccabile quando la certificazione ha un link al corso/tutorial */
+.tx-edu__side .cert a { color: inherit; text-decoration: none; transition: color 200ms ease; }
+.tx-edu__side .cert a:hover { color: var(--ink); text-decoration: underline; }
 .tx-edu__side .langs { display: grid; border-top: 1px dashed var(--rule); }
 .tx-edu__side .lang { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--rule); font-size: 13px; align-items: baseline; }
 .tx-edu__side .lang .name { font-family: var(--font-sans); font-weight: 600; font-style: normal; font-size: 15px; color: var(--ink); }

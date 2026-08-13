@@ -27,7 +27,8 @@ export interface StackColumn {
   kicker: string; lead: string; chips: string[];
 }
 export interface EduItem  { year: string; title: string; org: string; }
-export interface CertItem { name: string; yr: string; }
+/** href opzionale: se presente, il nome della certificazione diventa un link cliccabile al corso/tutorial */
+export interface CertItem { name: string; yr: string; href?: string; }
 export interface LangItem { name: string; level: string; }
 export interface BeyondItem { tag: string; title: string; desc: string; }
 export interface ContactField { k: string; v: string; href: string; }
@@ -261,6 +262,24 @@ const it: Content = {
       { name: "AI Fundamentals",     yr: "2024" },
       { name: "Git & GitHub Basics", yr: "2023" },
       { name: "React Development",   yr: "2023" },
+      { name: "HashiCorp Developer — Terraform Tutorials", yr: "2026",
+        href: "https://developer.hashicorp.com/terraform/tutorials" },
+      { name: "Terraform Associate 004 — Study Path", yr: "2026",
+        href: "https://developer.hashicorp.com/terraform/tutorials/certification-004/associate-study-004" },
+      { name: "Red Hat — Ansible Essentials (AU094)", yr: "2026",
+        href: "https://www.redhat.com/en/services/training/au094-ansible-essentials-simplicity-automation-technical-overview" },
+      { name: "Red Hat — Interactive Labs: Ansible", yr: "2026",
+        href: "https://www.redhat.com/en/interactive-labs/ansible" },
+      { name: "Kubernetes Basics (kubernetes.io)", yr: "2026",
+        href: "https://kubernetes.io/docs/tutorials/kubernetes-basics/" },
+      { name: "Akuity Academy — Intro to GitOps & Argo CD", yr: "2026",
+        href: "https://academy.akuity.io/courses/gitops-argocd-intro" },
+      { name: "TechWorld with Nana — ArgoCD for Beginners", yr: "2026",
+        href: "https://www.classcentral.com/course/youtube-argocd-tutorial-for-beginners-gitops-cd-for-kubernetes-108860" },
+      { name: "Red Hat Scholars — Argo CD Tutorial", yr: "2026",
+        href: "https://redhat-scholars.github.io/argocd-tutorial/" },
+      { name: "Red Hat Developer — Getting Started with OpenShift", yr: "2026",
+        href: "https://developers.redhat.com/products/openshift/getting-started" },
     ],
     langsTitle: "languages",
     langs: [
@@ -476,6 +495,24 @@ const en: Content = {
       { name: "AI Fundamentals",     yr: "2024" },
       { name: "Git & GitHub Basics", yr: "2023" },
       { name: "React Development",   yr: "2023" },
+      { name: "HashiCorp Developer — Terraform Tutorials", yr: "2026",
+        href: "https://developer.hashicorp.com/terraform/tutorials" },
+      { name: "Terraform Associate 004 — Study Path", yr: "2026",
+        href: "https://developer.hashicorp.com/terraform/tutorials/certification-004/associate-study-004" },
+      { name: "Red Hat — Ansible Essentials (AU094)", yr: "2026",
+        href: "https://www.redhat.com/en/services/training/au094-ansible-essentials-simplicity-automation-technical-overview" },
+      { name: "Red Hat — Interactive Labs: Ansible", yr: "2026",
+        href: "https://www.redhat.com/en/interactive-labs/ansible" },
+      { name: "Kubernetes Basics (kubernetes.io)", yr: "2026",
+        href: "https://kubernetes.io/docs/tutorials/kubernetes-basics/" },
+      { name: "Akuity Academy — Intro to GitOps & Argo CD", yr: "2026",
+        href: "https://academy.akuity.io/courses/gitops-argocd-intro" },
+      { name: "TechWorld with Nana — ArgoCD for Beginners", yr: "2026",
+        href: "https://www.classcentral.com/course/youtube-argocd-tutorial-for-beginners-gitops-cd-for-kubernetes-108860" },
+      { name: "Red Hat Scholars — Argo CD Tutorial", yr: "2026",
+        href: "https://redhat-scholars.github.io/argocd-tutorial/" },
+      { name: "Red Hat Developer — Getting Started with OpenShift", yr: "2026",
+        href: "https://developers.redhat.com/products/openshift/getting-started" },
     ],
     langsTitle: "languages",
     langs: [

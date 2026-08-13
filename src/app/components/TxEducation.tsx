@@ -42,7 +42,12 @@ export function TxEducation({ edu }: Props) {
           <div className="certs">
             {edu.certs.map((c, i) => (
               <div className="cert" key={i}>
-                <span>{c.name}</span>
+                {/* Link cliccabile al corso/tutorial quando è presente un href, altrimenti testo semplice */}
+                {c.href ? (
+                  <a href={c.href} target="_blank" rel="noopener noreferrer">{c.name}</a>
+                ) : (
+                  <span>{c.name}</span>
+                )}
                 <span className="yr">{c.yr}</span>
               </div>
             ))}

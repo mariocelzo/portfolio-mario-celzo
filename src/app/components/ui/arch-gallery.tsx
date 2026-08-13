@@ -21,13 +21,12 @@ type ArchGalleryProps = {
 const ROTATE_STEP = 6;
 const Y_STEP = 18;
 const OVERLAP = 0.58;
-// La card in hover deve leggersi chiaramente come "in primo piano": si
-// ingrandisce di più, si solleva di più e si allontana leggermente dalle
-// altre in orizzontale (non solo verso l'alto), mentre le vicine si attenuano
-const HOVER_SCALE = 1.16;
-const HOVER_LIFT = 30;
-const HOVER_SPREAD = 1.35;
-const SIBLING_DIM = 0.5;
+// La card in hover va semplicemente sopra le altre (z-index + leggero
+// ingrandimento/sollevamento): niente spread orizzontale, niente attenuazione
+// delle altre card — restano a piena luminosità, così la lettura è pulita
+// senza "spegnere" il resto del ventaglio
+const HOVER_SCALE = 1.12;
+const HOVER_LIFT = 22;
 
 export function ArchGallery({
   items = [],
@@ -64,11 +63,6 @@ export function ArchGallery({
           const baseZ = total - Math.abs(offset);
           const isHovered = hovered === index;
 
-          // Quando un'altra card è in hover, questa si attenua leggermente
-          // (a meno che non sia lei stessa quella sotto il mouse) — rinforza
-          // visivamente quale card è "avanti" e in primo piano
-          const isDimmed = hovered !== null && !isHovered;
-
           const cardStyle: CSSProperties = {
             position: "absolute",
             left: "50%",
@@ -81,16 +75,14 @@ export function ArchGallery({
             overflow: "hidden",
             transformOrigin: "center center",
             transform: isHovered
-              ? `translate(${translateX * HOVER_SPREAD}px, ${translateY - HOVER_LIFT}px) rotate(0deg) scale(${HOVER_SCALE})`
+              ? `translate(${translateX}px, ${translateY - HOVER_LIFT}px) rotate(0deg) scale(${HOVER_SCALE})`
               : `translate(${translateX}px, ${translateY}px) rotate(${rotate}deg) scale(1)`,
             zIndex: isHovered ? total + 1 : baseZ,
             transition:
-              "transform 280ms cubic-bezier(0.22, 1, 0.36, 1), opacity 280ms ease, filter 280ms ease, box-shadow 280ms ease, z-index 0ms",
+              "transform 280ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 280ms ease, z-index 0ms",
             boxShadow: isHovered
               ? "0 24px 48px rgba(0,0,0,0.32), 0 6px 16px rgba(0,0,0,0.22)"
               : "0 12px 28px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08)",
-            opacity: isDimmed ? SIBLING_DIM : 1,
-            filter: isDimmed ? "brightness(0.75) saturate(0.85)" : "none",
             cursor: "pointer",
             backgroundColor: "#f3f4f6",
           };

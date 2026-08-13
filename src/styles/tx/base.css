@@ -62,8 +62,11 @@ button { font: inherit; cursor: pointer; }
   text-transform: uppercase;
 }
 /* Seconda riga del titolo: gradiente colorato, un colore per sezione
-   (ereditato via var(--grad-section), impostato dal wrapper di sezione) */
-.tx-section__title .accent {
+   (ereditato via var(--grad-section), impostato dal wrapper di sezione).
+   SectionHead (TxNow.tsx) renderizza questo span con className="italic",
+   non "accent" — il selettore punta alla classe realmente usata. */
+.tx-section__title .italic {
+  font-style: normal;
   background-image: var(--grad-section, var(--grad-hero));
   -webkit-background-clip: text;
   background-clip: text;

@@ -43,12 +43,15 @@
   margin: 0 0 20px;
   color: var(--ink);
 }
-/* .accent in base.css is scoped to ".tx-section__title .accent" (section
-   headings only), so it never matches here — without this rule the second
+/* .italic in base.css is a bare utility (font-style: italic) and the
+   scoped gradient rule lives on ".tx-section__title .italic" (section
+   headings only), so neither matches here — without this rule the second
    word of the hero title stays plain white instead of the intended
    orange→purple gradient. Re-declare the same gradient-text treatment,
-   scoped to the hero title. */
-.tx-hero__title .accent {
+   scoped to the hero title, and cancel the base italic style so the
+   word renders upright as in the Figma design. */
+.tx-hero__title .italic {
+  font-style: normal;
   background-image: var(--grad-hero);
   -webkit-background-clip: text;
   background-clip: text;

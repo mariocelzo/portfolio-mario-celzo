@@ -45,7 +45,7 @@ export function TxHero({ content, lang }: Props) {
 
       {/* Titolo grande, seconda riga con parola in gradiente (var(--grad-hero)) */}
       <h1 className="tx-hero__title reveal" style={{ transitionDelay: "60ms" }}>
-        <span>{h.tagline[0]}</span> <span className="accent">{h.tagline[1]}</span>
+        <span>{h.tagline[0]}</span> <span className="italic">{h.tagline[1]}</span>
       </h1>
 
       {/* Pitch */}

@@ -1,4 +1,4 @@
-// TxFooter — Footer minimalista a 3 colonne mono
+// TxFooter — Footer minimalista a 3 colonne
 // Sinistra: copyright/torna-su, centro: versione + orologio live, destra: "built in italy"
 
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ interface Props {
   footer: FooterData;
 }
 
-// Orologio live sull'ora di Sarno (Europe/Rome) — tocco da status bar terminale
+// Orologio live sull'ora di Sarno (Europe/Rome)
 function useClock(): string {
   const [time, setTime] = useState("");
 

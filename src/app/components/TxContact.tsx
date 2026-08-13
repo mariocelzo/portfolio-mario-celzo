@@ -1,4 +1,4 @@
-// TxContact — Sezione contatto stile terminale
+// TxContact — Sezione contatto
 // Layout: box centrato con overline + titolo grande + lede + email + griglia campi
 
 import { Mail, Github, Linkedin } from "lucide-react";
@@ -24,10 +24,10 @@ export function TxContact({ contact, lang }: Props) {
 
         {/* Body centrato: overline + titolo + lede + email clicabile */}
         <div className="tx-contact__body">
-          {/* Overline: "open_to_opportunities" con prefisso $ accent */}
+          {/* Overline: badge "open_to_opportunities" sopra al titolo */}
           <span className="tx-contact__overline">{contact.overline}</span>
 
-          {/* Titolo grande in serif con seconda parola in corsivo accent */}
+          {/* Titolo grande, seconda parola con gradiente (var(--grad-contact)) */}
           <h2 className="tx-contact__title reveal">
             <span>{contact.title[0]}</span>{" "}
             <span className="italic">{contact.title[1]}</span>
@@ -35,7 +35,7 @@ export function TxContact({ contact, lang }: Props) {
 
           <p className="tx-contact__lede reveal">{contact.lede}</p>
 
-          {/* Email grande in serif corsivo con underline */}
+          {/* Email grande in grassetto con underline */}
           <a
             className="tx-contact__email reveal"
             style={{ transitionDelay: "100ms" }}
@@ -89,7 +89,7 @@ export function TxContact({ contact, lang }: Props) {
             >
               {/* Key in stile // prefisso */}
               <span className="k">{f.k}</span>
-              {/* Valore in serif corsivo */}
+              {/* Valore in grassetto */}
               <span className="v italic">{f.v}</span>
             </a>
           ))}

@@ -77,7 +77,7 @@ button { font: inherit; cursor: pointer; }
   color: var(--ink-mute); text-align: right;
 }
 /* Ogni sezione dichiara il proprio gradiente — evita di dover
-   duplicare .accent per ognuna */
+   duplicare .italic per ognuna */
 #now      { --grad-section: var(--grad-now); }
 #exp      { --grad-section: var(--grad-exp); }
 #work     { --grad-section: var(--grad-work); }

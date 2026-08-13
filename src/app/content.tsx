@@ -7,7 +7,6 @@ import React from "react";
 // Tipi condivisi
 // ──────────────────────────────────────────────────────────────
 export interface NavItem { id: string; label: string; }
-export interface MetaItem { k: string; v: string; }
 export interface BulletItem { ix: string; text: React.ReactNode; }
 export interface DataItem   { k: string; v: string; }
 export interface WorkItem {
@@ -38,12 +37,9 @@ export interface Content {
   status: { yes: string; no: string };
   cta: string;
   hero: {
-    promptUser: string; promptCmd: string;
     tagline: [string, string];
-    role: React.ReactNode;
     pitch: React.ReactNode;
-    ctas: { email: string; github: string; linkedin: string; cv: string };
-    meta: MetaItem[];
+    ctas: { email: string; cv: string };
   };
   now: {
     no: string; title: [string, string]; cue: string;
@@ -102,20 +98,7 @@ const it: Content = {
   status: { yes: "available", no: "not looking" },
   cta: "scrivimi",
   hero: {
-    promptUser: "mario@portfolio",
-    promptCmd:  "./whoami --short",
     tagline:    ["Mario", "Celzo"],
-    role: (
-      <>
-        <span className="key">role</span>{" "}={" "}
-        <span className="val">DevOps Engineer</span> @{" "}
-        <span className="val">Reply</span> ·{" "}
-        <span className="key">via</span>{" "}={" "}
-        <span className="val">Nepta</span> ·{" "}
-        <span className="key">mode</span>{" "}={" "}
-        <span className="accent">external_consultant</span>
-      </>
-    ),
     pitch: (
       <>
         Costruisco <strong>pipeline CI/CD</strong>,{" "}
@@ -123,13 +106,7 @@ const it: Content = {
         impediscono alla produzione di rompersi il venerdì sera.
       </>
     ),
-    ctas: { email: "scrivimi", github: "github", linkedin: "linkedin", cv: "cv.pdf" },
-    meta: [
-      { k: "role",      v: "DevOps Engineer" },
-      { k: "company",   v: "Reply · via Nepta" },
-      { k: "location",  v: "Sarno (SA), IT" },
-      { k: "languages", v: "IT · EN (B2)" },
-    ],
+    ctas: { email: "scrivimi", cv: "cv.pdf" },
   },
   now: {
     no: "01", title: ["Ora,", "in produzione."], cue: "uptime: lug 2026 → present",
@@ -336,20 +313,7 @@ const en: Content = {
   status: { yes: "available", no: "not looking" },
   cta: "get in touch",
   hero: {
-    promptUser: "mario@portfolio",
-    promptCmd:  "./whoami --short",
     tagline:    ["Mario", "Celzo"],
-    role: (
-      <>
-        <span className="key">role</span>{" "}={" "}
-        <span className="val">DevOps Engineer</span> @{" "}
-        <span className="val">Reply</span> ·{" "}
-        <span className="key">via</span>{" "}={" "}
-        <span className="val">Nepta</span> ·{" "}
-        <span className="key">mode</span>{" "}={" "}
-        <span className="accent">external_consultant</span>
-      </>
-    ),
     pitch: (
       <>
         I build <strong>CI/CD pipelines</strong>,{" "}
@@ -357,13 +321,7 @@ const en: Content = {
         keep production from breaking on a Friday night.
       </>
     ),
-    ctas: { email: "get in touch", github: "github", linkedin: "linkedin", cv: "cv.pdf" },
-    meta: [
-      { k: "role",      v: "DevOps Engineer" },
-      { k: "company",   v: "Reply · via Nepta" },
-      { k: "location",  v: "Sarno (SA), IT" },
-      { k: "languages", v: "IT · EN (B2)" },
-    ],
+    ctas: { email: "get in touch", cv: "cv.pdf" },
   },
   now: {
     no: "01", title: ["Now,", "in production."], cue: "uptime: jul 2026 → present",

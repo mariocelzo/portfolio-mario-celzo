@@ -1,4 +1,4 @@
-// TxHeader — Header sticky in stile terminal bar
+// TxHeader — Header sticky traslucido con blur
 // Contiene: mark (nome + ruolo), nav centrale con sezione attiva, toggle lingua, CTA
 
 import { useEffect, useState } from "react";
@@ -52,7 +52,7 @@ export function TxHeader({ content, lang, setLang }: Props) {
     <header className="tx-header">
       <div className="tx-header__inner">
 
-        {/* Mark: dot disponibilità + nome in serif + ruolo */}
+        {/* Mark: dot disponibilità + nome sans-serif in corsivo + ruolo */}
         <div className="tx-header__mark">
           <span className="dot" aria-hidden="true"></span>
           <span className="you italic">mario.celzo</span>

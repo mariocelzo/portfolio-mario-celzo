@@ -1,5 +1,5 @@
 // App principale — Portfolio Mario Celzo v6 Tech
-// Gestisce: lingua (IT/EN), accento colore, reveal scroll-based
+// Gestisce: lingua (IT/EN), reveal scroll-based, pagine virtuali per Analytics
 
 import { useState, useEffect } from "react";
 import { Analytics } from "@vercel/analytics/react";
@@ -210,13 +210,13 @@ export default function App() {
       {/* Spotlight: glow sottile che segue il cursore (solo desktop) */}
       <TxSpotlight />
 
-      {/* Header fisso in cima — terminal bar con lingua e CTA */}
+      {/* Header fisso in cima — mark, nav sezioni, toggle lingua e CTA */}
       <TxHeader content={content} lang={lang} setLang={setLang} />
 
       {/* key={lang}: rimonta il contenuto al cambio lingua attivando il fade CSS */}
       <main key={lang}>
-        {/* Hero: nome grande, prompt terminale, pitch, CTA, meta,
-            con il torus knot ASCII 3D (Three.js) come sfondo */}
+        {/* Hero: avatar foto in cornice circolare, headline con parola in
+            gradiente, pitch, CTA email/CV, riga tech loghi */}
         <TxHero content={content} lang={lang} />
 
         {/* Marquee ticker con le keyword tecniche */}
@@ -240,11 +240,11 @@ export default function App() {
         {/* Behind the keyboard: foto + 4 passion cards */}
         <TxBehind beyond={content.beyond} />
 
-        {/* Contact: sezione terminale con email grande */}
+        {/* Contact: box centrato con overline, titolo, email grande e griglia contatti */}
         <TxContact contact={content.contact} lang={lang} />
       </main>
 
-      {/* Footer: 3 colonne mono */}
+      {/* Footer: 3 colonne (copyright/torna-su, versione+orologio, built in italy) */}
       <TxFooter footer={content.footer} />
 
       {/* Vercel Analytics + Speed Insights: invisibili, attivi solo in produzione */}

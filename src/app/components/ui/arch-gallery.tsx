@@ -40,6 +40,20 @@ export function ArchGallery({
   const mid = (total - 1) / 2;
   const [hovered, setHovered] = useState<number | null>(null);
 
+  // Rank ogni card per distanza dal centro e assegna z-index interi 1..total
+  // (le card centrali in cima). Con un numero pari di card `mid` è un valore
+  // a metà (es. 1.5 per 4 card), quindi "total - Math.abs(offset)" produceva
+  // z-index NON interi (es. 2.5): CSS z-index accetta solo interi, quindi
+  // ogni volta che una card tornava alla sua posizione base il browser
+  // rifiutava silenziosamente il valore e la card restava "bloccata" allo
+  // z-index dell'ultimo hover valido — da qui il bug per cui, con 4 foto,
+  // l'hover funzionava una volta sola e poi le card restavano impilate male.
+  const zRankByIndex = new Map(
+    [...deck.keys()]
+      .sort((a, b) => Math.abs(a - mid) - Math.abs(b - mid))
+      .map((idx, rank) => [idx, total - rank])
+  );
+
   const stageWidth = cardWidth + Math.abs(mid) * 2 * cardWidth * OVERLAP + cardWidth * 0.2;
   const stageHeight = cardHeight + Math.abs(mid) * Y_STEP + 48;
 
@@ -60,7 +74,7 @@ export function ArchGallery({
           const rotate = offset * ROTATE_STEP;
           const translateY = Math.abs(offset) * Y_STEP;
           const translateX = offset * cardWidth * OVERLAP;
-          const baseZ = total - Math.abs(offset);
+          const baseZ = zRankByIndex.get(index)!;
           const isHovered = hovered === index;
 
           const cardStyle: CSSProperties = {

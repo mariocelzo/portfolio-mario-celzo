@@ -3,7 +3,6 @@
 
 import { useEffect, useState } from "react";
 import type { Content } from "../content";
-import { TxAccent } from "./TxAccent";
 
 type FooterData = Content["footer"];
 
@@ -42,9 +41,8 @@ export function TxFooter({ footer }: Props) {
       <div className="tx-footer__c">
         {footer.c} · sarno {clock}
       </div>
-      {/* Destra: switcher colore accento + "built in italy" */}
-      <div className="tx-footer__r tx-footer__r--flex">
-        <TxAccent />
+      {/* Destra: "built in italy" */}
+      <div className="tx-footer__r">
         <span>{footer.r}</span>
       </div>
     </footer>

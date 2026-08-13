@@ -1,6 +1,7 @@
 // TxContact — Sezione contatto stile terminale
 // Layout: box centrato con overline + titolo grande + lede + email + griglia campi
 
+import { Mail, Github, Linkedin } from "lucide-react";
 import type { Content } from "../content";
 import { trackEvent } from "../lib/track";
 
@@ -43,6 +44,36 @@ export function TxContact({ contact, lang }: Props) {
           >
             {contact.email} →
           </a>
+
+          {/* Icone social: mail/github/linkedin, al posto di Instagram/X/YouTube
+              del Figma (che Mario non usa) */}
+          <div className="tx-contact__social reveal" style={{ transitionDelay: "140ms" }}>
+            <a
+              href={`mailto:${contact.email}?subject=${emailSubject}`}
+              aria-label="Email"
+              onClick={() => trackEvent("email_click", { from: "contact_social" })}
+            >
+              <Mail size={20} strokeWidth={1.75} />
+            </a>
+            <a
+              href="https://github.com/mariocelzo"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              onClick={() => trackEvent("github_click", { from: "contact_social" })}
+            >
+              <Github size={20} strokeWidth={1.75} />
+            </a>
+            <a
+              href="https://linkedin.com/in/mario-celzo"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              onClick={() => trackEvent("linkedin_click", { from: "contact_social" })}
+            >
+              <Linkedin size={20} strokeWidth={1.75} />
+            </a>
+          </div>
         </div>
 
         {/* Griglia 4 campi: email / linkedin / github / location */}

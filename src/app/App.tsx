@@ -197,7 +197,7 @@ export default function App() {
   useVirtualPaths([lang]);
 
   // Accento fisso "lime" per il portfolio reale (il tweaks panel non esiste qui)
-  // Il colore viene impostato via data-accent sul tag <html> in index.html
+  // I colori sono i gradienti fissi definiti in tokens.css (nessuno switcher di tema)
   useReveal([lang]);
 
   const content = C[lang];

@@ -24,7 +24,7 @@ export function TxStack({ stack }: Props) {
           >
             {/* Kicker: identificatore categoria in stile comando */}
             <h5>{col.kicker}</h5>
-            {/* Lead: frase descrittiva in Instrument Serif corsivo */}
+            {/* Lead: frase descrittiva in Poppins corsivo */}
             <p className="lead italic">{col.lead}</p>
             {/* Chip delle tecnologie */}
             <div className="tx-stack__chips">

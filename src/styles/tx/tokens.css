@@ -1,9 +1,9 @@
 /* ============================================================
    DESIGN TOKENS — colori, gradienti, font.
-   Sostituisce il vecchio sistema ad accento singolo (--accent
-   selezionabile via data-accent) con i gradienti fissi del
-   Figma "Developer Portfolio Website Design", estesi con la
-   stessa logica alle sezioni che il Figma non copre.
+   Sostituisce il vecchio sistema ad accento singolo, selezionabile
+   a runtime, con i gradienti fissi del Figma "Developer Portfolio
+   Website Design", estesi con la stessa logica alle sezioni che
+   il Figma non copre.
    ============================================================ */
 
 :root {

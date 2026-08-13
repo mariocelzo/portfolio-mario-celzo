@@ -48,6 +48,16 @@
 .tx-edu__row .year { font-size: 12px; font-weight: 600; color: var(--ink-mute); padding-top: 4px; }
 .tx-edu__row .title { font-family: var(--font-sans); font-weight: 700; font-style: normal; font-size: 19px; line-height: 1.25; color: var(--ink); margin: 0 0 4px; }
 .tx-edu__row .org { font-size: 12px; font-weight: 500; color: var(--ink-mute); }
+/* Riga con logo istituto (es. UNISA) accanto a titolo/org */
+.tx-edu__row-main { display: flex; align-items: center; gap: 14px; }
+.tx-edu__logo {
+  height: 36px; min-width: 36px; max-width: 72px; width: max-content;
+  border-radius: 8px; background: #FFFFFF;
+  display: grid; place-items: center; padding: 5px 8px; flex-shrink: 0;
+}
+.tx-edu__logo img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+/* Badge scuro invece che bianco per loghi chiari (es. UNISA), altrimenti invisibili */
+.tx-edu__logo--dark { background: var(--bg-card); border: 1px solid var(--rule); }
 .tx-edu__side h4 { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); margin: 0 0 12px; }
 .tx-edu__side .certs { display: grid; margin-bottom: 26px; border-top: 1px dashed var(--rule); }
 .tx-edu__side .cert { display: grid; grid-template-columns: 22px 1fr auto; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--rule); font-size: 13px; color: var(--ink-soft); }
@@ -96,4 +106,27 @@
   .tx-behind__item:nth-child(even) { padding-left: 0; }
   .tx-behind__item:nth-last-child(-n+2) { border-bottom: 1px solid var(--rule); }
   .tx-behind__item:last-child { border-bottom: 0; }
+}
+
+/* ──── Other experience — menzione compatta, senza logo/badge ──── */
+.tx-other-exp { padding: 0 32px 56px; max-width: 1240px; margin: 0 auto; }
+.tx-other-exp__label {
+  display: block;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-mute); margin-bottom: 14px;
+}
+.tx-other-exp__list { border-top: 1px dashed var(--rule); }
+.tx-other-exp__row {
+  display: grid; grid-template-columns: 140px 1fr;
+  gap: 20px; padding: 14px 0;
+  border-bottom: 1px dashed var(--rule);
+}
+.tx-other-exp__range { font-size: 12px; font-weight: 500; color: var(--ink-mute); padding-top: 2px; }
+.tx-other-exp__title { font-size: 13px; font-weight: 700; color: var(--ink); }
+.tx-other-exp__org { font-size: 12px; color: var(--ink-mute); }
+.tx-other-exp__body { margin: 4px 0 0; font-size: 12px; line-height: 1.5; color: var(--ink-soft); max-width: 60ch; }
+
+@media (max-width: 720px) {
+  .tx-other-exp { padding: 0 22px 48px; }
+  .tx-other-exp__row { grid-template-columns: 1fr; gap: 4px; }
 }

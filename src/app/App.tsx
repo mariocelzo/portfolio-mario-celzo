@@ -17,6 +17,7 @@ import { TxExperience } from "./components/TxExperience";
 import { TxStack }      from "./components/TxStack";
 import { TxEducation }  from "./components/TxEducation";
 import { TxBehind }     from "./components/TxBehind";
+import { TxOtherExp }   from "./components/TxOtherExp";
 import { TxContact }    from "./components/TxContact";
 import { TxFooter }     from "./components/TxFooter";
 
@@ -239,6 +240,11 @@ export default function App() {
 
         {/* Behind the keyboard: foto + 4 passion cards */}
         <TxBehind beyond={content.beyond} />
+
+        {/* Altre esperienze: menzione compatta di ruoli minori (es. lavoro
+            stagionale), separata dalla Experience principale che ora
+            contiene solo i ruoli tech con logo aziendale */}
+        <TxOtherExp otherExp={content.otherExp} />
 
         {/* Contact: box centrato con overline, titolo, email grande e griglia contatti */}
         <TxContact contact={content.contact} lang={lang} />

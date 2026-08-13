@@ -28,6 +28,8 @@
   color: var(--bg);
 }
 .tx-exp__logo img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+/* Badge scuro invece che bianco per loghi chiari (es. UNISA), altrimenti invisibili */
+.tx-exp__logo--dark { background: var(--bg-soft); border: 1px solid var(--rule); }
 
 .tx-exp__title { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .tx-exp__title h4 {

@@ -21,12 +21,19 @@ export function TxEducation({ edu }: Props) {
         <div className="reveal">
           {edu.items.map((it, i) => (
             <div className="tx-edu__row" key={i}>
-              {/* Anno in stile monospace muted */}
               <span className="year">{it.year}</span>
-              <div>
-                {/* Titolo in serif corsivo */}
-                <h4 className="title">{it.title}</h4>
-                <span className="org">{it.org}</span>
+              <div className="tx-edu__row-main">
+                {/* Logo istituto, quando disponibile (es. UNISA).
+                    logoDark: badge scuro invece che bianco per loghi chiari */}
+                {it.logo && (
+                  <div className={`tx-edu__logo${it.logoDark ? " tx-edu__logo--dark" : ""}`}>
+                    <img src={it.logo} alt={it.org} loading="lazy" />
+                  </div>
+                )}
+                <div>
+                  <h4 className="title">{it.title}</h4>
+                  <span className="org">{it.org}</span>
+                </div>
               </div>
             </div>
           ))}

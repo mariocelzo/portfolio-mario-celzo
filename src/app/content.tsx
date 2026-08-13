@@ -22,15 +22,21 @@ export interface ExpItem {
   /** Percorso del logo aziendale reale (assente per il salone di famiglia,
       che non ha un logo ufficiale — il componente mostra un'icona generica) */
   logo?: string;
+  /** true se il logo è chiaro/bianco (es. UNISA) e richiede un badge scuro invece che bianco per restare visibile */
+  logoDark?: boolean;
 }
 export interface StackColumn {
   kicker: string; lead: string; chips: string[];
 }
-export interface EduItem  { year: string; title: string; org: string; }
+/** logo opzionale: percorso del logo dell'istituto, mostrato accanto al titolo.
+    logoDark: true se il logo è chiaro/bianco (es. UNISA) e richiede un badge scuro */
+export interface EduItem  { year: string; title: string; org: string; logo?: string; logoDark?: boolean; }
 /** href opzionale: se presente, il nome della certificazione diventa un link cliccabile al corso/tutorial */
 export interface CertItem { name: string; yr: string; href?: string; }
 export interface LangItem { name: string; level: string; }
 export interface BeyondItem { tag: string; title: string; desc: string; }
+/** Esperienze minori, mostrate in una sezione compatta a parte (senza logo/badge) */
+export interface OtherExpItem { range: string; title: string; org: string; body: string; }
 export interface ContactField { k: string; v: string; href: string; }
 
 export interface Content {
@@ -74,6 +80,10 @@ export interface Content {
     bio: string[];
     photoCaption: string; photoStatus: string;
     items: BeyondItem[];
+  };
+  otherExp: {
+    label: string;
+    items: OtherExpItem[];
   };
   contact: {
     no: string; overline: string;
@@ -160,6 +170,7 @@ const it: Content = {
         desc: "Sistema collaborativo per la biblioteca universitaria (HCI). Prenotazione posti con sensori, prestiti RFID self-service, chatbot. Accessibilità e sostenibilità al centro.",
         tags: ["HCI", "Figma", "IoT", "A11y"],
         href: "https://github.com/mariocelzo/biblioflow-app",
+        demo: "https://biblioflow-app.vercel.app/",
         cover: "/assets/cover-biblioflow.svg", span: "" },
       { name: "NearBite", year: "2025", level: "PERSONALE · MAGISTRALE",
         desc: "Progetto personale durante la magistrale. App mobile cross-platform per ricerca ristoranti: React Native + Expo, Supabase, Google Places, geo real-time, AI.",
@@ -216,22 +227,12 @@ const it: Content = {
       },
       { year: "2025", range: "Dicembre", badge: null,
         title: "Laurea Triennale in Informatica", org: "Università degli Studi di Salerno",
-        logo: "/assets/logos/companies/unisa.png",
+        logo: "/assets/logos/companies/unisa.png", logoDark: true,
         body: "Tesi: Progettazione e sviluppo di un tool per l'estrazione automatizzata e l'analisi di scenari in simulazioni CARLA e BeamNG per sistemi ADAS/ADS.",
         bullets: [
           "Tesi: scenario extraction tool per simulazioni CARLA / BeamNG (ADAS/ADS)",
           "Algoritmi e strutture dati, basi di dati, sistemi operativi",
           "Progetti full-stack & mobile (TARGET, BODY-LIFE, BiblioFlow)",
-        ],
-      },
-      { year: "2019", range: "Estati '18 — '19", badge: null,
-        title: "Assistente gestione salone", org: "Susy & Tito · attività di famiglia",
-        body: "Il primo posto in cui ho imparato il multitasking sotto pressione, la pazienza con le persone, l'importanza dell'ordine.",
-        bullets: [
-          "Servizio clienti e gestione prenotazioni",
-          "Controllo inventario e igiene degli spazi",
-          "Multitasking nelle ore di punta",
-          "Gestione incassi, apertura e chiusura",
         ],
       },
     ],
@@ -252,8 +253,10 @@ const it: Content = {
   edu: {
     no: "05", title: ["Formazione &", "certs."], cue: "univ. di salerno · liceo tito lucrezio caro",
     items: [
-      { year: "2025 → now",       title: "Laurea Magistrale · Software Engineering & IT Management", org: "Università degli Studi di Salerno" },
-      { year: "2022 → Dic 2025",  title: "Laurea Triennale in Informatica",                           org: "Università degli Studi di Salerno" },
+      { year: "2025 → now",       title: "Laurea Magistrale · Software Engineering & IT Management", org: "Università degli Studi di Salerno",
+        logo: "/assets/logos/companies/unisa.png", logoDark: true },
+      { year: "2022 → Dic 2025",  title: "Laurea Triennale in Informatica",                           org: "Università degli Studi di Salerno",
+        logo: "/assets/logos/companies/unisa.png", logoDark: true },
       { year: "2017 → 2022",      title: "Diploma di Liceo Scientifico",                              org: "Liceo Tito Lucrezio Caro · Sarno (SA)" },
     ],
     certsTitle: "certifications",
@@ -300,6 +303,13 @@ const it: Content = {
       { tag: "passion/02", title: "In strada",     desc: "Viaggi corti, città nuove, qualche fuga in montagna." },
       { tag: "passion/03", title: "Coding",        desc: "Side project la sera — soprattutto frontend e DevOps." },
       { tag: "passion/04", title: "Gaming",        desc: "Quando il deploy non vuole partire, una partita aiuta." },
+    ],
+  },
+  otherExp: {
+    label: "altre esperienze",
+    items: [
+      { range: "Estati '18 — '19", title: "Assistente gestione salone", org: "Susy & Tito · attività di famiglia",
+        body: "Il primo posto in cui ho imparato il multitasking sotto pressione, la pazienza con le persone, l'importanza dell'ordine." },
     ],
   },
   contact: {
@@ -393,6 +403,7 @@ const en: Content = {
         desc: "Collaborative system for the university library (HCI). Sensor-based study post booking, RFID self-service, chatbot. Accessibility-first design.",
         tags: ["HCI", "Figma", "IoT", "A11y"],
         href: "https://github.com/mariocelzo/biblioflow-app",
+        demo: "https://biblioflow-app.vercel.app/",
         cover: "/assets/cover-biblioflow.svg", span: "" },
       { name: "NearBite", year: "2025", level: "PERSONAL · M.SC.",
         desc: "Personal project during my M.Sc. Cross-platform restaurant discovery app: React Native + Expo, Supabase, Google Places, real-time geo, AI.",
@@ -449,22 +460,12 @@ const en: Content = {
       },
       { year: "2025", range: "December", badge: null,
         title: "BSc in Computer Science", org: "Università degli Studi di Salerno",
-        logo: "/assets/logos/companies/unisa.png",
+        logo: "/assets/logos/companies/unisa.png", logoDark: true,
         body: "Thesis on the design and development of a tool for automated scenario extraction and analysis in CARLA and BeamNG simulations for ADAS/ADS systems.",
         bullets: [
           "Thesis: scenario extraction tool for CARLA / BeamNG simulations (ADAS/ADS)",
           "Algorithms and data structures, databases, operating systems",
           "Full-stack & mobile projects (TARGET, BODY-LIFE, BiblioFlow)",
-        ],
-      },
-      { year: "2019", range: "Summers '18 — '19", badge: null,
-        title: "Salon assistant", org: "Susy & Tito · family business",
-        body: "The first place I learned the value of multitasking under pressure, patience with people, and keeping things in order.",
-        bullets: [
-          "Customer service and bookings",
-          "Inventory control and hygiene",
-          "Multitasking during peak hours",
-          "Cash handling, shift open / close",
         ],
       },
     ],
@@ -485,8 +486,10 @@ const en: Content = {
   edu: {
     no: "05", title: ["Education &", "certs."], cue: "univ. of salerno · liceo tito lucrezio caro",
     items: [
-      { year: "2025 → now",      title: "M.Sc. · Software Engineering & IT Management", org: "Università degli Studi di Salerno" },
-      { year: "2022 → Dec 2025", title: "B.Sc. in Computer Science",                    org: "Università degli Studi di Salerno" },
+      { year: "2025 → now",      title: "M.Sc. · Software Engineering & IT Management", org: "Università degli Studi di Salerno",
+        logo: "/assets/logos/companies/unisa.png", logoDark: true },
+      { year: "2022 → Dec 2025", title: "B.Sc. in Computer Science",                    org: "Università degli Studi di Salerno",
+        logo: "/assets/logos/companies/unisa.png", logoDark: true },
       { year: "2017 → 2022",     title: "Scientific High School Diploma",               org: "Liceo Tito Lucrezio Caro · Sarno (SA)" },
     ],
     certsTitle: "certifications",
@@ -533,6 +536,13 @@ const en: Content = {
       { tag: "passion/02", title: "On the road",   desc: "Short trips, new cities, the odd mountain escape." },
       { tag: "passion/03", title: "Coding",        desc: "Evening side projects — mostly frontend and DevOps." },
       { tag: "passion/04", title: "Gaming",        desc: "When the deploy refuses to start, a game helps." },
+    ],
+  },
+  otherExp: {
+    label: "other experience",
+    items: [
+      { range: "Summers '18 — '19", title: "Salon assistant", org: "Susy & Tito · family business",
+        body: "The first place I learned the value of multitasking under pressure, patience with people, and keeping things in order." },
     ],
   },
   contact: {

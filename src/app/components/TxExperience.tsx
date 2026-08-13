@@ -25,8 +25,9 @@ export function TxExperience({ exp }: Props) {
             style={{ transitionDelay: `${i * 60}ms` }}
           >
             {/* Badge logo: immagine reale se presente, altrimenti icona
-                generica (caso del salone di famiglia, senza logo ufficiale) */}
-            <div className="tx-exp__logo">
+                generica (caso del salone di famiglia, senza logo ufficiale).
+                logoDark: badge scuro invece che bianco per loghi chiari (es. UNISA) */}
+            <div className={`tx-exp__logo${it.logoDark ? " tx-exp__logo--dark" : ""}`}>
               {it.logo ? (
                 <img src={it.logo} alt={it.org} loading="lazy" />
               ) : (

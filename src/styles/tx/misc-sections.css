@@ -76,12 +76,9 @@
 /* ──── Behind the keyboard ──── */
 .tx-behind { padding: 72px 32px; max-width: 1240px; margin: 0 auto; }
 .tx-behind__inner { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 48px; align-items: start; }
-.tx-behind__media { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 20px; background: var(--bg-card); }
-.tx-behind__media img { width: 100%; height: 100%; object-fit: cover; }
-.tx-behind__media .corner { position: absolute; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); background: rgba(22,21,19,0.78); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); padding: 4px 10px; border-radius: 999px; }
-.tx-behind__media .corner.tl { top: 12px; left: 12px; }
-.tx-behind__media .corner.tr { top: 12px; right: 12px; }
-.tx-behind__photoCap { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 100%); color: var(--ink); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; display: flex; justify-content: space-between; gap: 12px; }
+/* Non più un frame per una singola foto: ora ospita il photo-dump ArchGallery
+   (mazzo a ventaglio), che gestisce da solo dimensioni/overflow delle card */
+.tx-behind__media { position: relative; display: flex; align-items: center; justify-content: center; min-height: 320px; }
 .tx-behind__copy { display: flex; flex-direction: column; gap: 18px; }
 .tx-behind__title { font-family: var(--font-sans); font-weight: 800; font-size: clamp(32px, 4.8vw, 48px); line-height: 1.1; margin: 0; color: var(--ink); text-transform: uppercase; }
 .tx-behind__title .italic { font-style: normal; background-image: var(--grad-behind); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -98,7 +95,7 @@
 @media (max-width: 900px) {
   .tx-behind { padding: 56px 22px; }
   .tx-behind__inner { grid-template-columns: 1fr; gap: 28px; }
-  .tx-behind__media { aspect-ratio: 4 / 3; }
+  .tx-behind__media { min-height: 260px; }
 }
 @media (max-width: 540px) {
   .tx-behind__grid { grid-template-columns: 1fr; }

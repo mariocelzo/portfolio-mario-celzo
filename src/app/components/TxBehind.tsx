@@ -1,7 +1,8 @@
-// TxBehind — "Behind the keyboard": foto laurea + bio + 4 passion cards
-// Layout: immagine a sinistra + copy a destra
+// TxBehind — "Behind the keyboard": photo dump (mazzo di foto a ventaglio) + bio + 4 passion cards
+// Layout: gallery a sinistra + copy a destra
 
 import type { Content } from "../content";
+import { ArchGallery } from "./ui/arch-gallery";
 
 type BeyondData = Content["beyond"];
 
@@ -14,22 +15,14 @@ export function TxBehind({ beyond }: Props) {
     <section className="tx-behind">
       <div className="tx-behind__inner">
 
-        {/* Media: foto di laurea con badge overlay agli angoli */}
+        {/* Media: photo dump a ventaglio (laurea + passioni), si allarga in hover */}
         <div className="tx-behind__media reveal">
-          <img
-            src="/assets/mario-graduation.jpeg"
-            alt="Mario Celzo — Laurea Triennale"
-            loading="lazy"
+          <ArchGallery
+            items={beyond.gallery.map((g) => ({ image: { src: g.src, alt: g.alt } }))}
+            cardWidth={150}
+            cardHeight={200}
+            cornerRadius={16}
           />
-          {/* Badge angolo in alto a sinistra */}
-          <span className="corner tl">PORTRAIT · N.01</span>
-          {/* Badge angolo in alto a destra — stato in accent */}
-          <span className="corner tr">{beyond.photoStatus}</span>
-          {/* Caption in basso su gradiente scuro */}
-          <div className="tx-behind__photoCap">
-            <span>{beyond.photoCaption}</span>
-            <span>FILE_01.JPG</span>
-          </div>
         </div>
 
         {/* Copy: etichetta + titolo + bio + griglia passioni */}

@@ -78,7 +78,8 @@ export interface Content {
   beyond: {
     title: [string, string];
     bio: string[];
-    photoCaption: string; photoStatus: string;
+    /** Foto del "photo dump": laurea + le 4 passioni sopra (Ferrari, viaggi, coding, gaming) */
+    gallery: { src: string; alt: string }[];
     items: BeyondItem[];
   };
   otherExp: {
@@ -296,8 +297,11 @@ const it: Content = {
       "Sono di Sarno, in provincia di Salerno. Laureato in Informatica a dicembre 2025 con una tesi su un tool per l'estrazione e l'analisi automatizzata di scenari in simulazioni CARLA e BeamNG per sistemi ADAS/ADS.",
       "Quando non sto scrivendo YAML o debuggando una pipeline, le quattro cose qui sotto sono quelle che mi tengono la testa sgombra.",
     ],
-    photoCaption: "BSc · Univ. di Salerno · dic. 2025",
-    photoStatus: "[GRADUATED]",
+    gallery: [
+      { src: "/assets/mario-graduation.jpeg", alt: "Mario Celzo — Laurea Triennale" },
+      { src: "/assets/gallery/ferrari-fiorano.jpg", alt: "Ferrari SF-26 — shakedown a Fiorano" },
+      { src: "/assets/gallery/gaming-setup.jpg", alt: "Postazione gaming" },
+    ],
     items: [
       { tag: "passion/01", title: "Forza Ferrari", desc: "F1 ogni domenica, gare riviste il lunedì." },
       { tag: "passion/02", title: "In strada",     desc: "Viaggi corti, città nuove, qualche fuga in montagna." },
@@ -529,8 +533,11 @@ const en: Content = {
       "I'm from Sarno, in the province of Salerno. Graduated with a BSc in Computer Science in December 2025, with a thesis on a tool for automated scenario extraction and analysis in CARLA and BeamNG simulations for ADAS/ADS systems.",
       "When I'm not writing YAML or debugging a pipeline, the four things below keep my head clear.",
     ],
-    photoCaption: "BSc · Univ. of Salerno · Dec. 2025",
-    photoStatus: "[GRADUATED]",
+    gallery: [
+      { src: "/assets/mario-graduation.jpeg", alt: "Mario Celzo — BSc graduation" },
+      { src: "/assets/gallery/ferrari-fiorano.jpg", alt: "Ferrari SF-26 — shakedown at Fiorano" },
+      { src: "/assets/gallery/gaming-setup.jpg", alt: "Gaming setup" },
+    ],
     items: [
       { tag: "passion/01", title: "Forza Ferrari", desc: "F1 every Sunday, re-watched on Monday." },
       { tag: "passion/02", title: "On the road",   desc: "Short trips, new cities, the odd mountain escape." },

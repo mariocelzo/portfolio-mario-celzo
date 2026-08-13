@@ -6,6 +6,8 @@ import { useState, type CSSProperties } from "react";
 
 type GalleryItem = {
   image: { src: string; alt?: string };
+  /** Didascalia sovrimpressa in basso a sinistra sulla card (titolo colorato + descrizione) */
+  caption?: { title: string; desc: string; color: string };
 };
 
 type ArchGalleryProps = {
@@ -97,6 +99,27 @@ export function ArchGallery({
                 draggable={false}
                 className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"
               />
+              {/* Didascalia sovrimpressa: titolo colorato + descrizione, su
+                  scrim scuro sfumato per restare leggibile su qualunque foto */}
+              {entry.caption && (
+                <div
+                  className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col gap-0.5 px-3 pb-3 pt-8"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.82) 75%)",
+                  }}
+                >
+                  <span
+                    className="text-[13px] font-bold leading-tight"
+                    style={{ color: entry.caption.color }}
+                  >
+                    {entry.caption.title}
+                  </span>
+                  <span className="text-[10.5px] leading-snug text-white/80">
+                    {entry.caption.desc}
+                  </span>
+                </div>
+              )}
             </div>
           );
         })}

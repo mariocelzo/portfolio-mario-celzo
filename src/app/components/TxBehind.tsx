@@ -1,5 +1,6 @@
-// TxBehind — "Behind the keyboard": photo dump (mazzo di foto a ventaglio) + bio + 4 passion cards
-// Layout: gallery a sinistra + copy a destra
+// TxBehind — "Behind the keyboard": solo titolo + photo dump a ventaglio.
+// Ogni foto porta con sé titolo (colorato) e descrizione della passione,
+// sovrimpressi nell'angolo in basso a sinistra — niente più blocco di testo separato.
 
 import type { Content } from "../content";
 import { ArchGallery } from "./ui/arch-gallery";
@@ -13,54 +14,23 @@ interface Props {
 export function TxBehind({ beyond }: Props) {
   return (
     <section className="tx-behind">
-      <div className="tx-behind__inner">
+      <span className="tx-behind__label reveal">behind_the_keyboard</span>
 
-        {/* Media: photo dump a ventaglio (laurea + passioni), si allarga in hover */}
-        <div className="tx-behind__media reveal">
-          <ArchGallery
-            items={beyond.gallery.map((g) => ({ image: { src: g.src, alt: g.alt } }))}
-            cardWidth={150}
-            cardHeight={200}
-            cornerRadius={16}
-          />
-        </div>
+      <h2 className="tx-behind__title reveal" style={{ transitionDelay: "80ms" }}>
+        <span>{beyond.title[0]}</span>{" "}
+        <span className="italic">{beyond.title[1]}</span>
+      </h2>
 
-        {/* Copy: etichetta + titolo + bio + griglia passioni */}
-        <div className="tx-behind__copy">
-          <span className="lbl --note reveal">behind_the_keyboard</span>
-
-          <h2
-            className="tx-behind__title reveal"
-            style={{ transitionDelay: "80ms" }}
-          >
-            <span>{beyond.title[0]}</span>{" "}
-            <span className="italic">{beyond.title[1]}</span>
-          </h2>
-
-          <div
-            className="tx-behind__bio reveal"
-            style={{ transitionDelay: "160ms" }}
-          >
-            {beyond.bio.map((p, i) => <p key={i}>{p}</p>)}
-          </div>
-
-          {/* Griglia 2×2 delle passioni */}
-          <div className="tx-behind__grid">
-            {beyond.items.map((it, i) => (
-              <div
-                className="tx-behind__item reveal"
-                key={i}
-                style={{ transitionDelay: `${200 + i * 60}ms` }}
-              >
-                {/* Tag: passion/01 ecc. con prefisso // accent */}
-                <span className="tag">{it.tag}</span>
-                <h4>{it.title}</h4>
-                <p>{it.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
+      <div className="tx-behind__gallery reveal" style={{ transitionDelay: "160ms" }}>
+        <ArchGallery
+          items={beyond.photos.map((p) => ({
+            image: { src: p.src, alt: p.alt },
+            caption: { title: p.title, desc: p.desc, color: p.color },
+          }))}
+          cardWidth={190}
+          cardHeight={250}
+          cornerRadius={16}
+        />
       </div>
     </section>
   );

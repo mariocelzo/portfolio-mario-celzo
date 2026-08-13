@@ -34,7 +34,10 @@ export interface EduItem  { year: string; title: string; org: string; logo?: str
 /** href opzionale: se presente, il nome della certificazione diventa un link cliccabile al corso/tutorial */
 export interface CertItem { name: string; yr: string; href?: string; }
 export interface LangItem { name: string; level: string; }
-export interface BeyondItem { tag: string; title: string; desc: string; }
+/** Una foto del "photo dump": titolo+descrizione sono sovrimpressi nell'angolo
+    in basso a sinistra della card stessa (niente più testo separato a fianco).
+    color: colore del titolo, per dare un'identità diversa a ogni passione */
+export interface BeyondPhoto { src: string; alt: string; title: string; desc: string; color: string; }
 /** Esperienze minori, mostrate in una sezione compatta a parte (senza logo/badge) */
 export interface OtherExpItem { range: string; title: string; org: string; body: string; }
 export interface ContactField { k: string; v: string; href: string; }
@@ -77,10 +80,9 @@ export interface Content {
   };
   beyond: {
     title: [string, string];
-    bio: string[];
-    /** Foto del "photo dump": laurea + le 4 passioni sopra (Ferrari, viaggi, coding, gaming) */
-    gallery: { src: string; alt: string }[];
-    items: BeyondItem[];
+    /** Le 4 passioni, una per foto: titolo+descrizione sono sovrimpressi
+        nella card stessa, non c'è più un blocco di testo separato */
+    photos: BeyondPhoto[];
   };
   otherExp: {
     label: string;
@@ -293,20 +295,15 @@ const it: Content = {
   },
   beyond: {
     title: ["Quattro cose", "oltre il deploy."],
-    bio: [
-      "Sono di Sarno, in provincia di Salerno. Laureato in Informatica a dicembre 2025 con una tesi su un tool per l'estrazione e l'analisi automatizzata di scenari in simulazioni CARLA e BeamNG per sistemi ADAS/ADS.",
-      "Quando non sto scrivendo YAML o debuggando una pipeline, le quattro cose qui sotto sono quelle che mi tengono la testa sgombra.",
-    ],
-    gallery: [
-      { src: "/assets/mario-graduation.jpeg", alt: "Mario Celzo — Laurea Triennale" },
-      { src: "/assets/gallery/ferrari-fiorano.jpg", alt: "Ferrari SF-26 — shakedown a Fiorano" },
-      { src: "/assets/gallery/gaming-setup.jpg", alt: "Postazione gaming" },
-    ],
-    items: [
-      { tag: "passion/01", title: "Forza Ferrari", desc: "F1 ogni domenica, gare riviste il lunedì." },
-      { tag: "passion/02", title: "In strada",     desc: "Viaggi corti, città nuove, qualche fuga in montagna." },
-      { tag: "passion/03", title: "Coding",        desc: "Side project la sera — soprattutto frontend e DevOps." },
-      { tag: "passion/04", title: "Gaming",        desc: "Quando il deploy non vuole partire, una partita aiuta." },
+    photos: [
+      { src: "/assets/gallery/ferrari-fiorano.jpg", alt: "Ferrari SF-26 — shakedown a Fiorano",
+        title: "Forza Ferrari", desc: "F1 ogni domenica, gare riviste il lunedì.", color: "#E10600" },
+      { src: "/assets/gallery/food.jpg", alt: "A tavola",
+        title: "Food", desc: "Weekend a caccia del piatto giusto, tra ricette nuove e classici che non tradiscono mai.", color: "#FFB020" },
+      { src: "/assets/gallery/travel.jpg", alt: "In viaggio",
+        title: "In strada", desc: "Viaggi corti, città nuove, qualche fuga in montagna.", color: "#38BDF8" },
+      { src: "/assets/gallery/gaming-setup.jpg", alt: "Postazione gaming",
+        title: "Gaming", desc: "Quando il deploy non vuole partire, una partita aiuta.", color: "#A78BFA" },
     ],
   },
   otherExp: {
@@ -529,20 +526,15 @@ const en: Content = {
   },
   beyond: {
     title: ["Four things", "beyond the deploy."],
-    bio: [
-      "I'm from Sarno, in the province of Salerno. Graduated with a BSc in Computer Science in December 2025, with a thesis on a tool for automated scenario extraction and analysis in CARLA and BeamNG simulations for ADAS/ADS systems.",
-      "When I'm not writing YAML or debugging a pipeline, the four things below keep my head clear.",
-    ],
-    gallery: [
-      { src: "/assets/mario-graduation.jpeg", alt: "Mario Celzo — BSc graduation" },
-      { src: "/assets/gallery/ferrari-fiorano.jpg", alt: "Ferrari SF-26 — shakedown at Fiorano" },
-      { src: "/assets/gallery/gaming-setup.jpg", alt: "Gaming setup" },
-    ],
-    items: [
-      { tag: "passion/01", title: "Forza Ferrari", desc: "F1 every Sunday, re-watched on Monday." },
-      { tag: "passion/02", title: "On the road",   desc: "Short trips, new cities, the odd mountain escape." },
-      { tag: "passion/03", title: "Coding",        desc: "Evening side projects — mostly frontend and DevOps." },
-      { tag: "passion/04", title: "Gaming",        desc: "When the deploy refuses to start, a game helps." },
+    photos: [
+      { src: "/assets/gallery/ferrari-fiorano.jpg", alt: "Ferrari SF-26 — shakedown at Fiorano",
+        title: "Forza Ferrari", desc: "F1 every Sunday, re-watched on Monday.", color: "#E10600" },
+      { src: "/assets/gallery/food.jpg", alt: "At the table",
+        title: "Food", desc: "Weekends hunting for the right dish, new recipes and classics that never fail.", color: "#FFB020" },
+      { src: "/assets/gallery/travel.jpg", alt: "On the road",
+        title: "On the road", desc: "Short trips, new cities, the odd mountain escape.", color: "#38BDF8" },
+      { src: "/assets/gallery/gaming-setup.jpg", alt: "Gaming setup",
+        title: "Gaming", desc: "When the deploy refuses to start, a game helps.", color: "#A78BFA" },
     ],
   },
   otherExp: {

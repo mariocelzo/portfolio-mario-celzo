@@ -73,29 +73,21 @@
 
 @media (max-width: 900px) { .tx-edu { grid-template-columns: 1fr; gap: 32px; } }
 
-/* ──── Behind the keyboard ──── */
-.tx-behind { padding: 72px 32px; max-width: 1240px; margin: 0 auto; }
-.tx-behind__inner { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 48px; align-items: start; }
-/* Non più un frame per una singola foto: ora ospita il photo-dump ArchGallery
-   (mazzo a ventaglio), che gestisce da solo dimensioni/overflow delle card */
-.tx-behind__media { position: relative; display: flex; align-items: center; justify-content: center; min-height: 320px; }
-.tx-behind__copy { display: flex; flex-direction: column; gap: 18px; }
-.tx-behind__title { font-family: var(--font-sans); font-weight: 800; font-size: clamp(32px, 4.8vw, 48px); line-height: 1.1; margin: 0; color: var(--ink); text-transform: uppercase; }
+/* ──── Behind the keyboard — solo titolo + photo dump, un unico pezzo centrato ──── */
+.tx-behind { padding: 72px 32px; max-width: 1240px; margin: 0 auto; text-align: center; }
+/* Rimasta senza stile dal redesign (era legata al vecchio tema terminal, mai
+   riportata nel nuovo sistema) — le do un trattamento minimo coerente con
+   .tx-section__no / .tx-contact__overline */
+.tx-behind__label { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); }
+.tx-behind__title { font-family: var(--font-sans); font-weight: 800; font-size: clamp(32px, 4.8vw, 48px); line-height: 1.1; margin: 10px 0 0; color: var(--ink); text-transform: uppercase; }
 .tx-behind__title .italic { font-style: normal; background-image: var(--grad-behind); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.tx-behind__bio p { font-size: 14px; line-height: 1.65; color: var(--ink-soft); margin: 0 0 12px; max-width: 60ch; }
-.tx-behind__grid { margin-top: 8px; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--rule); }
-.tx-behind__item { padding: 18px 22px 18px 0; border-bottom: 1px solid var(--rule); }
-.tx-behind__item:nth-child(odd) { border-right: 1px solid var(--rule); }
-.tx-behind__item:nth-child(even) { padding-left: 22px; padding-right: 0; }
-.tx-behind__item:nth-last-child(-n+2) { border-bottom: 0; }
-.tx-behind__item .tag { font-size: 10px; font-weight: 600; color: var(--ink-mute); display: block; margin-bottom: 4px; }
-.tx-behind__item h4 { font-family: var(--font-sans); font-weight: 700; font-style: normal; font-size: 19px; margin: 0 0 4px; color: var(--ink); }
-.tx-behind__item p { font-size: 13px; line-height: 1.55; color: var(--ink-soft); margin: 0; }
+/* Ospita il photo-dump ArchGallery (mazzo a ventaglio), che gestisce da solo
+   dimensioni/overflow delle card — qui solo centratura e altezza minima */
+.tx-behind__gallery { display: flex; align-items: center; justify-content: center; min-height: 340px; }
 
 @media (max-width: 900px) {
   .tx-behind { padding: 56px 22px; }
-  .tx-behind__inner { grid-template-columns: 1fr; gap: 28px; }
-  .tx-behind__media { min-height: 260px; }
+  .tx-behind__gallery { min-height: 280px; }
 }
 @media (max-width: 540px) {
   .tx-behind__grid { grid-template-columns: 1fr; }

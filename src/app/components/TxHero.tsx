@@ -4,6 +4,7 @@
 
 import type { Content } from "../content";
 import { trackEvent } from "../lib/track";
+import { FlowButton } from "./ui/flow-button";
 // Versione compressa (600px lato lungo, JPEG q75) dell'originale 2.4MB/3088x2316:
 // l'avatar è renderizzato solo a 220px/160px in pagina, quindi il file raw
 // causava un chunk enorme in build ed era probabile LCP. Originale lasciato
@@ -65,14 +66,12 @@ export function TxHero({ content, lang }: Props) {
         >
           {h.ctas.email}
         </a>
-        <a
-          className="tx-btn"
+        <FlowButton
+          text={h.ctas.cv}
           href="/assets/CV-Mario-Celzo.pdf"
           download
           onClick={() => trackEvent("cv_download", { from: "hero" })}
-        >
-          {h.ctas.cv}
-        </a>
+        />
       </div>
 
       {/* Riga tech loghi, equivalente a "EXPERIENCE WITH" del Figma */}

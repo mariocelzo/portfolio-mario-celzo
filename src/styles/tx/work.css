@@ -10,9 +10,16 @@
   background: var(--bg-card);
   border-radius: 18px;
   overflow: hidden;
-  transition: transform 360ms cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  transition: transform 420ms cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow 420ms cubic-bezier(0.34,1.56,0.64,1);
 }
-.tx-work__card:hover { transform: translateY(-4px); }
+/* Lift + ombra più profonda in hover — stessa molla "pop" del bottone CV,
+   per coerenza di feeling tra le interazioni hover del sito */
+.tx-work__card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 40px rgba(0,0,0,0.35), 0 8px 16px rgba(0,0,0,0.22);
+}
 .tx-work__card.span-2 { grid-column: span 2; }
 .tx-work__media {
   position: relative; aspect-ratio: 16 / 10;
@@ -23,8 +30,9 @@
   object-fit: cover; display: block;
   transition: transform 700ms cubic-bezier(0.16,1,0.3,1);
 }
-.tx-work__card:hover .tx-work__media img { transform: scale(1.05); }
-.tx-work__media .num, .tx-work__media .yr, .tx-work__media .lvl {
+/* Zoom + leggero sollevamento della cover, come la card "galleggia" verso chi guarda */
+.tx-work__card:hover .tx-work__media img { transform: scale(1.09) translateY(-6px); }
+.tx-work__media .yr, .tx-work__media .lvl {
   position: absolute;
   font-family: var(--font-sans);
   font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
@@ -34,7 +42,16 @@
   backdrop-filter: blur(4px);
   color: var(--ink);
 }
-.tx-work__media .num { top: 12px; left: 12px; }
+/* Indice progetto: numero pieno in stile minimale ("01", "02"...), non più
+   una pillola con testo — resta leggibile su qualunque foto grazie all'ombra */
+.tx-work__media .num {
+  position: absolute; top: 12px; left: 14px;
+  font-family: var(--font-sans);
+  font-size: 20px; font-weight: 800; font-style: italic;
+  color: var(--ink);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.55);
+  letter-spacing: -0.02em;
+}
 .tx-work__media .yr  { top: 12px; right: 12px; }
 .tx-work__media .lvl { bottom: 12px; left: 12px; background: var(--ink); color: var(--bg); font-weight: 700; }
 .tx-work__body { padding: 22px 24px 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }

@@ -38,10 +38,8 @@ export function TxWork({ work }: Props) {
                 loading="lazy"
                 decoding="async"
               />
-              {/* Badge numero progetto */}
-              <span className="num">
-                N. {String(i + 1).padStart(2, "0")} / {String(work.items.length).padStart(2, "0")}
-              </span>
+              {/* Badge numero progetto — stile indice minimale ("01", "02"...) */}
+              <span className="num">{String(i + 1).padStart(2, "0")}</span>
               {/* Anno */}
               <span className="yr">{p.year}</span>
               {/* Livello (es. MAGISTRALE, B.SC.) con sfondo accent */}

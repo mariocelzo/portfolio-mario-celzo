@@ -127,13 +127,16 @@ const it: Content = {
     lead: "$ kubectl describe me",
     body: [
       <>
-        Dal <strong>18 luglio 2026</strong> sono in <strong>Reply</strong> come{" "}
+        Dal <strong>18 luglio 2026</strong> sono in <strong>Liquid Reply</strong> come{" "}
         <strong>DevOps Engineer</strong>, consulente esterno via{" "}
-        <strong>Nepta</strong>. Consulenza su progetti enterprise:{" "}
-        <strong>Infrastructure as Code</strong> con Terraform e Ansible, pipeline
-        CI/CD e workflow <strong>GitOps</strong> su Kubernetes, scripting e{" "}
-        <strong>observability</strong> degli ambienti cloud. Il progetto è coperto
-        da NDA — la produzione, però, deve restare in piedi ovunque.
+        <strong>Nepta</strong>, su progetti di automazione e delivery per primari
+        gruppi bancari italiani. Sto progettando una{" "}
+        <strong>piattaforma Jenkins CI/CD</strong> pensata per scalare su{" "}
+        <strong>~20.000 progetti</strong>, con pipeline parametrizzate per stack
+        tecnologico e una shared library <strong>Groovy</strong> centralizzata, e
+        seguo la <strong>migrazione di un automation platform Rundeck</strong> da
+        Enterprise a Community, dall'analisi di fattibilità all'architettura
+        target multi-instance in ottica <strong>GitOps</strong>.
       </>,
       <>
         Prima, sei mesi in <strong>Lutech</strong> sul progetto ERIT-DXL per
@@ -144,21 +147,21 @@ const it: Content = {
       </>,
     ],
     bullets: [
-      { ix: "[01]", text: <><strong>CI/CD & automazione</strong> — il cuore del ruolo, ovunque sia il codice.</> },
-      { ix: "[02]", text: <><strong>Kubernetes</strong>: deploy, Helm charts, pratiche GitOps.</> },
+      { ix: "[01]", text: <><strong>Piattaforma Jenkins CI/CD</strong> — scalabile su ~20.000 progetti, pipeline parametrizzate per stack tecnologico.</> },
+      { ix: "[02]", text: <><strong>Migrazione Rundeck</strong>: Enterprise → Community, dall'analisi di fattibilità all'architettura GitOps multi-instance.</> },
       { ix: "[03]", text: <><strong>Consulenza</strong>: contesti nuovi, team nuovi, stessa affidabilità.</> },
-      { ix: "[04]", text: <><strong>Dettagli progetto</strong>: riservati. La produzione, però, gira.</> },
+      { ix: "[04]", text: <><strong>Toolchain & sicurezza</strong>: SonarQube, Nexus, ArgoCD, audit su webhook e secret management.</> },
     ],
-    panelFile: "engagement.yaml", panelMeta: "EMPLOYER=NEPTA · CLIENT=REPLY",
+    panelFile: "engagement.yaml", panelMeta: "EMPLOYER=NEPTA · CLIENT=LIQUID REPLY",
     panelTitle: "toolbox",
-    stack: ["Terraform","Ansible","CI/CD","Kubernetes","Docker","Helm","GitOps / ArgoCD","Bash / Python","Azure DevOps","YAML","Docs-as-Code","Angular","Storybook"],
+    stack: ["Jenkins","Groovy","Rundeck","Terraform","Ansible","CI/CD","Kubernetes","Docker","Helm","GitOps / ArgoCD","RHEL / Linux","Nexus","SonarQube","PostgreSQL","Bash / Python","Azure DevOps","YAML","Docs-as-Code","Angular","Storybook"],
     panelDataTitle: "metadata",
     data: [
       { k: "role",     v: "DevOps Engineer" },
-      { k: "company",  v: "Reply" },
+      { k: "company",  v: "Liquid Reply" },
       { k: "employer", v: "Nepta" },
       { k: "mode",     v: "External consultant" },
-      { k: "project",  v: "[REDACTED]" },
+      { k: "project",  v: "Jenkins CI/CD · Rundeck migration" },
     ],
   },
   work: {
@@ -201,14 +204,21 @@ const it: Content = {
     no: "02", title: ["Esperienza &", "percorso."], cue: "deploy log · 2018 → 2026",
     items: [
       { year: "2026", range: "18 Lug — Present", badge: "ACTIVE",
-        title: "DevOps Engineer · External Consultant", org: "Reply · via Nepta",
+        title: "DevOps Engineer · External Consultant", org: "Liquid Reply · via Nepta",
         logo: "/assets/logos/companies/reply.svg",
-        body: "Consulente esterno Nepta in Reply. Il progetto è coperto da NDA — il mestiere resta: CI/CD, Kubernetes, automazione, e la produzione che non deve fermarsi.",
+        body: "Consulente DevOps su progetti di automazione e delivery per primari gruppi bancari italiani.",
         bullets: [
-          "IaC: provisioning con Terraform, configuration management con Ansible",
-          "Pipeline CI/CD e workflow GitOps per applicazioni containerizzate su Kubernetes",
-          "Automazione operativa: scripting Bash/Python, monitoring & observability cloud",
-          "Dettagli del progetto: [REDACTED] — NDA",
+          "Piattaforma Jenkins CI/CD enterprise — pensata per scalare su ~20.000 progetti, con pipeline parametrizzate per stack tecnologico (Java, .NET, Python) al posto di una pipeline per applicazione",
+          "Shared library Groovy centralizzata per standardizzare i comportamenti comuni",
+          "Setup di controller e agent su RHEL 9 con storage NFS condiviso",
+          "Deployment via Tomcat Manager API, Nexus come artifact store per i rollback",
+          "Integrazione toolchain: SonarQube, Scan Central, Nexus, Quay, ArgoCD",
+          "Runbook operativo in ottica docs-as-code",
+          "Migrazione automation platform Rundeck: Enterprise → Community — analisi di fattibilità su 2.738 job in 75 progetti (90,2% migrabile), mappatura delle dipendenze bloccanti",
+          "Progettazione dell'architettura target multi-instance in ottica GitOps",
+          "Ambiente di test end-to-end su Docker Compose per validare clustering e failover",
+          "Automazione del flusso di promozione via API REST",
+          "Audit di sicurezza su webhook e secret management",
         ],
       },
       { year: "2026", range: "Gen — 18 Lug", badge: "SHIPPED",
@@ -244,7 +254,7 @@ const it: Content = {
     no: "04", title: ["Stack &", "competenze."], cue: "$ ls -la /skills",
     columns: [
       { kicker: "devops_cloud", lead: "Far girare le cose, ripeterle, automatizzarle.",
-        chips: ["Terraform","Ansible","Azure DevOps","CI/CD (YAML)","Kubernetes / AKS","Helm","GitOps / ArgoCD","kubectl","Docker","Docs-as-Code","Qualys WAS","Dependency Track","Git","GitHub Actions","SonarCloud","SendGrid","Azure Managed Redis"] },
+        chips: ["Jenkins","Groovy","Rundeck","Terraform","Ansible","Azure DevOps","CI/CD (YAML)","Kubernetes / AKS","Helm","GitOps / ArgoCD","kubectl","Docker","RHEL / Linux","Nexus","SonarQube","PostgreSQL","Bash","Docs-as-Code","Qualys WAS","Dependency Track","Git","GitHub Actions","SonarCloud","SendGrid","Azure Managed Redis"] },
       { kicker: "frontend_ui", lead: "Interfacce che chiedono poco e restituiscono molto.",
         chips: ["TypeScript","Angular","Storybook","React","React Native","Next.js","JavaScript","HTML5","CSS3","Tailwind","Material UI","Bootstrap","Figma","jQuery","Flutter"] },
       { kicker: "backend_data", lead: "Sotto al cofano, dove succedono le cose serie.",
@@ -358,13 +368,16 @@ const en: Content = {
     lead: "$ kubectl describe me",
     body: [
       <>
-        Since <strong>July 18, 2026</strong> I'm at <strong>Reply</strong> as a{" "}
+        Since <strong>July 18, 2026</strong> I'm at <strong>Liquid Reply</strong> as a{" "}
         <strong>DevOps Engineer</strong>, external consultant via{" "}
-        <strong>Nepta</strong>. DevOps consulting on enterprise projects:{" "}
-        <strong>Infrastructure as Code</strong> with Terraform and Ansible, CI/CD
-        pipelines and <strong>GitOps</strong> workflows on Kubernetes, scripting
-        and cloud <strong>observability</strong>. The project is under NDA —
-        production, though, must stay up everywhere.
+        <strong>Nepta</strong>, on automation and delivery projects for major
+        Italian banking groups. I'm building an{" "}
+        <strong>enterprise Jenkins CI/CD platform</strong> designed to scale to{" "}
+        <strong>~20,000 projects</strong>, with pipelines parameterized by tech
+        stack and a centralized <strong>Groovy</strong> shared library, and
+        leading an <strong>automation platform migration from Rundeck Enterprise
+        to Community</strong>, from feasibility analysis to a target
+        multi-instance <strong>GitOps</strong> architecture.
       </>,
       <>
         Before that, six months at <strong>Lutech</strong> on the ERIT-DXL
@@ -375,21 +388,21 @@ const en: Content = {
       </>,
     ],
     bullets: [
-      { ix: "[01]", text: <><strong>CI/CD & automation</strong> — the core of the role, wherever the code lives.</> },
-      { ix: "[02]", text: <><strong>Kubernetes</strong>: deploys, Helm charts, GitOps practices.</> },
+      { ix: "[01]", text: <><strong>Enterprise Jenkins CI/CD platform</strong> — scalable to ~20,000 projects, pipelines parameterized by tech stack.</> },
+      { ix: "[02]", text: <><strong>Rundeck migration</strong>: Enterprise → Community, from feasibility analysis to a multi-instance GitOps architecture.</> },
       { ix: "[03]", text: <><strong>Consulting</strong>: new contexts, new teams, same reliability.</> },
-      { ix: "[04]", text: <><strong>Project details</strong>: classified. Production runs, though.</> },
+      { ix: "[04]", text: <><strong>Toolchain & security</strong>: SonarQube, Nexus, ArgoCD, webhook and secret-management audits.</> },
     ],
-    panelFile: "engagement.yaml", panelMeta: "EMPLOYER=NEPTA · CLIENT=REPLY",
+    panelFile: "engagement.yaml", panelMeta: "EMPLOYER=NEPTA · CLIENT=LIQUID REPLY",
     panelTitle: "toolbox",
-    stack: ["Terraform","Ansible","CI/CD","Kubernetes","Docker","Helm","GitOps / ArgoCD","Bash / Python","Azure DevOps","YAML","Docs-as-Code","Angular","Storybook"],
+    stack: ["Jenkins","Groovy","Rundeck","Terraform","Ansible","CI/CD","Kubernetes","Docker","Helm","GitOps / ArgoCD","RHEL / Linux","Nexus","SonarQube","PostgreSQL","Bash / Python","Azure DevOps","YAML","Docs-as-Code","Angular","Storybook"],
     panelDataTitle: "metadata",
     data: [
       { k: "role",     v: "DevOps Engineer" },
-      { k: "company",  v: "Reply" },
+      { k: "company",  v: "Liquid Reply" },
       { k: "employer", v: "Nepta" },
       { k: "mode",     v: "External consultant" },
-      { k: "project",  v: "[REDACTED]" },
+      { k: "project",  v: "Jenkins CI/CD · Rundeck migration" },
     ],
   },
   work: {
@@ -432,14 +445,21 @@ const en: Content = {
     no: "02", title: ["Experience &", "path."], cue: "deploy log · 2018 → 2026",
     items: [
       { year: "2026", range: "Jul 18 — Present", badge: "ACTIVE",
-        title: "DevOps Engineer · External Consultant", org: "Reply · via Nepta",
+        title: "DevOps Engineer · External Consultant", org: "Liquid Reply · via Nepta",
         logo: "/assets/logos/companies/reply.svg",
-        body: "External consultant from Nepta at Reply. The project is under NDA — the craft remains: CI/CD, Kubernetes, automation, and production that must not stop.",
+        body: "DevOps consultant on automation and delivery projects for major Italian banking groups.",
         bullets: [
-          "IaC: provisioning with Terraform, configuration management with Ansible",
-          "CI/CD pipelines and GitOps workflows for containerized apps on Kubernetes",
-          "Operational automation: Bash/Python scripting, cloud monitoring & observability",
-          "Project details: [REDACTED] — NDA",
+          "Enterprise Jenkins CI/CD platform — built to scale to ~20,000 projects, with pipelines parameterized by tech stack (Java, .NET, Python) instead of one pipeline per application",
+          "Centralized Groovy shared library to standardize common behaviors",
+          "Controller/agent setup on RHEL 9 with shared NFS storage",
+          "Deployment via Tomcat Manager API, Nexus as the artifact store for rollbacks",
+          "Toolchain integration: SonarQube, Scan Central, Nexus, Quay, ArgoCD",
+          "Operational runbook, docs-as-code",
+          "Rundeck automation platform migration: Enterprise → Community — feasibility analysis across 2,738 jobs in 75 projects (90.2% migratable), mapping of blocking dependencies",
+          "Design of the target multi-instance GitOps architecture",
+          "End-to-end test environment on Docker Compose to validate clustering and failover",
+          "Automated promotion workflow via REST API",
+          "Security audit of webhooks and secret management",
         ],
       },
       { year: "2026", range: "Jan — Jul 18", badge: "SHIPPED",
@@ -475,7 +495,7 @@ const en: Content = {
     no: "04", title: ["Stack &", "skills."], cue: "$ ls -la /skills",
     columns: [
       { kicker: "devops_cloud", lead: "Making things run, repeat, automate.",
-        chips: ["Terraform","Ansible","Azure DevOps","CI/CD (YAML)","Kubernetes / AKS","Helm","GitOps / ArgoCD","kubectl","Docker","Docs-as-Code","Qualys WAS","Dependency Track","Git","GitHub Actions","SonarCloud","SendGrid","Azure Managed Redis"] },
+        chips: ["Jenkins","Groovy","Rundeck","Terraform","Ansible","Azure DevOps","CI/CD (YAML)","Kubernetes / AKS","Helm","GitOps / ArgoCD","kubectl","Docker","RHEL / Linux","Nexus","SonarQube","PostgreSQL","Bash","Docs-as-Code","Qualys WAS","Dependency Track","Git","GitHub Actions","SonarCloud","SendGrid","Azure Managed Redis"] },
       { kicker: "frontend_ui", lead: "Interfaces that ask little and give a lot.",
         chips: ["TypeScript","Angular","Storybook","React","React Native","Next.js","JavaScript","HTML5","CSS3","Tailwind","Material UI","Bootstrap","Figma","jQuery","Flutter"] },
       { kicker: "backend_data", lead: "Under the hood, where serious things happen.",
